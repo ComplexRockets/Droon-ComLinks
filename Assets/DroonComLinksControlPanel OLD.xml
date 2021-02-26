@@ -1,0 +1,86 @@
+<XmlLayout xmlns="http://www.w3schools.com" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\ModTools\UI\XmlLayout.xsd">
+    <Include path="Ui/Xml/Flight/FlightStyles.xml" />
+
+    <Defaults>
+    </Defaults>
+
+    <RectTransform class="safe-area">
+        <Panel offsetXY="700 0">
+            <Panel class="flight-panel panel-angled border-angled" rectAlignment="UpperLeft" padding="30" rotation="180" width="200" height="70" offsetXY="0 -70">
+                <TextMeshPro text="Droon ComLinks Control Panel" color="Primary" fontsize="14" rotation="180 180 180"/>
+            </Panel>
+        </Panel>
+
+        <Panel class="flight-panel panel-angled border-angled" width="645" height="70" rectAlignment="UpperLeft" offsetXY="855 0">
+            <Panel width="530" height="70" spacing="5">
+                <HorizontalLayout class="no-image" spacing="10" padding="10">
+                    <VerticalLayout class="no-image" spacing="5">
+                        <TextMeshPro class="label text-sm" alignment="left" text="Droon Control"/>
+                        <TextMeshPro class="label text-sm" alignment="left" text="Remote Control"/>
+                        <TextMeshPro class="label text-sm" alignment="left" text="Connection Status"/>
+                    </VerticalLayout>
+
+                    <VerticalLayout class="no-image" spacing="5">
+                        <TextMeshPro class="value text-sm" alignment="right" color="DangerHover" text="no"/>
+                        <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="yes"/>
+                        <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="good"/>
+                    </VerticalLayout>
+
+                    <VerticalLayout class="no-image"/>
+                    <VerticalLayout class="no-image"/>
+                    <VerticalLayout class="no-image"/>
+
+                    <VerticalLayout class="no-image" spacing="5">
+                        <TextMeshPro class="label text-sm" alignment="left" text="Crafts in Range"/>
+                        <TextMeshPro class="label text-sm" alignment="left" text="Relays In Use"/>
+                        <TextMeshPro class="label text-sm" alignment="left" text="Connection Status"/>
+                    </VerticalLayout>
+
+                    <VerticalLayout class="no-image" spacing="5">
+                        <TextMeshPro class="value text-sm" alignment="right" text="num"/>
+                        <TextMeshPro class="value text-sm" alignment="right" text="num"/>
+                        <TextMeshPro class="value text-sm" alignment="right" text="num"/>
+                    </VerticalLayout>
+
+                </HorizontalLayout>
+            </Panel>
+        </Panel>
+
+        <Panel class="flight-panel panel border" width="745" height="150" rectAlignment="UpperLeft" offsetXY="755 -77">
+
+            <HorizontalLayout class="no-image" padding="5">
+                <VerticalLayout class="no-image" padding="10" spacing="5" rectAlignment="UpperCenter">
+                    <TextMeshPro class="label text-sm" text="Crafts In Range" alignment="Top"/>
+                    <VerticalScrollView class="no-image">
+                        <VerticalLayout class="no-image" childForceExpandHeight="false" spacing="5" id="ConnectedList">
+                            <TextMeshPro class="value text-sm" text="Craft Name" id="rangetemplate" active="false"/>
+                        </VerticalLayout>
+                    </VerticalScrollView>
+                </VerticalLayout>
+
+                <VerticalLayout class="no-image" padding="5">
+                    <TextMeshPro class="label text-sm" text="Crafts's Antenna's" alignment="Top"/>
+                    <VerticalScrollView class="no-image">
+                        <VerticalLayout class="no-image" childForceExpandHeight="false" spacing="5" id="antennaList">
+                            <TextMeshPro class="value text-sm" text="Antenna Name" id="antennatemplate" active="false"/>
+                        </VerticalLayout>
+                    </VerticalScrollView>
+                </VerticalLayout>
+
+                <VerticalLayout class="no-image" padding="10" spacing="5">
+                    <Button class="btn menu-button" onClick="OnNetToggleButtonClicked();">
+                        <TextMeshPro text="Toggle Network" />
+                    </Button>
+                    <Button class="btn menu-button" onClick="OnRelaunchButtonClicked();">
+                        <TextMeshPro text="Button" />
+                    </Button>
+                    <Button class="btn menu-button" onClick="OnRelaunchButtonClicked();">
+                        <TextMeshPro text="Button" />
+                    </Button>
+                </VerticalLayout>
+
+            </HorizontalLayout>
+        </Panel>
+    </RectTransform>
+</XmlLayout>

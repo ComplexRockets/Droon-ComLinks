@@ -1,0 +1,8 @@
+{
+    "name": "Droon ComLinks",
+    "references": [
+        "UnityEngine.UI",
+        "Unity.TextMeshPro",
+        "Unity.Mathematics"
+    ]
+}
