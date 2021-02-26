@@ -1,9 +1,8 @@
 ﻿using System;
-using Assets.Scripts.Flight;
-using Assets.Scripts.Flight.MapView;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.Objects {
+namespace Assets.Scripts.DroonComLinks.Objects
+{
     public class DCLLine : MonoBehaviour {
         private String _id;
         private Color _color;

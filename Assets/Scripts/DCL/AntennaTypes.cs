@@ -1,7 +1,7 @@
-using Assets.Scripts.Craft.Parts.Modifiers;
 using Assets.Scripts.DroonComLinks.Interfaces;
 
-namespace Assets.Scripts.DroonComLinks {
+namespace Assets.Scripts.DroonComLinks
+{
     public static class AntennaTypes {
         public static ParametricalParabolic parametricalParabolic = new ParametricalParabolic ();
         public static Whip whip = new Whip ();

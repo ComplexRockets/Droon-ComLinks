@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Assets.Scripts.Flight.MapView.Interfaces;
 using Assets.Scripts.Flight.Sim;
-using ModApi.Flight.Sim;
-using ModApi.Planet;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.Objects {
+namespace Assets.Scripts.DroonComLinks.Objects
+{
     public class NetworkNode {
         public bool isCraft;
         public CraftNode craftNode {

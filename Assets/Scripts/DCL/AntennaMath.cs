@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Assets.Scripts.Craft.Parts.Modifiers;
 using Assets.Scripts.DroonComLinks.Interfaces;
 using Assets.Scripts.DroonComLinks.Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks {
+namespace Assets.Scripts.DroonComLinks
+{
     public static class AntennaMath {
         private static Dictionary < (XElement, string), float > floatAttributes = new Dictionary < (XElement, string), float > ();
         public static double GetMinReceivedPower (float sensitivityConstant, float efficiency, float gain) {

@@ -1,7 +1,7 @@
-namespace Assets.Scripts.Craft.Parts.Modifiers {
+namespace Assets.Scripts.Craft.Parts.Modifiers
+{
     using System;
     using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects;
     using ModApi.Craft.Parts;
     using ModApi.Ui.Inspector;
     using UnityEngine;

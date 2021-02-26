@@ -1,27 +1,25 @@
-﻿    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using System;
-    using Assets.Scripts.Craft.Parts.Modifiers.Eva;
-    using Assets.Scripts.Craft.Parts.Modifiers;
-    using Assets.Scripts.Craft;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects;
-    using Assets.Scripts.Flight.MapView.Interfaces;
-    using Assets.Scripts.Flight.MapView;
-    using Assets.Scripts.Flight.Sim;
-    using Assets.Scripts.Flight;
-    using Assets.Scripts.State;
-    using Assets.Scripts.Ui.Flight;
-    using ModApi.Craft.Parts;
-    using ModApi.Craft;
-    using ModApi.Flight.Sim;
-    using ModApi.Planet;
-    using ModApi.Scenes.Events;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using System;
+using Assets.Scripts.Craft.Parts.Modifiers.Eva;
+using Assets.Scripts.Craft.Parts.Modifiers;
+using Assets.Scripts.DroonComLinks.Objects;
+using Assets.Scripts.Flight.MapView.Interfaces;
+using Assets.Scripts.Flight.MapView;
+using Assets.Scripts.Flight.Sim;
+using Assets.Scripts.Flight;
+using Assets.Scripts.State;
+using Assets.Scripts.Ui.Flight;
+using ModApi.Craft.Parts;
+using ModApi.Craft;
+using ModApi.Planet;
+using ModApi.Scenes.Events;
+using UnityEngine;
 
-    namespace Assets.Scripts.DroonComLinks {
-        public class ComLinksManager : MonoBehaviour {
+namespace Assets.Scripts.DroonComLinks
+{
+    public class ComLinksManager : MonoBehaviour {
             public List<String> connectedNodes {
                 get {
                     if (_player != null) return _player.nodesInDirectRange;

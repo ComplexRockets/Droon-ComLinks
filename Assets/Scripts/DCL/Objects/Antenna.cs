@@ -1,10 +1,9 @@
-﻿using System;
-using System.Xml.Linq;
-using Assets.Scripts.Craft.Parts.Modifiers;
+﻿using System.Xml.Linq;
 using Assets.Scripts.DroonComLinks.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.Objects {
+namespace Assets.Scripts.DroonComLinks.Objects
+{
     public class Antenna {
         public NetworkNode node;
         public IAntennaType antennaType {

@@ -1,8 +1,5 @@
-namespace Assets.Scripts.Craft.Parts.Modifiers {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Linq;
+namespace Assets.Scripts.Craft.Parts.Modifiers
+{
     using System;
     using Assets.Scripts.DroonComLinks.Interfaces;
     using Assets.Scripts.DroonComLinks;

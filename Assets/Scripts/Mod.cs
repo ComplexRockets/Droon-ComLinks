@@ -1,14 +1,9 @@
-namespace Assets.Scripts {
+namespace Assets.Scripts
+{
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System;
     using Assets.Scripts.DroonComLinks;
     using Assets.Scripts.Ui.Flight;
-    using ModApi.Common;
-    using ModApi.Mods;
     using ModApi.Ui.Inspector;
-    using ModApi;
     using UnityEngine;
 
     public class Mod : ModApi.Mods.GameMod {
