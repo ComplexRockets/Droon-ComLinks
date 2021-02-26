@@ -1,23 +1,10 @@
-﻿    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using System;
-    using Assets.Scripts.Flight.MapView.Interfaces;
-    using Assets.Scripts.Flight.MapView;
-    using Assets.Scripts.Flight.Sim;
-    using Assets.Scripts.Flight;
-    using Assets.Scripts.Scenes;
-    using Assets.Scripts.State;
-    using Assets.Scripts.Ui.Flight;
-    using ModApi.Common;
-    using ModApi.Craft.Parts;
-    using ModApi.GameLoop.Interfaces;
-    using ModApi.GameLoop;
-    using ModApi.Scenes.Events;
-    using UnityEngine;
+﻿using System;
+using Assets.Scripts.Flight.MapView;
+using UnityEngine;
 
-    namespace Assets.Scripts.DroonComLinks.Objects {
-        public class DCLSphere : MonoBehaviour {
+namespace Assets.Scripts.DroonComLinks.Objects
+{
+    public class DCLSphere : MonoBehaviour {
             private Material DefaultMaterial;
             private String _name;
             private Vector3 _Center;

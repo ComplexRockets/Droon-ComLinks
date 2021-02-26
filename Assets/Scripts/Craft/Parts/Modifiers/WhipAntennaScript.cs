@@ -1,11 +1,7 @@
-namespace Assets.Scripts.Craft.Parts.Modifiers {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System;
+namespace Assets.Scripts.Craft.Parts.Modifiers
+{
     using Assets.Scripts.DroonComLinks.Interfaces;
     using ModApi.Craft.Parts;
-    using ModApi.GameLoop.Interfaces;
     using UnityEngine;
 
     public class WhipAntennaScript : PartModifierScript<WhipAntennaData>, IDCLAntennaScript {

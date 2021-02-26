@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.ParabolicAntenna {
+namespace Assets.Scripts.DroonComLinks.ParabolicAntenna
+{
     public class CylinderScript : MonoBehaviour {
         private GameObject _Cylinder;
         private GameObject _SphereA;

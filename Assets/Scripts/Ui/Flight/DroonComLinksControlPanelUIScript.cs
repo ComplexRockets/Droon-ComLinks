@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.DroonComLinks;
 using Assets.Scripts.Input;
-using ModApi.Common;
 using ModApi.Input;
 using ModApi.Ui;
 using TMPro;
 using UI.Xml;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Flight {
+namespace Assets.Scripts.Ui.Flight
+{
     public class DroonComLinksControlPanelUIScript : MonoBehaviour {
         private GameInputs gameInputs;
         private XmlLayoutController _controller;

@@ -1,21 +1,18 @@
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using System;
-    using Assets.Scripts.DroonComLinks.Objects;
-    using Assets.Scripts.Flight.Sim;
-    using Assets.Scripts.Flight;
-    using Assets.Scripts.Input;
-    using Assets.Scripts.State;
-    using ModApi.Common;
-    using ModApi.Craft.Parts;
-    using ModApi.Craft;
-    using ModApi.Flight.UI;
-    using ModApi.Input;
-    using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.DroonComLinks.Objects;
+using Assets.Scripts.Flight;
+using Assets.Scripts.Input;
+using Assets.Scripts.State;
+using ModApi.Craft.Parts;
+using ModApi.Craft;
+using ModApi.Flight.UI;
+using ModApi.Input;
+using UnityEngine;
 
-    namespace Assets.Scripts.DroonComLinks {
-        public class DelayManager {
+namespace Assets.Scripts.DroonComLinks
+{
+    public class DelayManager {
             public float Delay => _Delay;
             private float timeStep => Time.unscaledDeltaTime;
             private float _Delay => Mod.Instance.antennaDelay * 10;

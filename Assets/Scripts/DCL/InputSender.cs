@@ -1,19 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Assets.Scripts.Flight;
-using Assets.Scripts.Flight.Sim;
-using Assets.Scripts.State;
-using ModApi;
-using ModApi.Common;
 using ModApi.Craft;
 using ModApi.Craft.Parts;
 using ModApi.Flight.UI;
-using ModApi.Input;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks {
+namespace Assets.Scripts.DroonComLinks
+{
     public class InputSender {
         private CraftControls Controls => CommandPod.Controls;
         private FlightSceneScript _flightScene => FlightSceneScript.Instance;

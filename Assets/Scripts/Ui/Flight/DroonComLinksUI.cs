@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using Assets.Scripts.DroonComLinks;
-using ModApi.Common;
-using ModApi.Ui;
+﻿using Assets.Scripts.DroonComLinks;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Flight {
+namespace Assets.Scripts.Ui.Flight
+{
     public class droonComLinksUI : MonoBehaviour {
 
         private static DroonComLinksControlPanelUIScript _controlPanel;

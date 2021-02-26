@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ModApi;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.ParabolicAntenna {
+namespace Assets.Scripts.DroonComLinks.ParabolicAntenna
+{
     public class ParametricalParabolicAntenna : MonoBehaviour {
         private GameObject _parabola;
         private GameObject _bottom;
