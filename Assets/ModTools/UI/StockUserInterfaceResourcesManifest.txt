@@ -539,18 +539,20 @@ TMPro.TMP_FontAsset
    Ui/Fonts/DSEG-14-Classic/DSEG14Classic-Regular SDF
    Ui/Fonts/DSEG-14-Modern/DSEG14Modern-Regular SDF
    Ui/Fonts/FutureEarth/Future Earth SDF
+   Ui/Fonts/Roboto/PartMaterial-Roboto-Regular SDF
    Ui/Fonts/Roboto/Roboto-Regular SDF
 
-UnityEditor.DefaultAsset
-   Ui/Fonts/AnitaSemiSquare/CC BY SA License
-
 UnityEngine.Material
+   Ui/Fonts/AnitaSemiSquare/AnitaSemiSquareShadow
    Ui/Materials/ColorPickerMaterial
    Ui/Materials/GradientMaterial
    Ui/Prefabs/Mfd/Mfd-Roboto-Regular-SDF
    Ui/Prefabs/Mfd/MfdHudMaskMaterial
    Ui/Prefabs/Mfd/MfdMaskMaterial
    Ui/Prefabs/Mfd/MfdUIMaterial
+
+UnityEditor.DefaultAsset
+   Ui/Fonts/AnitaSemiSquare/CC BY SA License
 
 UnityEngine.Shader
    Ui/Materials/ColorPickerShader

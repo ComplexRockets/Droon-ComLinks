@@ -65,10 +65,10 @@ namespace Assets.Scripts.DroonComLinks
             }
 
             private void SendNextControls () {
-                if (ControlsBuffer.Count > 0 && ControlsBuffer.First ().timeStamp + Mod.Instance.antennaDelay > Time.realtimeSinceStartup) {
-                    lastConrtols = ControlsBuffer.First ().controls;
-                    SendControls (ControlsBuffer.First ().controls);
-                    ControlsBuffer.Remove (ControlsBuffer.First ());
+                if (ControlsBuffer.Count > 0 && ControlsBuffer[0].timeStamp + Mod.Instance.antennaDelay > Time.realtimeSinceStartup) {
+                    lastConrtols = ControlsBuffer[0].controls;
+                    SendControls (ControlsBuffer[0].controls);
+                    ControlsBuffer.Remove (ControlsBuffer[0]);
                     //Debug.Log ("Delay :" + Mod.Instance.antennaDelay);
                 } else SendControls (lastConrtols);
             }

@@ -5,8 +5,7 @@ using Assets.Scripts.DroonComLinks.Interfaces;
 using Assets.Scripts.DroonComLinks.Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks
-{
+namespace Assets.Scripts.DroonComLinks {
     public static class AntennaMath {
         private static Dictionary < (XElement, string), float > floatAttributes = new Dictionary < (XElement, string), float > ();
         public static double GetMinReceivedPower (float sensitivityConstant, float efficiency, float gain) {
@@ -27,20 +26,21 @@ namespace Assets.Scripts.DroonComLinks
             }
         }
         public static float GetGain (IAntennaType type, XElement xml) {
-            float waveLength = FrequencyToWaveLength (GetFloatAttribute (type, xml, "Frequency"));
+            try {
+                float waveLength = FrequencyToWaveLength (GetFloatAttribute (type, xml, "Frequency"));
 
-            if (type == AntennaTypes.parametricalParabolic) {
-                float diameter = GetFloatAttribute (type, xml, "Diameter");
-                float depth = GetFloatAttribute (type, xml, "Depth");
-                return GetParabolicGain (GetParabolicFocalLength (diameter, depth), diameter, waveLength);
-            } else {
-                float size = GetFloatAttribute (type, xml, "Size");
-                float efficiency = GetFloatAttribute (type, xml, "Efficency");
-                return GetGain (type, waveLength, size, efficiency);
-            }
+                if (type == AntennaTypes.parametricalParabolic) {
+                    float diameter = GetFloatAttribute (type, xml, "Diameter");
+                    float depth = GetFloatAttribute (type, xml, "Depth");
+                    return GetParabolicGain (GetParabolicFocalLength (diameter, depth), diameter, waveLength);
+                } else {
+                    float size = GetFloatAttribute (type, xml, "Size");
+                    float efficiency = GetFloatAttribute (type, xml, "Efficency");
+                    return GetGain (type, waveLength, size, efficiency);
+                }
+            } catch { Debug.LogError ("Error on GetGain"); return -1; }
         }
 
-        //public static float GetGain (IAntennaType type, float size, float efficiency) => 41000 / (type.azAngle * type.eqAngle) * size * efficiency;
         public static float GetGain (IAntennaType type, float waveLength, float size, float efficiency) {
             double a = 9.73 / (waveLength * Mathd.Pow (10, type.azAngle * type.eqAngle / Mod.Instance.gainConstant));
             return (float) (a * a * efficiency + 10 * size);
@@ -54,26 +54,24 @@ namespace Assets.Scripts.DroonComLinks
         public static float GetParabolicFocalLength (float diameter, float depth) => (diameter * diameter) / (16 * depth);
         public static float GetParabolicEficiency (float focalLength, float diameter) => focalLength / diameter;
 
-        public static float[] GetSignalInfo (NetworkNode A, NetworkNode B) {
-            float[] result = {-1, -1 };
+        public static void GetSignalInfo (NetworkNode A, NetworkNode B, out float signalStrengh, out float waveLength) {
+            signalStrengh = waveLength = 0;
             foreach (Antenna a in A.antennas) {
                 if (a.activated) {
                     foreach (Antenna b in B.antennas) {
                         if (b.activated) {
                             float abStrength = a.SignalStrengthFrom (b);
-                            if (abStrength > 0) {
+                            if (abStrength > signalStrengh) {
                                 float baStrength = b.SignalStrengthFrom (a);
-                                if (baStrength > 0) {
-                                    result[0] = abStrength > baStrength? baStrength : abStrength;
-                                    result[1] = a.isGS? b.waveLength : a.waveLength;
-                                    return result;
+                                if (baStrength > signalStrengh) {
+                                    signalStrengh = abStrength > baStrength? baStrength : abStrength;
+                                    waveLength = a.isGS? b.waveLength : a.waveLength;
                                 }
                             }
                         }
                     }
                 }
             }
-            return result;
         }
 
         public static IAntennaType GetAntennaType (string typeID) {
@@ -90,9 +88,7 @@ namespace Assets.Scripts.DroonComLinks
         public static float GetFloatAttribute (IAntennaType type, XElement xml, string attributeName) {
             float result = -1;
             try {
-                if (floatAttributes.ContainsKey ((xml, attributeName))) {
-                    return floatAttributes[(xml, attributeName)];
-                }
+                if (floatAttributes.ContainsKey ((xml, attributeName))) return floatAttributes[(xml, attributeName)];
 
                 XAttribute attribute = xml.Attribute (attributeName);
 

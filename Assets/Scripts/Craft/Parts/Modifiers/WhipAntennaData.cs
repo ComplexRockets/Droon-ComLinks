@@ -1,5 +1,4 @@
-namespace Assets.Scripts.Craft.Parts.Modifiers
-{
+namespace Assets.Scripts.Craft.Parts.Modifiers {
     using System;
     using Assets.Scripts.DroonComLinks.Interfaces;
     using Assets.Scripts.DroonComLinks;
@@ -22,12 +21,22 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         }
 
         [SerializeField]
-        [DesignerPropertyToggleButton (Label = "Start Open", Order = 1, Tooltip = "")]
+        [DesignerPropertyToggleButton (Label = "Start open", Order = 1, Tooltip = "")]
         private bool _startOpen = true;
-        public bool startOpen => _startOpen;
+        public bool startOpen {
+            get => _startOpen;
+            set { _startOpen = value; }
+        }
+
+        [SerializeField]
+        [DesignerPropertySlider (Label = "Deployment duration", Order = 2, MinValue = 0.1f, MaxValue = 10f, Tooltip = "", NumberOfSteps = 1000)]
+        private float _deploymentDuration = 2;
+        public float deploymentDuration => _deploymentDuration;
 
         protected override void OnDesignerInitialization (IDesignerPartPropertiesModifierInterface d) {
             d.OnAnyPropertyChanged (() => Script.UpdateAntenna ());
+
+            d.OnValueLabelRequested (() => _deploymentDuration, (float x) => deploymentDuration.ToString ("n1") + "s");
         }
 
         public void OnSizeChanged (float _size) {

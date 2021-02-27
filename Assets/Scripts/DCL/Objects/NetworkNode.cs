@@ -5,15 +5,15 @@ using Assets.Scripts.Flight.MapView.Interfaces;
 using Assets.Scripts.Flight.Sim;
 using UnityEngine;
 
-namespace Assets.Scripts.DroonComLinks.Objects
-{
+namespace Assets.Scripts.DroonComLinks.Objects {
     public class NetworkNode {
         public bool isCraft;
         public CraftNode craftNode {
             get;
         }
-        public bool isControlled {
+        public bool gsInRange {
             get;
+            private set;
         }
         public String name {
             get;
@@ -27,8 +27,7 @@ namespace Assets.Scripts.DroonComLinks.Objects
             }
         }
         private ComLinksManager _ComLinksManager;
-        public IMapViewCoordinateConverter _coordinateConverter; // => (IMapViewCoordinateConverter) Game.Instance.FlightScene.ViewManager.MapViewManager.MapView;
-        //private AntennaTypes antennaTypes = new AntennaTypes ();
+        public IMapViewCoordinateConverter _coordinateConverter;
         private List<Antenna> _antennas;
         public List<Antenna> antennas => _antennas;
         private List<DCLLine> lines = new List<DCLLine> ();
@@ -37,7 +36,8 @@ namespace Assets.Scripts.DroonComLinks.Objects
         public List<String> nodesInDirectRange => GetNodesInDirectRange ().Select (inRangeNode => inRangeNode.name).ToList ();
         public List<String> nodeInRelayRange => GetNodesInRelayRange ().Select (inRangeNode => inRangeNode.name).ToList ();
         public List<NetworkNode> objectNodesInDirectRange => GetNodesInDirectRange ().Select (inRangeNode => inRangeNode.node).ToList ();
-        public List<NetworkNode> objectNodeInRelayRange => GetNodesInRelayRange (); //.Select (InRangeNode => InRangeNode.Node).ToList ();
+        public List<NetworkNode> objectNodeInRelayRange => GetNodesInRelayRange ();
+
         public Vector3d position => isCraft? craftNode.SolarPosition : _gsPosition;
         private Vector3d _gsPosition => _parent.SolarPosition + _parent.SurfaceVectorToPlanetVector (_gslocalPos);
         private Vector3d _gslocalPos;
@@ -95,13 +95,17 @@ namespace Assets.Scripts.DroonComLinks.Objects
             List<NetworkNode> targets = new List<NetworkNode> (_ComLinksManager._networkNodes);
             List<InRangeNode> nodesInRange = new List<InRangeNode> ();
 
-            foreach (NetworkNode target in targets) {
-                if (!excludedNodes.Contains (target)) {
-                    if ((target != this) && (isCraft || target.isCraft)) {
-                        float[] signalInfo = AntennaMath.GetSignalInfo (this, target);
-                        if (signalInfo.Length > 1 && signalInfo[0] > 0) {
-                            if (!CommonMethods.ConectionObstructed (position, target.position)) {
-                                nodesInRange.Add (new InRangeNode (target, target.name, Vector3d.Distance (position, target.position), signalInfo[0], signalInfo[1]));
+            if (!isUnderWater) {
+                foreach (NetworkNode target in targets) {
+                    if (!excludedNodes.Contains (target)) {
+                        if ((target != this) && (isCraft || target.isCraft) && !target.isUnderWater) {
+                            float signalStrengh;
+                            float waveLength;
+                            AntennaMath.GetSignalInfo (this, target, out signalStrengh, out waveLength);
+                            if (signalStrengh > 0) {
+                                if (!CommonMethods.ConectionObstructed (position, target.position)) {
+                                    nodesInRange.Add (new InRangeNode (target, target.name, Vector3d.Distance (position, target.position), signalStrengh, waveLength));
+                                }
                             }
                         }
                     }
@@ -121,9 +125,12 @@ namespace Assets.Scripts.DroonComLinks.Objects
             List<NetworkNode> nodesToCheck = new List<NetworkNode> (nodesInRange);
             List<NetworkNode> CheckedNodes = new List<NetworkNode> () { this };
             List<NetworkNode> nodesInRelayRange = new List<NetworkNode> (nodesInRange);
+            gsInRange = false;
+            foreach (NetworkNode node in nodesInRange)
+                if (!node.isCraft) gsInRange = true;
 
             while (nodesToCheck.Count > 0) {
-                NetworkNode currentNode = nodesToCheck.First ();
+                NetworkNode currentNode = nodesToCheck[0];
                 nodesToCheck.Remove (currentNode);
                 CheckedNodes.Add (currentNode);
 
@@ -131,6 +138,7 @@ namespace Assets.Scripts.DroonComLinks.Objects
                     if (!nodesInRelayRange.Contains (node)) {
                         nodesInRelayRange.Add (node);
                         if (!CheckedNodes.Contains (node) && !nodesToCheck.Contains (node)) nodesToCheck.Add (node);
+                        if (!node.isCraft) gsInRange = true;
                     }
                 }
                 //UnityEngine.Debug.Log (nodesToCheck.Count);
@@ -138,7 +146,7 @@ namespace Assets.Scripts.DroonComLinks.Objects
 
             _nodesInRelayRange = nodesInRelayRange;
             //UnityEngine.Debug.Log ("Got Nodes In Relay Range: " + nodesInRelayRange.Count);
-            return nodesInRelayRange;
+            return _nodesInRelayRange;
         }
 
         public List<String> GetCraftAntennas () {

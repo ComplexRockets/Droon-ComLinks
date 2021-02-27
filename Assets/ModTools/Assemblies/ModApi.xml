@@ -5921,6 +5921,15 @@
             <param name="attributeName">The name of the attribute.</param>
             <returns>The requested attribute value or <c>null</c> if it does not exist.</returns>
         </member>
+        <member name="M:ModApi.Common.Extensions.XElementExtensions.GetDoubleArray(System.Xml.Linq.XElement,System.String,System.Double[])">
+            <summary>
+            Gets the double array attribute value.
+            </summary>
+            <param name="element">The element containing the attribute.</param>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="defaultValue">The default value to return if the attribute does not exist.</param>
+            <returns>The requested attribute value or the default value if it does not exist.</returns>
+        </member>
         <member name="M:ModApi.Common.Extensions.XElementExtensions.GetDoubleAttribute(System.Xml.Linq.XElement,System.String,System.Double)">
             <summary>
             Gets the double attribute value.
@@ -6305,6 +6314,14 @@
             <param name="value">The value of the attribute.</param>
         </member>
         <member name="M:ModApi.Common.Extensions.XElementExtensions.SetAttribute(System.Xml.Linq.XElement,System.String,UnityEngine.Vector3d)">
+            <summary>
+            Sets the specified attribute's value to the specified value.
+            </summary>
+            <param name="element">The element on which to set the attribute value.</param>
+            <param name="attributeName">The name of the attribute to set.</param>
+            <param name="value">The value of the attribute.</param>
+        </member>
+        <member name="M:ModApi.Common.Extensions.XElementExtensions.SetAttribute(System.Xml.Linq.XElement,System.String,System.Double[])">
             <summary>
             Sets the specified attribute's value to the specified value.
             </summary>
@@ -7485,6 +7502,21 @@
             The default legacy solar system ID.
             </summary>
         </member>
+        <member name="F:ModApi.Constants.JunoSystemAliasId">
+            <summary>
+            The default alias for the Juno planetary system.
+            </summary>
+        </member>
+        <member name="F:ModApi.Constants.DefaultStructureLoadDistance">
+            <summary>
+            The default structure load distance in meters.
+            </summary>
+        </member>
+        <member name="F:ModApi.Constants.DefaultSurfaceLockAltitude">
+            <summary>
+            The default surface lock altitude in meters.
+            </summary>
+        </member>
         <member name="F:ModApi.Constants.DegreeSymbol">
             <summary>
             The degree symbol. I don't know how many times I've googled this to copy/paste it into our code.
@@ -7498,11 +7530,6 @@
         <member name="F:ModApi.Constants.DragForceScale">
             <summary>
             The drag force scale.
-            </summary>
-        </member>
-        <member name="F:ModApi.Constants.DefaultSurfaceLockAltitude">
-            <summary>
-            The default surface lock altitude in meters.
             </summary>
         </member>
         <member name="F:ModApi.Constants.EarthGravity">
@@ -20265,6 +20292,11 @@
             Occurs when active command pod has changed for this craft.
             </summary>
         </member>
+        <member name="E:ModApi.Craft.ICraftScript.ActiveCommandPodChanging">
+            <summary>
+            Occurs when active command pod is about to change for this craft.
+            </summary>
+        </member>
         <member name="E:ModApi.Craft.ICraftScript.CraftSplit">
             <summary>
             Occurs after this <see cref="T:ModApi.Craft.ICraftScript"/> has been split into multiple crafts.
@@ -20287,6 +20319,16 @@
             Occurs after this <see cref="T:ModApi.Craft.ICraftScript"/> has been fully initialized.
             </summary>
         </member>
+        <member name="E:ModApi.Craft.ICraftScript.NavballRotationUpdate">
+            <summary>
+            Event for extra navballs (MFD) to hook rotation updates.
+            </summary>
+        </member>
+        <member name="E:ModApi.Craft.ICraftScript.NavballVectorUpdate">
+            <summary>
+            Event for extra navballs (MFD) to hook vector updates.
+            </summary>
+        </member>
         <member name="E:ModApi.Craft.ICraftScript.PartCollisionEnter">
             <summary>
             Occurs when a part in the craft enters a collision.
@@ -20300,16 +20342,6 @@
         <member name="E:ModApi.Craft.ICraftScript.TimeMultiplierModeChanged">
             <summary>
             Occurs after the time multiplier changes, and after this <see cref="T:ModApi.Craft.ICraftScript"/> has finished processing the event.
-            </summary>
-        </member>
-        <member name="E:ModApi.Craft.ICraftScript.NavballRotationUpdate">
-            <summary>
-            Event for extra navballs (MFD) to hook rotation updates.
-            </summary>
-        </member>
-        <member name="E:ModApi.Craft.ICraftScript.NavballVectorUpdate">
-            <summary>
-            Event for extra navballs (MFD) to hook vector updates.
             </summary>
         </member>
         <member name="P:ModApi.Craft.ICraftScript.ActiveCommandPod">
@@ -33329,6 +33361,13 @@
             Called when the object should be unloaded from the game view.
             </summary>
             <param name="flightEnd">if set to <c>true</c> ship is being unloaded due to the flight ending.</param>
+        </member>
+        <member name="M:ModApi.Flight.GameView.IGameViewObject.UpdateLevelOfDetail(System.Double)">
+            <summary>
+            Updates the level of detail based on the current distance from the player. This is only called while the
+            game view object is currently loaded into the game view.
+            </summary>
+            <param name="distanceSquared">The distance squared from the player.</param>
         </member>
         <member name="T:ModApi.Flight.GameView.IReferenceFrame">
             <summary>
@@ -54449,7 +54488,7 @@
             <param name="planet">The planet.</param>
             <param name="brightnessAdjustment">The brightness adjustment value.</param>
         </member>
-        <member name="M:ModApi.Planet.PlanetCubemapUtility.CreateEquirectangularMap(ModApi.Planet.IPlanetData,System.Int32,System.Int32,System.Int32,System.Single,System.Boolean,System.Boolean)">
+        <member name="M:ModApi.Planet.PlanetCubemapUtility.CreateEquirectangularMap(ModApi.Planet.IPlanetData,System.Int32,System.Int32,System.Int32,System.Single,System.Single,System.Boolean)">
             <summary>
             Creates the equirectangular maps for the planet.
             </summary>
@@ -55420,6 +55459,22 @@
             </summary>
             <value>
             The description of the planet.
+            </value>
+        </member>
+        <member name="P:ModApi.Planet.PlanetDataScript.EquirectangularMapBrightness">
+            <summary>
+            Gets or sets the brightness to use when generating an equirectangular map for this planet.
+            </summary>
+            <value>
+            The brightness to use when generating an equirectangular map for this planet.
+            </value>
+        </member>
+        <member name="P:ModApi.Planet.PlanetDataScript.EquirectangularMapLight">
+            <summary>
+            Gets or sets the light intensity to use when generating an equirectangular map for this planet.
+            </summary>
+            <value>
+            The light intensity to use when generating an equirectangular map for this planet.
             </value>
         </member>
         <member name="P:ModApi.Planet.PlanetDataScript.EscapeVelocity">
@@ -58649,6 +58704,11 @@
             The type of the elevation.
             </summary>
         </member>
+        <member name="F:ModApi.Planet.StructureNodeData._gameViewLoadDistance">
+            <summary>
+            The load distance in game view in meters.
+            </summary>
+        </member>
         <member name="F:ModApi.Planet.StructureNodeData._heading">
             <summary>
             The heading in degrees.
@@ -58671,7 +58731,7 @@
         </member>
         <member name="F:ModApi.Planet.StructureNodeData._longitude">
             <summary>
-            The longitude.
+            The longitude
             </summary>
         </member>
         <member name="F:ModApi.Planet.StructureNodeData._name">
@@ -58732,6 +58792,14 @@
             The type of the elevation.
             </value>
         </member>
+        <member name="P:ModApi.Planet.StructureNodeData.GameViewLoadDistance">
+            <summary>
+            Gets or sets the game view load distance in meters.
+            </summary>
+            <value>
+            The game view load distance in meters.
+            </value>
+        </member>
         <member name="P:ModApi.Planet.StructureNodeData.Heading">
             <summary>
             Gets or sets the heading in degrees. If the Rotation property is set, then this property
@@ -58763,6 +58831,14 @@
             </summary>
             <value>
             The local scale.
+            </value>
+        </member>
+        <member name="P:ModApi.Planet.StructureNodeData.LodDistanceScalars">
+            <summary>
+            Gets or sets the lod distance scalars.
+            </summary>
+            <value>
+            The lod distance scalars.
             </value>
         </member>
         <member name="P:ModApi.Planet.StructureNodeData.Longitude">
@@ -59277,6 +59353,14 @@
             </summary>
             <value>
             The version.
+            </value>
+        </member>
+        <member name="P:ModApi.Planet.SubStructure.LevelOfDetail">
+            <summary>
+            Gets or sets the level of detail that this sub-structure should be loaded.
+            </summary>
+            <value>
+            The level of detail.
             </value>
         </member>
         <member name="M:ModApi.Planet.SubStructure.DeserializeSubStructures(System.Xml.Linq.XElement,ModApi.Planet.ISubStructureParent,System.Collections.Generic.List{ModApi.Planet.SubStructure})">

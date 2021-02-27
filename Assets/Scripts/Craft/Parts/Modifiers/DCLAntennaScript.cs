@@ -1,20 +1,25 @@
-namespace Assets.Scripts.Craft.Parts.Modifiers
-{
+namespace Assets.Scripts.Craft.Parts.Modifiers {
+    using System.Collections;
     using System;
     using Assets.Scripts.DroonComLinks.Interfaces;
     using ModApi.Craft.Parts;
     using ModApi.Ui.Inspector;
     using UnityEngine;
+    using static ModApi.Ui.Inspector.SliderModel;
+    using Assets.Scripts.DroonComLinks;
 
     public class DCLAntennaScript : PartModifierScript<DCLAntennaData> {
         public IDCLAntennaScript antennaScript {
             get {
-                if (_antennaScript == null) _antennaScript = PartScript.GetModifierWithInterface<IDCLAntennaScript> ();
-                return _antennaScript;
+                try {
+                    if (_antennaScript == null) _antennaScript = PartScript.GetModifierWithInterface<IDCLAntennaScript> ();
+                    return _antennaScript;
+                } catch { return null; }
             }
         }
         public IDCLAntennaData antennaData {
             get {
+                if (antennaScript == null) return null;
                 if (_antennaData == null) _antennaData = _antennaScript.data;
                 return _antennaData;
             }
@@ -25,23 +30,26 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         protected override void OnInitialized () {
             base.OnInitialized ();
+            StartCoroutine (InitialiseCoroutine ());
         }
 
-        public override void OnModifiersCreated () {
-            base.OnModifiersCreated ();
-            Debug.Log ("modifier initialized antenna script: " + antennaScript == null);
+        private IEnumerator InitialiseCoroutine () {
+            while (antennaScript == null) yield return 0;
             antennaScript.Initialize (Data, Data.size);
-            //Data.saveData ();
+
+            while (Data.manager == null) yield return 0;
+            Data.OnUpdateFields ();
         }
 
         public override void OnGenerateInspectorModel (PartInspectorModel model) {
-            model.Add (new TextModel ("Frequency", () => Data.frequency.ToString ("n2") + " GHz"));
-            model.Add (new TextModel ("Gain", () => antennaData.gain.ToString ("n0") + " nat"));
-            model.Add (new TextModel ("Gain", () => (10 * Math.Log10 (antennaData.gain)).ToString ("n0") + " dBi"));
-            model.Add (new TextModel ("Min Rx Power", () => Data.minReceivablePower.ToString ("n2") + " W"));
+            SliderModel frequencySlider = new SliderModel ("Frequency", () => Data.frequency, (float f) => Data.frequency = f, antennaData.type.minFrenquency, antennaData.type.maxFrenquency);
+            frequencySlider.ValueFormatter = ((float x) => $"{frequencySlider.Value} GHz");
+            frequencySlider.OnSliderAdjustmentEnded += delegate { Mod.Instance.ComLinksManager.ForceRefresh (); };
+            model.Add (frequencySlider);
+            model.Add (new TextModel ("Gain", () => (10 * Math.Log10 (antennaData.gain)).ToString ("n0") + " dB"));
+            model.Add (new TextModel ("Min Rx Power", () => (Data.minReceivablePower * Math.Pow (10, 20)).ToString ("n2") + "E-20 W"));
             model.Add (new TextModel ("Max Tx Power", () => Data.maxTransmittedPower.ToString ("n2") + "W"));
         }
-
         public override void OnActivated () {
             base.OnActivated ();
             Mod.Instance.ComLinksManager.GetNode (PartScript.CraftScript.CraftNode)?.antennas.Find (antenna => antenna.partId == PartScript.Data.Id)?.toggleAntenna (true);
@@ -55,7 +63,6 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         public void UpdateAntenna () {
             antennaScript.UpdateAntenna ();
-            //Data.saveData ();
         }
     }
 }

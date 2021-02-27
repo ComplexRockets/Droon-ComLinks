@@ -28,14 +28,13 @@
               <TextMeshPro class="name" text="Joey Sellers" />
               <TextMeshPro class="job" text="Design" />
             </Panel>
+          </VerticalLayout>
+          <VerticalLayout contentSizeFitter="vertical" childForceExpandWidth="false" childForceExpandHeight="false" rectAlignment="UpperCenter" childAlignment="UpperCenter" spacing="5" pivot="0.5 1">
+            <TextMeshPro text="CORE TEAM" class="credit-header" />
             <Panel class="credit">
               <TextMeshPro class="name" text="Pedro Carro" />
               <TextMeshPro class="job" text="Design &amp; QA" />
             </Panel>
-          </VerticalLayout>
-          <VerticalLayout contentSizeFitter="vertical" childForceExpandWidth="false" childForceExpandHeight="false" rectAlignment="UpperCenter" childAlignment="UpperCenter" spacing="5" pivot="0.5 1">
-            <TextMeshPro text="CORE TEAM" class="credit-header" />
-            <TextMeshPro text="from left to right" color="LabelText" />
             <Panel class="credit">
               <TextMeshPro class="name" text="Nicky Pike" />
               <TextMeshPro class="job" text="Code" />

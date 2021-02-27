@@ -1,5 +1,4 @@
-namespace Assets.Scripts
-{
+namespace Assets.Scripts {
     using System.Collections.Generic;
     using Assets.Scripts.DroonComLinks;
     using Assets.Scripts.Ui.Flight;
@@ -8,12 +7,12 @@ namespace Assets.Scripts
 
     public class Mod : ModApi.Mods.GameMod {
         public ComLinksManager ComLinksManager;
-        private float _linesScaleFactor = 1f, _red = 0.30f, _green = 0.75f, _blue = 0.40f, _antennaDelay = 0f, _signalStrengthFactor = 1f, _radiusScale = 0.99f, _updatefrenquency = 0.02f, _gainConstant = 0.3f;
+        private float _linesScaleFactor = 1f, _red = 0.30f, _green = 0.75f, _blue = 0.40f, _antennaDelay = 0f, _signalStrengthFactor = 1f, _radiusScale = 0.995f, _updatefrenquency = 0.02f, _gainConstant = 0.3f;
         public float lineScale => _linesScaleFactor;
         public float gainConstant => _gainConstant * 100000;
         public Color defaultLineColor => new Color (_red, _green, _blue);
         public float radiusScale => _radiusScale;
-        public float updatefrenquency => _updatefrenquency;
+        public float updateFrequency => _updatefrenquency;
         public float signalStrengthFactor => _signalStrengthFactor;
         public float antennaDelay => _antennaDelay;
         private int _maxConnections = 0;
@@ -46,6 +45,7 @@ namespace Assets.Scripts
                 _antennaDelay = x;
             }, 0, 50);
             g.Add (delaySlider);
+            delaySlider.ValueFormatter = ((float x) => $"{delaySlider.Value:n2}s");
         }
 
         private void OnBuildMapViewInspectorPanel (BuildInspectorPanelRequest request) {
@@ -59,10 +59,10 @@ namespace Assets.Scripts
             TextButtonModel colorButton = new TextButtonModel ("Reset Colors", b => waveLengthColors.Clear ());
             g.Add (colorButton);
 
-            ToggleModel logaritmicButton = new ToggleModel ("Logaritmic", () => _logaritmicValues, delegate (bool x) {
-                _logaritmicValues = x;
-            });
-            g.Add (logaritmicButton);
+            // ToggleModel logaritmicButton = new ToggleModel ("Logaritmic", () => _logaritmicValues, delegate (bool x) {
+            //     _logaritmicValues = x;
+            // });
+            // g.Add (logaritmicButton);
 
             SliderModel lineWidthSlider = new SliderModel ("Lines Width", () => _linesScaleFactor, delegate (float x) {
                 _linesScaleFactor = x;
@@ -79,43 +79,50 @@ namespace Assets.Scripts
                 _red = x;
             });
             g.Add (redSlider);
+            redSlider.ValueFormatter = ((float x) => $"{redSlider.Value:n2}");
 
             SliderModel greenSlider = new SliderModel ("(Debug) Green", () => _green, delegate (float x) {
                 _green = x;
             });
             g.Add (greenSlider);
+            greenSlider.ValueFormatter = ((float x) => $"{greenSlider.Value:n2}");
 
             SliderModel blueSlider = new SliderModel ("(Debug) Blue", () => _blue, delegate (float x) {
                 _blue = x;
             });
             g.Add (blueSlider);
+            blueSlider.ValueFormatter = ((float x) => $"{blueSlider.Value:n2}");
 
             SliderModel maxConnectionsSlider = new SliderModel ("(Debug) Max Connections", () => _maxConnections, delegate (float x) {
                 _maxConnections = (int) x;
             }, 0, 10);
             g.Add (maxConnectionsSlider);
+            maxConnectionsSlider.ValueFormatter = ((float x) => $"{maxConnectionsSlider.Value:n2}");
 
             SliderModel rangeSlider = new SliderModel ("(Debug) Range Factor", () => _signalStrengthFactor, delegate (float x) {
                 _signalStrengthFactor = (float) x;
             }, 0, 10);
             g.Add (rangeSlider);
 
-            SliderModel updatefrenquencySlider = new SliderModel ("(Debug) Update Frenquecy", () => _updatefrenquency, delegate (float x) {
+            SliderModel updatefrenquencySlider = new SliderModel ("(Debug) Update Period", () => _updatefrenquency, delegate (float x) {
                 _updatefrenquency = (float) x;
             }, 0, 1);
             g.Add (updatefrenquencySlider);
+            updatefrenquencySlider.ValueFormatter = ((float x) => $"{updatefrenquencySlider.Value:n2}s");
 
             SliderModel gainConstantSlider = new SliderModel ("(Debug) Gain Constant", () => _gainConstant, delegate (float x) {
                 _gainConstant = (float) x;
             }, 0, 2);
             g.Add (gainConstantSlider);
+            gainConstantSlider.ValueFormatter = ((float x) => $"{gainConstantSlider.Value:n2}");
 
             SliderModel radiusScaleSlider = new SliderModel ("(Debug) Radius scale", () => _radiusScale, delegate (float x) {
                 _radiusScale = (float) x;
             }, 0.5f, 1);
             g.Add (radiusScaleSlider);
+            radiusScaleSlider.ValueFormatter = ((float x) => $"{(radiusScaleSlider.Value*100):n2}%");
 
-            drawModeDropdown.ValueChangedByUserInput += delegate { ComLinksManager.ForceRefresh (); };
+            drawModeDropdown.ValueChangedByUserInput += delegate {  ComLinksManager.ForceRefresh (); };
             maxConnectionsSlider.OnSliderAdjustmentEnded += delegate { ComLinksManager.ForceRefresh (); };
             rangeSlider.OnSliderAdjustmentEnded += delegate { ComLinksManager.ForceRefresh (); };
             updatefrenquencySlider.OnSliderAdjustmentEnded += delegate { ComLinksManager.ForceRefresh (); };
