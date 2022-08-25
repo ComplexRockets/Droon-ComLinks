@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1366777262, guid: c37b925f2b4978342b2e0b83a8fa404a, type: 3}
+  m_Name: ModData
+  m_EditorClassIdentifier: 
+  _assemblies:
+  - 0Harmony.dll
+  - Droon Comlinks.dll
+  _author: Aram
+  _description: 'DCL adds a whole new gameplay experience by adding communication
+    to SimpleRockets 2.
+
+    More info on the mod''s web page https://www.simplerockets.com/Mods/View/114248/Droon-ComLinks'
+  _loadPriority: 1000
+  _name: Droon Comlinks
+  _otherAssets:
+  - {fileID: 2100000, guid: 8ccf1ff8930b844409171a0481bc7819, type: 2}
+  - {fileID: 2800000, guid: 23efe550ce1e641fb8dabc4c6055530d, type: 3}
+  _prefabs:
+  - {fileID: 9144705692310912206, guid: 3763c2229d62f4bcf96b87408e3d92a2, type: 3}
+  - {fileID: 8555157069980614380, guid: fcd9e27b0af804343992d8c887f45a74, type: 3}
+  - {fileID: 526705831781635670, guid: d7ca7d8b42b854f3ca84df7fa01bab6e, type: 3}
+  - {fileID: 8976453463338096861, guid: c513a1fbdc9c646eb9a46a643ad4e3a5, type: 3}
+  - {fileID: 9106000074157556813, guid: 295fff0508e3a4c2f96eb701d66f2b0c, type: 3}
+  - {fileID: 8864932458801327456, guid: cfab3d92903824bcdb2fbb037e84baac, type: 3}
+  - {fileID: 1384079547464141543, guid: d842043c92adb4aaba333d3d2b4e25bd, type: 3}
+  - {fileID: 6777830611588333843, guid: 0e3ceb3310de84c018948528c61a2c2c, type: 3}
+  - {fileID: 4767836966991344864, guid: 09e5d9ed6acab4531aaa784c9c90c0f4, type: 3}
+  - {fileID: 2951338742814241491, guid: 057a2c1a756134a118e6401ccd04652a, type: 3}
+  - {fileID: 5163700443137055711, guid: 5a64c77b0d69a4498bd26cfbf9f2dc29, type: 3}
+  - {fileID: 7056679550213296106, guid: 4305f0bead6fc43e4b1a325eec2e87a0, type: 3}
+  - {fileID: 3992600919861206369, guid: 891168f5e95ca4e1baffa51ae769db2f, type: 3}
+  - {fileID: 5475505657188212959, guid: e3e1a1929553c41ea8225751a3cd5e53, type: 3}
+  - {fileID: 4041940529024696411, guid: 3af7c521b6597419a9f1512b29fb708c, type: 3}
+  - {fileID: 7046471993914268560, guid: 59ee9109b4beb44aa84e7f0d3884a54c, type: 3}
+  - {fileID: 9170350809104154170, guid: cf295200a88e44741b0d8f740be842e0, type: 3}
+  - {fileID: 3424636495409622759, guid: 1e4739c65720645768cd97c87e4da830, type: 3}
+  - {fileID: 1646478781082898352, guid: 3660f23e417114a95a3d115051be2093, type: 3}
+  _steamDescription: 
+  _steamLanguage: English
+  _steamPreviewPath: 
+  _steamTags: 
+  _steamTitle: 
+  _steamVisibility: 0
+  _versionMajor: 0
+  _versionMinor: 2
+  _partCategories:
+  - {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
+  _parts:
+  - {fileID: 4900000, guid: 0ff5fc6b365d54fc28216a688bac50fe, type: 3}
+  - {fileID: 4900000, guid: a4fada1cd0e0d4136948bd0b99686fbb, type: 3}
+  - {fileID: 4900000, guid: cdaaf18a94a58403eaf9d964a1fba849, type: 3}
+  - {fileID: 4900000, guid: d49788bd37f404c6e81833451b291e7f, type: 3}
+  _partStyleExtensions: []
+  _partTextureStyles: []
+  _persistentObjects:
+  - {fileID: 7304565558708299780, guid: 0a0e6b0c1fdd64092881142c8415bb24, type: 3}
+  _uiResourceDatabases:
+  - {fileID: 11400000, guid: 9ee8db32d8ea443b294b30220300bf86, type: 2}

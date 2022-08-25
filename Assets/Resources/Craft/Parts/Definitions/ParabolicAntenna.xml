@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Part name="Parabolic Antenna">
+  <PartType id="ParabolicAntenna" includeInBodyDrag="true" name="Parabolic Antenna" prefabPath="Assets/Resources/Craft/Parts/Prefabs/ParabolicAntenna.prefab" mass="0" price="0" partCollisions="Default" defaultMaterials="0,1,2,3,4" subpartsSharePartStyle="false" stylesShareHeader="false">
+    <Modifiers>
+      <Config autoActivateIfNoStageOrActivationGroup="true" buoyancyBaseScale="1" buoyancyUserScale="1" castShadows="true" centerOfMass="0,0,0" collisionDisconnectImpulse="1000" collisionDisconnectVelocity="15" collisionExplodeImpulse="2000" collisionExplodeVelocity="30" collisionPreventExternalDisconnections="false" collisionVelocityMode="NormalOnly" dragScale="1" dragScaleActive="1" explosiveness="0" fuelLine="false" heatShield="0" heatShieldBaseScale="1" heatShieldMass="0" heatShieldScale="-1" includeInDrag="true" inertiaTensorBaseScale="1" inertiaTensorMin="0.05" inertiaTensorUserScale="1" massScale="1" maxDamage="100" maxDrag="0" maxDragActive="0" maxTemperature="1500" occlusion="Auto" partCollisionHandling="Default" partCollisionResponse="Default" partScale="1,1,1" preventDebris="false" raiseWaterEventsEvenIfNotBuoyant="false" renderQueue="Default" stageActivationType="None" supportsActivation="true" supportsTransparency="true" thermalMassRatio="1" inspectorEnabled="true" partPropertiesEnabled="true" staticPriceAndMass="false" />
+      <DroonComLinks.ParabolicAntenna diameter="2" depth="0.25" thickness="0.05" supportArmCount="3" supportArmPos="0.8" doubleSupportArmOffset="0" supportArmDiameter="0.03" ridgeWidth="0.035" ridgeA="0.01" ridgeB="0.002" straightSide="false" bottomDepth="0" bottomOffset="0" bottomDiameter="0" upperElement="Basic" lowerElement="Basic" secondaryReflector="true" parabolaResolution="64" parabolaDivCount="8" ridgeDivCount="8" structureResolution="8" inspectorEnabled="true" partPropertiesEnabled="true" staticPriceAndMass="false" />
+      <DroonComLinks.DCLAntenna maxPower="0" size="1" frequency="10" fractionalBandWidth="0" efficiency="0.7" bitPerCycle="1" customAntenna="false" inspectorEnabled="true" partPropertiesEnabled="true" staticPriceAndMass="false" />
+    </Modifiers>
+    <AttachPoints>
+      <AttachPoint name="AttachPoint1" position="0,0,0" rotation="90,0,0" allowRotation="true" allowInvertedConnection="false" canReceive="true" canSeek="true" ignoreSurfaces="false" />
+    </AttachPoints>
+    <SubpartTypes>
+      <SubpartType index="0" xmlName="" displayName="Part" />
+    </SubpartTypes>
+  </PartType>
+  <DesignerParts>
+    <DesignerPart name="Parabolic Antenna" category="Droon  ComLinks" description="An antenna shaped like a parabola" order="0" showInDesigner="true" snapshotDistanceScaler="1" snapshotRotation="30,30,0">
+      <Assembly>
+        <Parts>
+          <Part id="1" partType="ParabolicAntenna" position="0,0,0" rotation="0,0,0">
+            <Config />
+            <DroonComLinks.ParabolicAntenna />
+            <DroonComLinks.DCLAntenna />
+          </Part>
+        </Parts>
+      </Assembly>
+    </DesignerPart>
+  </DesignerParts>
+  <PartStyles>
+    <SubpartStyles subpartIndex="0">
+      <Style id="Default" displayName="Parabola">
+        <TextureStyles>
+          <TextureStyle id="Default" />
+          <TextureStyle id="Fuselage3" />
+          <TextureStyle id="Fuselage5" />
+          <TextureStyle id="Fuselage10" />
+        </TextureStyles>
+      </Style>
+    </SubpartStyles>
+  </PartStyles>
+</Part>

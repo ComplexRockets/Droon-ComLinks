@@ -1,0 +1,69 @@
+<XmlLayout xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\..\ModTools\UI\XmlLayout.xsd">
+    <Include path="Ui/Xml/Design/DesignStyles.xml" />
+    <Include path="Ui/Xml/InspectorPanel.xml" />
+
+    <Defaults>
+        <TextMeshPro class="label" raycastTarget="true" tooltipPosition="Above" width="225" alignment="Left" rectAlignment="MiddleLeft" />
+        <VerticalLayout class="property-row" tooltipPosition="Right" tooltipBackgroundColor="DarkPanel" />
+        <Panel class="property-row" tooltipPosition="Right" tooltipBackgroundColor="DarkPanel" />
+
+        <TextMeshPro class="input-field-label" width="75%" />
+        <TextMeshProInputField class="input-field" width="25%" height="100%" rectAlignment="MiddleRight" contentType="DecimalNumber" />
+    </Defaults>
+
+    <VerticalLayout class="panel border dialog-panel draggable" width="300" height="180" childAlignment="UpperCenter" childForceExpandHeight="false" rectAlignment="MiddleRight">
+        <!-- Header -->
+        <Panel class="inspector-header" preferredHeight="30" color="border">
+            <TextMeshPro class="text-lg" color="Primary" text="Antenna Generator" />
+            <Image class="btn flyout-close-button" rectAlignment="MiddleRight" color="labeltext" onClick="Close();" />
+        </Panel>
+
+        <!-- Main Panel -->
+        <VerticalLayout class="panel border dialog-panel" preferredHeight="150" childAlignment="UpperCenter" childForceExpandHeight="false" padding="10" spacing="5">
+            <!-- Slected Part Text -->
+            <Panel class="property-row row ">
+                <TextMeshPro class="label" text="Selected Part" />
+                <TextMeshPro id="selected-part-text" class="value" text="none" alignment="Right" />
+            </Panel>
+
+            <!-- Type Selector -->
+            <Panel class="property-row row " preferredHeight="30" navigation="None">
+                <TextMeshPro class="label" text="Antenna Type" width="35%" />
+                <Panel rectAlignment="MiddleRight" width="50%">
+                    <TextMeshProDropdown id="antenna-types-dropdown" width="100%" height="100%">
+                        <TMP_OptionTextTemplate enableWordWrapping="false" overflowMode="ScrollRect" />
+                        <TMP_DropdownLabel enableWordWrapping="false" overflowMode="ScrollRect" text="Parabolic" />
+                    </TextMeshProDropdown>
+                </Panel>
+            </Panel>
+
+            <Panel class="inspector-panel-row tooltip-row no-image" preferredHeight="10">
+                <Image height="1" color="#2E353E" />
+            </Panel>
+
+            <VerticalLayout preferredHeight="30" childAlignment="UpperCenter" childForceExpandHeight="false" spacing="5">
+                <!-- Input Field Template -->
+                <Panel id="input-field-template" class="property-row row fix" active="false">
+                    <TextMeshPro class="label input-field-label" text="Size" />
+                    <TextMeshProInputField class="input-field">
+                        <TMP_Text richText="false" alignment="Right" />
+                    </TextMeshProInputField>
+                </Panel>
+            </VerticalLayout>
+
+            <Panel class="inspector-panel-row tooltip-row no-image " preferredHeight="10">
+                <Image height="1" color="#2E353E" />
+            </Panel>
+
+            <!-- Info Text-->
+            <TextMeshPro class="label " text="Select a part and click 'generate', the part will then act as an antenna" />
+            <TextMeshPro class="label " text="After generating the antenna, the data will be saved in the part's name." />
+            <TextMeshPro class="label " text="Do not edit the name manually" />
+
+            <!-- Generate Button -->
+            <Button class="btn menu-button" id="export_button" rectAlignment="BottomCenter" onClick="OnGenerateAntenna();" colors="Primary|PrimaryHover|PrimaryHover|PrimaryHover">
+                <TextMeshPro text="Generate" alignment="Center" color="White" />
+            </Button>
+        </VerticalLayout>
+    </VerticalLayout>
+</XmlLayout>

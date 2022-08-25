@@ -1,0 +1,322 @@
+<XmlLayout xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\ModTools\UI\XmlLayout.xsd">
+    <Include path="Ui/Xml/Flight/FlightStyles.xml" />
+    <Include path="Ui/Xml/InspectorPanel.xml" />
+
+    <Defaults>
+        <Color name="DCLPanel" color="#2e353eE0" />
+        <Color name="FaintGreen" color="#4bad4b10" />
+        <Color name="FaintOrange" color="#f2932e10" />
+
+        <Image class="dcl-button" width="25" height="25" rectAlignment="MiddleRight" hoverClass="inspector-panel-pin-hover" />
+
+        <Panel class="panel-1angled" sprite="Droon ComLinks/Sprites/AngledRect" />
+    </Defaults>
+
+    <RectTransform class="safe-area">
+        <!--Status Icons-->
+        <Panel id="status-icons-panel" class="flight-panel" width="80" height="39.5" rectAlignment="UpperRight" offsetXY="-279.5 0" onClick="OnToggleReducedStatus();" tooltip="Open DCL Status Panel" tooltipPosition="Left" active="true">
+            <!--<Panel class="no-image" width="30" height="35" rectAlignment="CenterLeft" offsetXY="-20 2">
+                <Image id="2Connection3" color="FaintGreen" sprite="Droon ComLinks/Sprites/NetworkD" width="4" height="17" rectAlignment="LowerLeft" offsetXY="12 0" />
+                <Image id="2Connection2" color="SuccessHover" sprite="Droon ComLinks/Sprites/NetworkC" width="4" height="13" rectAlignment="LowerLeft" offsetXY="8 0" />
+                <Image id="2Connection1" color="SuccessHover" sprite="Droon ComLinks/Sprites/NetworkB" width="4" height="9" rectAlignment="LowerLeft" offsetXY="4 0" />
+                <Image id="2Connection0" color="SuccessHover" sprite="Droon ComLinks/Sprites/NetworkA" width="4" height="5" rectAlignment="LowerLeft" offsetXY="0 0" />
+            </Panel>-->
+            <Image id="Connection" width="28" height="28" offsetXY="-15 0" sprite="Droon ComLinks/Sprites/Connection" color="DangerHover" />
+            <Image id="Drood" width="30" height="30" offsetXY="25 0" sprite="Droon ComLinks/Sprites/Drood" color="DangerHover" />
+            <!-- <Image id="DroodCross" width="27" height="27" offsetXY="20 0" sprite="Droon ComLinks/Sprites/Crossed" color="DangerHover" active="false" /> -->
+        </Panel>
+
+        <!-- Reduced Network Status-->
+        <Panel id="reduced-status-panel" rectAlignment="UpperLeft" showAnimation="SlideIn_Left" hideAnimation="SlideOut_Left" animationDuration="0.35" active="false">
+            <!--Side Panel-->
+            <Panel class="flight-panel panel-1angled" width="50" height="450" rectAlignment="MiddleLeft" color="DCLPanel" offsetXY="699 300" border="DCLPanel" borderSprite="Droon ComLinks/Sprites/AngledRectBorder">
+                <Image sprite="Droon ComLinks/Sprites/DCLLogoBlured" rectAlignment="UpperCenter" offset="0 10" width="43" height="43" color="Primary" />
+
+                <Panel width="50" height="295" rectAlignment="UpperLeft" offsetXY="0 -70">
+                    <VerticalLayout class="no-image" padding="0" spacing="4" width="40" height="150" offsetXY="5 -10" rectAlignment="UpperLeft">
+                        <Image id="1Connection9" color="FaintGreen" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection8" color="FaintGreen" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection7" color="SuccessHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection6" color="SuccessHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection5" color="SuccessHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection4" color="SuccessHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection3" color="WarningHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection2" color="WarningHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection1" color="WarningHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                        <Image id="1Connection0" color="DangerHover" sprite="Droon ComLinks/Sprites/RoundedRect" />
+                    </VerticalLayout>
+
+                    <TextMeshPro text="Delay :" fontstyle="Bold" color="Primary" fontSize="11" rectAlignment="LowerLeft" alignment="Left" offsetXY="5 -22" />
+                    <TextMeshPro id="delaytext" text="10 min" color="ValueText" fontSize="10" rectAlignment="LowerLeft" alignment="Left" offsetXY="5 -33" />
+
+                    <Image id="PanelConnection" width="45" height="45" offsetXY="0 60" rectAlignment="LowerCenter" sprite="Droon ComLinks/Sprites/ConnectionBlured" color="DangerHover" />
+                    <Image id="PanelConnectionCross" width="45" height="45" offsetXY="0 60" rectAlignment="LowerCenter" sprite="Droon ComLinks/Sprites/CrossedBlured" color="DangerHover" active="false" />
+                    <Image id="PanelDrood" width="36" height="36" offsetXY="0 14" rectAlignment="LowerCenter" sprite="Droon ComLinks/Sprites/DroodBlured" color="DangerHover" />
+                    <Image id="PanelDroodCross" width="45" height="45" offsetXY="0 8" rectAlignment="LowerCenter" sprite="Droon ComLinks/Sprites/CrossedBlured" color="DangerHover" active="false" />
+                </Panel>
+            </Panel>
+
+            <!--Main Panel-->
+            <Panel class="flight-panel" width="700" height="450" rectAlignment="MiddleLeft" offsetXY="0 300" border="DCLPanel">
+                <VerticalLayout class="no-image" childForceExpandHeight="false">
+                    <VerticalLayout childForceExpandHeight="false" flexibleHeight="1">
+                        <!--Header-->
+                        <Panel preferredHeight="30" color="DCLPanel">
+                            <TextMeshPro text="Droon ComLinks Status Panel" color="Primary" fontStyle="UpperCase" alignment="Center" />
+                        </Panel>
+
+                        <!--Info Panel-->
+                        <Panel flexibleHeight="1">
+                            <HorizontalLayout class="no-image" spacing="10" padding="10">
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Droon Control" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Remote Control" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Connection Status" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="value text-sm" alignment="right" color="DangerHover" text="no" />
+                                    <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="yes" />
+                                    <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="good" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" />
+                                <VerticalLayout class="no-image" />
+                                <VerticalLayout class="no-image" />
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Crafts in Range" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Relays In Use" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Antennas on craft" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                </VerticalLayout>
+
+                            </HorizontalLayout>
+                        </Panel>
+                    </VerticalLayout>
+
+                    <VerticalLayout childForceExpandHeight="false" flexibleHeight="1">
+                        <!--List Header-->
+                        <Panel color="DCLPanel" preferredHeight="25">
+                            <HorizontalLayout class="no-image" padding="5">
+                                <TextMeshPro class="label" text="Crafts In Range" fontStyle="Bold,UpperCase" fontSize="16" alignment="Center" />
+                                <TextMeshPro class="label" text="Craft's Antennas" fontStyle="Bold,UpperCase" fontSize="16" alignment="Center" />
+                            </HorizontalLayout>
+                        </Panel>
+                        <!--List-->
+                        <Panel flexibleHeight="1">
+                            <HorizontalLayout class="no-image" padding="5">
+                                <VerticalScrollView class="no-image">
+                                    <VerticalLayout id="inrange-list" class="no-image" contentSizeFitter="vertical" spacing="5"></VerticalLayout>
+                                </VerticalScrollView>
+
+                                <VerticalScrollView class="no-image">
+                                    <VerticalLayout id="antennas-list" class="no-image" contentSizeFitter="vertical" spacing="5"></VerticalLayout>
+                                </VerticalScrollView>
+                            </HorizontalLayout>
+                        </Panel>
+                    </VerticalLayout>
+
+                    <VerticalLayout childForceExpandHeight="false" flexibleHeight="1">
+                        <!--More Info Header-->
+                        <Panel color="DCLPanel" preferredHeight="25">
+                            <TextMeshPro class="label" text="Information" fontStyle="Bold,UpperCase" fontSize="16" />
+                        </Panel>
+                        <!--More Info Panel-->
+                        <Panel flexibleHeight="1">
+                            <HorizontalLayout class="no-image" spacing="10" padding="10">
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Droon Control" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Remote Control" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Connection Status" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="value text-sm" alignment="right" color="DangerHover" text="no" />
+                                    <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="yes" />
+                                    <TextMeshPro class="value text-sm" alignment="right" color="SuccessHover" text="good" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" />
+                                <VerticalLayout class="no-image" />
+                                <VerticalLayout class="no-image" />
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Crafts in Range" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Relays In Use" />
+                                    <TextMeshPro class="label text-sm" alignment="left" text="Antennas on craft" />
+                                </VerticalLayout>
+
+                                <VerticalLayout class="no-image" spacing="5">
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                    <TextMeshPro class="value text-sm" alignment="right" text="num" />
+                                </VerticalLayout>
+                            </HorizontalLayout>
+                            <Panel rectAlignment="UpperLeft" color="FlightPanel" active="true">
+                                <TextMeshPro text="No Item Selected" fontSize="15" fontStyle="Bold" />
+                            </Panel>
+                        </Panel>
+                    </VerticalLayout>
+
+                    <!--Button Panel-->
+                    <Panel preferredHeight="75">
+                        <VerticalLayout class="no-image" padding="7" spacing="10">
+                            <HorizontalLayout class="no-image" spacing="5">
+                                <Button class="btn menu-button" onClick="">
+                                    <TextMeshPro text="Mod On/Off" color="White" />
+                                </Button>
+                                <Button class="btn menu-button" onClick="OnToggleStatus();">
+                                    <TextMeshPro text="Debug" color="White" />
+                                </Button>
+                                <Button class="btn menu-button" onClick="">
+                                    <TextMeshPro text="Button" color="White" />
+                                </Button>
+                            </HorizontalLayout>
+                            <HorizontalLayout class="no-image" spacing="5">
+                                <Button class="btn menu-button" onClick="">
+                                    <TextMeshPro text="Button" color="White" />
+                                </Button>
+                                <Button class="btn menu-button" onClick="">
+                                    <TextMeshPro text="Button" color="White" />
+                                </Button>
+                                <Button class="btn menu-button" onClick="">
+                                    <TextMeshPro text="Button" color="White" />
+                                </Button>
+                            </HorizontalLayout>
+                        </VerticalLayout>
+                    </Panel>
+                </VerticalLayout>
+            </Panel>
+        </Panel>
+
+        <!-- DCL Status Panel-->
+        <Panel id="status-panel" class="flight-panel draggable" width="40%" height="50%" rectAlignment="LowerRight" offsetXY="-70 70" border="border" active="false">
+            <VerticalLayout class="no-image" flexibleHeight="1" childForceExpandHeight="false">
+                <!--Header-->
+                <Panel class="inspector-header" preferredHeight="30">
+                    <TextMeshPro text="DCL Network Status [This Panel is a work in progress, its pretty buggy]" color="Primary" fontStyle="UpperCase" alignment="Center" />
+                    <Image class="audio-btn-click inspector-panel-pin dcl-button" sprite="Ui/Sprites/Common/IconCloseFlyout" onClick="OnToggleStatus" />
+                </Panel>
+
+                <!--Global Info Panel-->
+                <!--4X4 Table-->
+                <Panel preferredHeight="100" flexibleHeight="0" border="border">
+                    <HorizontalLayout class="no-image" childForceExpandWidth="false" padding="5" spacing="5">
+                        <VerticalLayout id="globalinfo-table:0" class="no-image" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+
+                        <Panel preferredWidth="2" border="border" />
+
+                        <VerticalLayout id="globalinfo-table:1" class="no-image" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+
+                        <Panel preferredWidth="2" border="border" />
+
+                        <VerticalLayout id="globalinfo-table:2" class="no-image" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+
+                        <Panel preferredWidth="2" border="border" />
+
+                        <VerticalLayout id="globalinfo-table:3" class="no-image" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+                    </HorizontalLayout>
+                </Panel>
+
+                <HorizontalLayout childForceExpandWidth="false" flexibleHeight="1">
+                    <!--Node Selector-->
+                    <Panel border="border" preferredWidth="200">
+                        <VerticalLayout class="no-image" childForceExpandHeight="false">
+                            <HorizontalLayout preferredHeight="30" flexibleHeight="0" padding="5" childForceExpandWidth="false">
+                                <TextMeshPro class="text-sm" text="Nodes" fontStyle="UpperCase" alignment="Left" margin="0 5" flexibleWidth="1" />
+                                <Button class="btn menu-button" onClick="OnFilter(Nodes);" preferredWidth="75">
+                                    <TextMeshPro class="value text-sm" text="Filter" alignment="Center" color="LabelText" />
+                                </Button>
+                            </HorizontalLayout>
+
+                            <VerticalScrollView class="no-image" flexibleHeight="1">
+                                <VerticalLayout id="network-nodes-list" class="no-image" contentSizeFitter="vertical" padding="5" spacing="5"></VerticalLayout>
+                            </VerticalScrollView>
+                        </VerticalLayout>
+                    </Panel>
+
+                    <!--Connection Selector-->
+                    <Panel border="border" preferredWidth="200">
+                        <VerticalLayout class="no-image" border="border" preferredWidth="200" childForceExpandHeight="false">
+                            <HorizontalLayout preferredHeight="30" flexibleHeight="0" padding="5" childForceExpandWidth="false">
+                                <TextMeshPro class="text-sm" text="Connections" fontStyle="UpperCase" alignment="Left" margin="0 5" flexibleWidth="1" />
+                                <Button class="btn menu-button" onClick="OnFilter(Connections);" preferredWidth="75">
+                                    <TextMeshPro class="value text-sm" text="Filter" alignment="Center" color="LabelText" />
+                                </Button>
+                            </HorizontalLayout>
+
+                            <VerticalScrollView class="no-image" flexibleHeight="1">
+                                <VerticalLayout id="network-connections-list" class="no-image" contentSizeFitter="vertical" padding="5" spacing="5"></VerticalLayout>
+                            </VerticalScrollView>
+                        </VerticalLayout>
+                    </Panel>
+
+                    <!--Info Panel-->
+                    <Panel border="border" flexibleWidth="1" flexibleHeight="1">
+                        <VerticalLayout class="no-image" flexibleHeight="1" childForceExpandHeight="false">
+                            <!--Header-->
+                            <Panel preferredHeight="35">
+                                <TextMeshPro class="text-sm" text="Information" fontStyle="UpperCase" margin="5" />
+                                <Image class="audio-btn-click inspector-panel-pin dcl-button" sprite="Ui/Sprites/Design/IconSpinnerArrowRight" onClick="OnChangeInfo(1);" active="true" />
+                                <Image class="audio-btn-click inspector-panel-pin dcl-button " sprite="Ui/Sprites/Design/IconSpinnerArrowLeft" offsetXY="-35 0" onClick="OnChangeInfo(-1);" />
+                            </Panel>
+
+                            <TextMeshPro id="info-sub-header" class="text-sm" text="The object you are trying to get info from doesn't exist anymore" color="LabelText" />
+
+                            <!--2Xinf Table-->
+                            <HorizontalLayout class="no-image" childForceExpandWidth="false" flexibleHeight="1" spacing="10">
+                                <VerticalScrollView class="no-image" flexibleHeight="1" flexibleWidth="1">
+                                    <VerticalLayout id="info-table:0" class="no-image" padding="5" spacing="5" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+                                </VerticalScrollView>
+
+                                <VerticalScrollView class="no-image" flexibleHeight="1" flexibleWidth="1">
+                                    <VerticalLayout id="info-table:1" class="no-image" padding="5" spacing="5" flexibleWidth="1" childForceExpandHeight="false"></VerticalLayout>
+                                </VerticalScrollView>
+                            </HorizontalLayout>
+                        </VerticalLayout>
+                    </Panel>
+                </HorizontalLayout>
+            </VerticalLayout>
+        </Panel>
+    </RectTransform>
+
+    <!--Templates-->
+    <Panel id="textvalue-list-item" preferredHeight="35" active="false">
+        <TextMeshPro internalId="label" class="label column-left" />
+        <TextMeshPro internalId="value" class="label column-right" />
+    </Panel>
+
+    <Button id="button-list-item" class="btn menu-button" preferredHeight="35" flexibleHeight="0" colors="Button|ButtonHover|ButtonHover|ButtonDisabled" active="false">
+        <TextMeshPro internalId="text" class="label text-sm" alignment="center" />
+    </Button>
+
+    <HorizontalLayout id="labelbutton-list-item" spacing="5" childForceExpandWidth="false" preferredHeight="35" flexibleHeight="0" active="false">
+        <TextMeshPro internalId="label" class="label column-left" />
+        <Button internalId="button" class="btn menu-button" flexibleWidth="1" colors="Button|ButtonHover|ButtonHover|ButtonDisabled">
+            <TextMeshPro internalId="value" class="label text-sm" alignment="center" />
+        </Button>
+    </HorizontalLayout>
+
+    <Panel id="dropdown-list-item" preferredHeight="35" navigation="None" active="false">
+        <TextMeshProDropdown internalId="dropdown" width="100%">
+            <TMP_OptionTextTemplate enableWordWrapping="false" overflowMode="ScrollRect" />
+            <TMP_DropdownLabel enableWordWrapping="false" overflowMode="ScrollRect" />
+        </TextMeshProDropdown>
+    </Panel>
+
+    <Panel id="label-dropdown-list-item" preferredHeight="35" navigation="None" active="false">
+        <TextMeshPro internalId="label" class="label column-left" />
+        <Panel class="column-right no-image">
+            <TextMeshProDropdown internalId="dropdown">
+                <TMP_OptionTextTemplate enableWordWrapping="false" overflowMode="ScrollRect" />
+                <TMP_DropdownLabel enableWordWrapping="false" overflowMode="ScrollRect" />
+            </TextMeshProDropdown>
+        </Panel>
+    </Panel>
+</XmlLayout>

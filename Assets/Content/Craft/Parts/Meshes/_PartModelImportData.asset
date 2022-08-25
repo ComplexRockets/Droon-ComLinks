@@ -1,0 +1,673 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2135884626, guid: c37b925f2b4978342b2e0b83a8fa404a, type: 3}
+  m_Name: _PartModelImportData
+  m_EditorClassIdentifier: 
+  _models:
+  - _id: Bottom
+    _meshes:
+    - _id: Sphere.003
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 3447038591770236762, guid: 0ff3498247a3544118d5b8230f688c3f, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: -927199367670048503, guid: 0ff3498247a3544118d5b8230f688c3f, type: 3}
+  - _id: CassiniAntennaDecimated
+    _meshes:
+    - _id: Body8
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5646418913876977197, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Body10
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4529524283109666172, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Body20
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2425885328825229046, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Body21
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -6443314645571437240, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Body26
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8640798940867185924, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
+    - _id: Body27
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -9026155364463262221, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
+    _model: {fileID: -927199367670048503, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+  - _id: Cubesat S-Band Antenna
+    _meshes:
+    - _id: Primary
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 1440805119435059495, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Trim1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5230616835874375908, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim21
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 5311703848790529931, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Trim22
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8446321372736730021, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Trim31
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 606256271108007086, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Trim32
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6103655485986205932, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Trim33
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6524174534790634046, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Trim34
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7220215946760863394, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    _model: {fileID: -927199367670048503, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+  - _id: Cylinder
+    _meshes:
+    - _id: Cylinder.001
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7387706064836869012, guid: a2ac3e241dabf43ae9295857e0540040, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: -927199367670048503, guid: a2ac3e241dabf43ae9295857e0540040, type: 3}
+  - _id: DipoleAntenna1
+    _meshes:
+    - _id: Cylinder
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2534964839176971238, guid: 474fc1b1ada4f41969bb41c1c3309ac5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: DipoleAntenna1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -178471074171951208, guid: 474fc1b1ada4f41969bb41c1c3309ac5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: 474fc1b1ada4f41969bb41c1c3309ac5, type: 3}
+  - _id: DoubleDipoleAntenna1
+    _meshes:
+    - _id: Cylinder.001
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7387706064836869012, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Cylinder.002
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 8691780276856062721, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: DoubleDipoleAntenna1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 3859604845735419590, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+  - _id: LowPolyCylinder
+    _meshes:
+    - _id: Cylinder
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2534964839176971238, guid: e68f53197e00542bb8aee0896d0e7268, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 2
+    _model: {fileID: -927199367670048503, guid: e68f53197e00542bb8aee0896d0e7268, type: 3}
+  - _id: LowPolySphere
+    _meshes:
+    - _id: Sphere
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4711208715938537054, guid: ac524eaab42964b84b26ade41e1e0f69, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 2
+    _model: {fileID: -927199367670048503, guid: ac524eaab42964b84b26ade41e1e0f69, type: 3}
+  - _id: Mobile LaserAntenna
+    _meshes:
+    - _id: Primary1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 3583862473919851754, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Primary2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8796708376038297712, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Primary3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4182579778746039484, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Trim11
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 943518090189540724, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim12
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -1307931947558602985, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim13
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -945593978242962699, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim14
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 7189775390134331234, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim15
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7404687883466274150, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim16
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 7786599114484539436, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim17
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -6269370193215814616, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim18
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -4996251738672175086, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim19
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4902308439008885043, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim21
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 5311703848790529931, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Trim22
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8446321372736730021, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Trim110
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7390889914436891193, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim111
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5242856339698189210, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim112
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 7196962531966370064, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim113
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8065571109082864756, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    _model: {fileID: -927199367670048503, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
+  - _id: Parabola
+    _meshes:
+    - _id: Sphere.002
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 212370497460711607, guid: 6344bc668cc1e416f88c013527b87d6e, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 1
+    _model: {fileID: -927199367670048503, guid: 6344bc668cc1e416f88c013527b87d6e, type: 3}
+  - _id: ReceiverDown1
+    _meshes:
+    - _id: ReceiverDown1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2066694567242048597, guid: 53cba1149b45a4484a115cf624765428, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    _model: {fileID: 919132149155446097, guid: 53cba1149b45a4484a115cf624765428, type: 3}
+  - _id: ReceiverDown2
+    _meshes:
+    - _id: ReceiverDown2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7394185778318395455, guid: 592a7d3e08842409e93ca232afcec264, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    - _id: ReceiverDown2.001
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -4116554953151242250, guid: 592a7d3e08842409e93ca232afcec264, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    - _id: ReceiverDown2.002
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 5225883379714064049, guid: 592a7d3e08842409e93ca232afcec264, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    _model: {fileID: -927199367670048503, guid: 592a7d3e08842409e93ca232afcec264, type: 3}
+  - _id: ReceiverDown3
+    _meshes:
+    - _id: default
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2432090755550338912, guid: 6962298725335460eb8b2d35e5b2da70, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    _model: {fileID: 919132149155446097, guid: 6962298725335460eb8b2d35e5b2da70, type: 3}
+  - _id: ReceiverUP1
+    _meshes:
+    - _id: BezierCurve
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 150581138598605843, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    - _id: BezierCurve.001
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 1825875415147931077, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    - _id: ReceiverUP1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2937698237522372156, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    _model: {fileID: -927199367670048503, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+  - _id: ReflectorUP1
+    _meshes:
+    - _id: ReflectorUP1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5956300242258502569, guid: 0bba3799438b847169a8be6cb51dc13a, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    _model: {fileID: -927199367670048503, guid: 0bba3799438b847169a8be6cb51dc13a, type: 3}
+  - _id: ReflectorUP2
+    _meshes:
+    - _id: Cube
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5495902117074765545, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 4
+    - _id: ReflectorUP2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6570371372631914681, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    _model: {fileID: -927199367670048503, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
+  - _id: ReflectorUP2.1
+    _meshes:
+    - _id: default
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2432090755550338912, guid: c32bf21e63ce545ba9bc20305108ce3c, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 4
+    _model: {fileID: 919132149155446097, guid: c32bf21e63ce545ba9bc20305108ce3c, type: 3}
+  - _id: SquareCap
+    _meshes:
+    - _id: SquareCap
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -392907211997994165, guid: 70c3683bb1d2448269d70fb0d23589fa, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 2
+    _model: {fileID: -927199367670048503, guid: 70c3683bb1d2448269d70fb0d23589fa, type: 3}
+  - _id: SquareCylinder
+    _meshes:
+    - _id: SquareCylinder
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7668195597379566492, guid: 27d92a605c80b49e88f17f8285f582fd, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 2
+    _model: {fileID: -927199367670048503, guid: 27d92a605c80b49e88f17f8285f582fd, type: 3}
+  - _id: WhipAntenna
+    _meshes:
+    - _id: LowPolyCylinder.001
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 3013040305430469837, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: LowPolyCylinder.002
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5730751078772334661, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: LowPolyCylinder.003
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2818516580691964712, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: LowPolyCylinder.004
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -4139488774588769155, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: LowPolyCylinder.005
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 139144404925750313, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: LowPolyCylinder.006
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -8071607939937647175, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: WipAntenna
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4190129258100037064, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+  - _id: WhipAntenna2
+    _meshes:
+    - _id: Hinge1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 123211937855103052, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
+    - _id: Hinge2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4759731074568979303, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
+    - _id: Hinge3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2923822569955819319, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
+    - _id: Segment1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5314792407481992355, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    - _id: Segment2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6114851100424566214, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Segment3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 195951801915581523, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Whip Antenna 2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -840199876072796960, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+  - _id: WhipAntenna3
+    _meshes:
+    - _id: Segment1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5314792407481992355, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Segment2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6114851100424566214, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Segment4
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -7502714479175172880, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
+      _subpartId: 0
+    - _id: WhipAntenna 3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2021709294001178597, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
