@@ -297,7 +297,7 @@ namespace Assets.Scripts.DroonComLinks
 
             UpdateConnections();
             CheckPlayerRemoteControl();
-            GetNodePathToGS(_player);
+            if (_player != null) GetNodePathToGS(_player);
         }
 
         private void UpdateNetwork()
@@ -756,7 +756,11 @@ namespace Assets.Scripts.DroonComLinks
 
             foreach (NetworkNode node in nodes)
             {
-                if (node == null) { if (ModSettings.Instance.debugMode) Debug.LogError("Update paths to GS error, node null"); continue; }
+                if (node == null)
+                {
+                    if (ModSettings.Instance.debugMode) Debug.LogError("Update paths to GS error, node null");
+                    continue;
+                }
                 if (node.isCraft)
                 {
                     List<NetworkNode> list = paths.Values.ToList().Find(l => l.Contains(node));
