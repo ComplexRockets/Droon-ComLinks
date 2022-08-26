@@ -277,10 +277,11 @@ namespace Assets.Scripts.DroonComLinks
                         requestFlightStateUpdate = true;
                     }
 
-                    if (requestFlightStateUpdate && _lastFlightStateUpdate + 2f < Time.time) FlightStateUpdate();
-                    if (_lastNetworkUpdate + updatePeriod < Time.time) UpdateNetwork();
-                    else LightNetworkUpdate();
+                    if (requestFlightStateUpdate && _lastFlightStateUpdate + 2f < Time.time) FlightStateUpdate(); //Mega update
+                    else if (_lastNetworkUpdate + updatePeriod < Time.time) UpdateNetwork(); //Medium update
+                    else LightNetworkUpdate(); //Light update
 
+                    //Things that need to be updated anyway
                     if (Game.Instance.FlightScene.ViewManager.MapViewManager.MapView.Visible) DrawNetwork();
                     DCLUIManager.Update();
                 }
@@ -573,6 +574,7 @@ namespace Assets.Scripts.DroonComLinks
             }
 
             NetworkNodesUpdated?.Invoke();
+            UpdateNetwork();
         }
 
         private void CreateAntennaModifers(CustomAntennaResult data, out XElement antennaModifer, out XElement typeModifer)
@@ -754,6 +756,7 @@ namespace Assets.Scripts.DroonComLinks
 
             foreach (NetworkNode node in nodes)
             {
+                if (node == null) { if (ModSettings.Instance.debugMode) Debug.LogError("Update paths to GS error, node null"); continue; }
                 if (node.isCraft)
                 {
                     List<NetworkNode> list = paths.Values.ToList().Find(l => l.Contains(node));

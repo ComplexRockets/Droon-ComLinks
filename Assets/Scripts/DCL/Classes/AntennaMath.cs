@@ -74,7 +74,7 @@ namespace Assets.Scripts.DroonComLinks
         {
             float price = 0;
             price += Mathf.Pow(antenna.size + 1, 4); // Size price
-            price += Mathf.Pow(antenna.efficiency + 1, 7); // Efficiency price
+            price += Mathf.Pow(antenna.efficiency + 1, 13); // Efficiency price
             price += Mathf.Pow(antenna.fractionalBandWidth + 1, 5); // Frequency price
             price += Mathf.Pow(antenna.maxTransmittedPower / antenna.Script.antennaData.type.maxPower + 1, 3); // Max tx power price
             return (int)(price);

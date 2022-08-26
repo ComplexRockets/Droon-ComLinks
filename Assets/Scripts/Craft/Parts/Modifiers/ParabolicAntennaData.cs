@@ -50,7 +50,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         private int doubleSupportArm => doubleSupportArmOffset > 0 ? 2 : 1;
 
         [SerializeField]
-        [DesignerPropertySlider(Label = "Diameter", Order = 1, MinValue = 0.1f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
+        [DesignerPropertySlider(Label = "Diameter", Order = 1, MinValue = 0.2f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
         private float _diameter = AntennaTypes.Defaults.parabolicDiameter;
         public float diameter => _diameter * size;
         public float radius => diameter / 2;
@@ -161,9 +161,10 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             d.OnAnyPropertyChanged(() =>
             {
-                SetSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, 0.01f, _diameter / 4);
+                SetSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, _diameter / 50, _diameter / 4);
                 SetSliderMinMax(d.GetSliderProperty(() => _bottomDiameter), ref _bottomDiameter, (_straightSide || bottomOffset > 0) ? Mathf.Max(_diameter / 2 - 10 * _bottomDepth, 0) : 0, _diameter);
                 SetSliderMinMax(d.GetSliderProperty(() => _bottomDepth), ref _bottomDepth, _thickness, 0.75f);
+
                 Script.antennaData?.Script.UpdateAntenna();
             });
 

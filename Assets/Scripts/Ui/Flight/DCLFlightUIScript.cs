@@ -75,7 +75,7 @@ namespace Assets.Scripts.Ui.Flight
                 UpdateTable(infoTable, displayed[infoTable] == null ? _comLinksManager.player : Displayed(infoTable));
                 UpdateTable(globalInfoTable, displayed[globalInfoTable]);
                 if (ModSettings.Instance.blockControls && !Mod.Instance.comLinksManager.playerHasControl)
-                    Game.Instance.FlightScene.FlightSceneUI.ShowMessage("<color=#b33e46FF><b><size=180%> CRAFT IS UNCONTROlLABLE");
+                    Game.Instance.FlightScene.FlightSceneUI.ShowMessage("<color=#b33e46FF><b><size=180%> CRAFT IS UNCONTROLLABLE");
             }
         }
 
