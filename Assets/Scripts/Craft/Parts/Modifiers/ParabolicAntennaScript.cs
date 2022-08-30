@@ -72,10 +72,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
                 }
 
                 PartScript.PartMaterialScript.UpdateTextureData();
-                if (Game.InDesignerScene)
-                {
-                    Symmetry.SynchronizePartModifiers(base.PartScript);
-                }
+                if (Game.InDesignerScene) Symmetry.SynchronizePartModifiers(base.PartScript);
             }
         }
     }

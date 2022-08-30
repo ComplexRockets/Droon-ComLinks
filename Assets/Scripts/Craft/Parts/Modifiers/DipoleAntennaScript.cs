@@ -1,13 +1,8 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Assets.Scripts.Design;
     using Assets.Scripts.DroonComLinks.Interfaces;
     using ModApi.Craft.Parts;
-    using ModApi.GameLoop.Interfaces;
     using UnityEngine;
 
     public class DipoleAntennaScript : PartModifierScript<DipoleAntennaData>, IDCLAntennaScript
@@ -46,9 +41,11 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
             _antennaObject = UnityEngine.Object.Instantiate(Mod.Instance.ResourceLoader.LoadAsset<GameObject>("Assets/Content/Craft/Parts/DipoleAntenna/Prefabs/" + Data.antennaType + "DipoleAntenna.prefab"));
             _antennaObject.transform.SetParent(transform, worldPositionStays: false);
-            _antennaObject.transform.localScale = new Vector3(Data.size * 0.3f, Data.size * 0.3f, Data.size * 0.3f);
-            _antennaObject.transform.Find("Segment1").localScale = new Vector3(1, Data.length, 1);
-            if (Data.antennaType == DipoleAntennaData.DipoleAntennaTypes.Double) _antennaObject.transform.Find("Segment2").localScale = new Vector3(Data.length, 1, 1);
+            _antennaObject.transform.localScale = new Vector3(Data.size, Data.size, Data.size);
+            float thicknessOffset = Data.thickness > 0.075f ? (Data.thickness - 0.075f) * 2 : 0;
+            _antennaObject.transform.Find("Base").localScale = new Vector3(0.2f + thicknessOffset, 0.2f + thicknessOffset, 0.2f + Data.thickness);
+            _antennaObject.transform.Find("Segment1").localScale = new Vector3(Data.thickness, Data.length + thicknessOffset, Data.thickness);
+            if (Data.antennaType == DipoleAntennaData.DipoleAntennaTypes.Double) _antennaObject.transform.Find("Segment2").localScale = new Vector3(Data.length + thicknessOffset, Data.thickness, Data.thickness);
 
             PartColliderScript[] componentsInChildren = PartScript.GameObject.GetComponentsInChildren<PartColliderScript>(includeInactive: true);
             foreach (PartColliderScript partColliderScript in componentsInChildren) partColliderScript.gameObject.layer = 31;

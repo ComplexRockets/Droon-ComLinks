@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 474fc1b1ada4f41969bb41c1c3309ac5
+guid: 23be0604ff04a4b7a8153efbb9218f91
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -97,9 +97,9 @@ ModelImporter:
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
-  userData: <PartModelData><PartMeshData id="Cylinder" submeshCount="1" isCollider="false"
-    subpartId="0" submeshMap="1" antiDistortion="false" /><PartMeshData id="DipoleAntenna1"
-    submeshCount="1" isCollider="false" subpartId="0" submeshMap="0" antiDistortion="false"
-    /></PartModelData>
+  userData: <PartModelData><PartMeshData id="FixedMonopoleAntenna1" submeshCount="1"
+    isCollider="false" subpartId="0" submeshMap="1" antiDistortion="false" /><PartMeshData
+    id="Segment1.002" submeshCount="1" isCollider="false" subpartId="0" submeshMap="0"
+    antiDistortion="false" /></PartModelData>
   assetBundleName: 
   assetBundleVariant: 

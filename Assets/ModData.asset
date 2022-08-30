@@ -31,7 +31,7 @@ MonoBehaviour:
   - {fileID: 526705831781635670, guid: d7ca7d8b42b854f3ca84df7fa01bab6e, type: 3}
   - {fileID: 8976453463338096861, guid: c513a1fbdc9c646eb9a46a643ad4e3a5, type: 3}
   - {fileID: 9106000074157556813, guid: 295fff0508e3a4c2f96eb701d66f2b0c, type: 3}
-  - {fileID: 8864932458801327456, guid: cfab3d92903824bcdb2fbb037e84baac, type: 3}
+  - {fileID: 6520087875603149865, guid: 6ab976e4d7b4d4dc9b692473d5b5ac4c, type: 3}
   - {fileID: 1384079547464141543, guid: d842043c92adb4aaba333d3d2b4e25bd, type: 3}
   - {fileID: 6777830611588333843, guid: 0e3ceb3310de84c018948528c61a2c2c, type: 3}
   - {fileID: 4767836966991344864, guid: 09e5d9ed6acab4531aaa784c9c90c0f4, type: 3}
@@ -42,7 +42,7 @@ MonoBehaviour:
   - {fileID: 5475505657188212959, guid: e3e1a1929553c41ea8225751a3cd5e53, type: 3}
   - {fileID: 4041940529024696411, guid: 3af7c521b6597419a9f1512b29fb708c, type: 3}
   - {fileID: 7046471993914268560, guid: 59ee9109b4beb44aa84e7f0d3884a54c, type: 3}
-  - {fileID: 9170350809104154170, guid: cf295200a88e44741b0d8f740be842e0, type: 3}
+  - {fileID: 8316980095376536345, guid: cf295200a88e44741b0d8f740be842e0, type: 3}
   - {fileID: 3424636495409622759, guid: 1e4739c65720645768cd97c87e4da830, type: 3}
   - {fileID: 1646478781082898352, guid: 3660f23e417114a95a3d115051be2093, type: 3}
   _steamDescription: 
@@ -52,7 +52,7 @@ MonoBehaviour:
   _steamTitle: 
   _steamVisibility: 0
   _versionMajor: 0
-  _versionMinor: 21
+  _versionMinor: 3
   _partCategories:
   - {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
   _parts:
@@ -64,5 +64,4 @@ MonoBehaviour:
   _partTextureStyles: []
   _persistentObjects:
   - {fileID: 7304565558708299780, guid: 0a0e6b0c1fdd64092881142c8415bb24, type: 3}
-  _uiResourceDatabases:
-  - {fileID: 11400000, guid: 9ee8db32d8ea443b294b30220300bf86, type: 2}
+  _uiResourceDatabases: []

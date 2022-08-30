@@ -3,6 +3,7 @@
 namespace Assets.Scripts
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using Assets.Packages.DevConsole;
     using Assets.Scripts.DroonComLinks;
     using Assets.Scripts.Ui;
@@ -116,6 +117,19 @@ namespace Assets.Scripts
                     // }
                     comLinksManager.BenchmarkNetwork();
                 });
+
+                DevConsoleApi.RegisterCommand("DCLDebug_GetPropertyValue", delegate (string propertyName)
+                {
+                    PropertyInfo property = comLinksManager.GetType().GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.GetProperty);
+                    if (property != null)
+                    {
+                        if (ModSettings.Instance.debugMode) Debug.Log(propertyName + " = " + property.GetValue(this).ToString());
+                    }
+                    else
+                    {
+                        if (ModSettings.Instance.debugMode) Debug.LogError("Property [" + propertyName + "] not found");
+                    }
+                });
                 commandRegistered = true;
             }
             else if (!ModSettings.Instance.debugMode && commandRegistered)
@@ -125,6 +139,7 @@ namespace Assets.Scripts
                 DevConsoleApi.UnregisterCommand("DCLDebug_SetSensitivity");
                 DevConsoleApi.UnregisterCommand("DCLDebug_SetPowerRatio");
                 DevConsoleApi.UnregisterCommand("DCLDebug_BenchmarkAntennas");
+                DevConsoleApi.UnregisterCommand("DCLDebug_GetPropertyValue");
                 commandRegistered = false;
             }
         }

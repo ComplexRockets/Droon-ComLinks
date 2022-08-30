@@ -25,10 +25,10 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         public IWhipAntenna whipAntenna { get; private set; }
         public IInputController inputController;
         public InputControllerScript inputControllerScript;
-        private string _lastAntennaType = "DFGSDGF";
-        private string _lastAntennaStyle = "DFGDSFG";
+        private WhipAntennaTypes _lastAntennaType = WhipAntennaTypes.None;
+        private WhipAntennaStyles _lastAntennaStyle = WhipAntennaStyles.None;
         private string _deployableString = WhipAntennaTypes.Deployable.ToString();
-        public bool deployable => Data.antennaType == _deployableString;
+        public bool deployable => true; //Data.antennaType == _deployableString;
         private bool _positionInitialized = false;
 
         protected override void OnInitialized()
@@ -54,29 +54,30 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         public void UpdateAntenna()
         {
-            if (_lastAntennaType != Data.antennaType || _lastAntennaStyle != Data.antennaStyle)
+            if ((_lastAntennaType != Data.antennaType) || (_lastAntennaStyle != Data.antennaStyle))
             {
+                //List<IRendererMaterialMap> maps = new List<IRendererMaterialMap>(PartScript.PartMaterialScript.RendererMaps);
+                //foreach (IRendererMaterialMap r in maps) PartScript.PartMaterialScript.RemoveRenderer(r.Renderer);
                 if (whipAntenna != null) whipAntenna.Destroy();
 
-                switch (Enum.Parse(typeof(WhipAntennaTypes), Data.antennaType))
+                switch (Data.antennaType)
                 {
                     case WhipAntennaTypes.Deployable:
-                        whipAntenna = new LargeDeployableWhipAntenna();
+                        whipAntenna = new DeployableWhipAntenna();
                         inputControllerScript.enabled = true;
                         inputControllerScript.Data.PartPropertiesEnabled = true;
                         break;
-                    // case WhipAntennaData.WhipAntennaTypes.Fixed:
-                    //     whipAntenna = new FixedWhipAntenna();
-                    //     inputControllerScript.Data.PartPropertiesEnabled = false;
-                    //     inputControllerScript.enabled = false;
-                    //     break;
-                    default:
+                    case WhipAntennaTypes.Fixed:
+                        whipAntenna = new FixedWhipAntenna();
+                        inputControllerScript.Data.PartPropertiesEnabled = false;
+                        inputControllerScript.enabled = false;
                         break;
                 }
 
                 whipAntenna.Initialize(PartScript.Transform, _antennaData.customAntenna, Data);
                 PartColliderScript[] componentsInChildren = PartScript.GameObject.GetComponentsInChildren<PartColliderScript>(includeInactive: true);
                 foreach (PartColliderScript partColliderScript in componentsInChildren) partColliderScript.gameObject.layer = 31;
+                //foreach (Renderer r in PartScript.GameObject.GetComponentsInChildren<Renderer>()) PartScript.PartMaterialScript.AddRenderer(r);
                 PartScript.PartMaterialScript.UpdateRenderers();
                 PartScript.OnModifiersCreated();
 
@@ -87,10 +88,10 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             if (Game.InDesignerScene)
             {
                 Symmetry.SynchronizePartModifiers(PartScript);
-                PartScript.CraftScript.RaiseDesignerCraftStructureChangedEvent();
+                //PartScript.CraftScript.RaiseDesignerCraftStructureChangedEvent();
             }
 
-            whipAntenna.Update(Data.size);
+            whipAntenna.Update(Data);
             if (Game.InDesignerScene && (whipAntenna.opened != Data.startOpen)) ToggleAntenna(Data.startOpen, Data.deploymentDuration);
         }
 

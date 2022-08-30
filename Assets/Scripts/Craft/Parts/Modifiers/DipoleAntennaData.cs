@@ -2,9 +2,6 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Linq;
     using Assets.Scripts.Design;
     using Assets.Scripts.DroonComLinks;
     using Assets.Scripts.DroonComLinks.Interfaces;
@@ -20,8 +17,18 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     {
         public IAntennaType type => AntennaTypes.dipole;
         public float gain => AntennaMath.GetGain(type, Script.antennaData.waveLength, size, Script.antennaData.efficiency);
-        public float mass => size * 0.3f;
-        public int price => 0;
+        public float mass
+        {
+            get
+            {
+                float volume = 0.1f; // volume of core
+                volume += CommonMethods.SphereVolume(thickness) * length * 2; // Volume of rod
+                if (antennaType == DipoleAntennaTypes.Double) volume *= 2; // Second rod if double
+
+                return volume * 2.7f; // Volume * aluminium volumic mass
+            }
+        }
+        public int price => (int)(mass * size * 7); // mass * (massic price of metal (5) + price of manufacturing (2))
         public float size
         {
             get;
@@ -30,14 +37,19 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         public enum DipoleAntennaTypes { Simple, Double }
 
         [SerializeField]
-        [DesignerPropertySlider(Label = "Length", Order = 1, MinValue = 0.23f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
-        private float _length = 1.13f;
-        public float length => _length + 0.17f;
-
-        [SerializeField]
-        [DesignerPropertySpinner(Label = "Type", Order = 2, Tooltip = "")]
+        [DesignerPropertySpinner(Label = "Type", Order = 1, Tooltip = "")]
         private DipoleAntennaTypes _antennaType = DipoleAntennaTypes.Simple;
         public DipoleAntennaTypes antennaType => _antennaType;
+
+        [SerializeField]
+        [DesignerPropertySlider(Label = "Length", Order = 2, MinValue = 0.20f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
+        private float _length = 0.7f;
+        public float length => _length;
+
+        [SerializeField]
+        [DesignerPropertySlider(Label = "Thickness", Order = 3, MinValue = 0.01f, MaxValue = 0.15f, Tooltip = "", NumberOfSteps = 1000)] //MaxValue = 0.09f
+        private float _thickness = 0.04f;
+        public float thickness => _thickness;
 
         protected override void OnDesignerInitialization(IDesignerPartPropertiesModifierInterface d)
         {
@@ -46,7 +58,8 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
                 Script.antennaData?.Script.UpdateAntenna();
             });
 
-            d.OnValueLabelRequested(() => _length, (float x) => length.ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _length, (float x) => (_length * size).ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _thickness, (float x) => (_thickness * 100 * size).ToString("n2") + "cm");
 
             d.OnSpinnerValuesRequested(() => _antennaType, delegate (List<string> x)
             {

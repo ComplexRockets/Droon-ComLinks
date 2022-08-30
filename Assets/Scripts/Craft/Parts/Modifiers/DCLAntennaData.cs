@@ -20,6 +20,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             {
                 float mass = 0;
                 try { mass += Script.antennaData.mass; } catch { }
+                mass *= size;
                 return mass;
             }
         }
@@ -100,9 +101,9 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
             d.OnValueLabelRequested(() => _size, (float x) => Utilities.FormatPercentage(x));
             d.OnValueLabelRequested(() => _efficiency, (float x) => Utilities.FormatPercentage(x));
-            d.OnValueLabelRequested(() => maxPower, (float x) => maxPower.ToString("n2") + " W");
-            d.OnValueLabelRequested(() => _frequency, (float x) => _frequency.ToString("n2") + " GHz");
-            d.OnValueLabelRequested(() => _fractionalBandWidth, (float x) => (_fractionalBandWidth * 100).ToString("n2") + " %");
+            d.OnValueLabelRequested(() => maxPower, (float x) => maxPower.ToString("n2") + "W");
+            d.OnValueLabelRequested(() => _frequency, (float x) => _frequency.ToString("n2") + "GHz");
+            d.OnValueLabelRequested(() => _fractionalBandWidth, (float x) => (_fractionalBandWidth * 100).ToString("n2") + "%");
         }
 
         public void InitializeFields()

@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Craft.Parts;
 using Assets.Scripts.Craft.Parts.Modifiers;
 using Assets.Scripts.DroonComLinks.Interfaces;
-using ModApi.Craft.Parts;
 using UnityEngine;
-using static Assets.Scripts.Craft.Parts.Modifiers.WhipAntennaData;
 
 namespace Assets.Scripts.DroonComLinks.Objects.Antennas.WhipAntennas
 {
-    public class LargeDeployableWhipAntenna : IWhipAntenna
+    public class DeployableWhipAntenna : IWhipAntenna
     {
         public WhipAntennaTypes type => WhipAntennaTypes.Deployable;
         public Transform parent { get; set; }
@@ -18,23 +15,23 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.WhipAntennas
         public bool opened { get; set; }
         public bool custom { get; set; }
         private GameObject[] _segments;
-        private Dictionary<DeployableAntennaStyles, float[]> _segmentsOffsets = new Dictionary<DeployableAntennaStyles, float[]>() {
-            { DeployableAntennaStyles.Simple, new float[] { 0, -0.78f, -0.72f, -0.59f, -0.53f, -0.45f, -0.4f } },
-            { DeployableAntennaStyles.Thin, new float[] { 0, -1.33f, -1.33f, -1.3f }} };
-        private Dictionary<DeployableAntennaStyles, int> _segmentCounts = new Dictionary<DeployableAntennaStyles, int>() {
-            { DeployableAntennaStyles.Simple, 7 },
-            { DeployableAntennaStyles.Thin, 4 } };
-        private Dictionary<DeployableAntennaStyles, string> _stylePrefabNames = new Dictionary<DeployableAntennaStyles, string>() {
-            { DeployableAntennaStyles.Simple, "DeployableWhipAntenna1" },
-            { DeployableAntennaStyles.Thin, "DeployableWhipAntenna3" } };
-        private DeployableAntennaStyles _style;
+        private readonly Dictionary<WhipAntennaStyles, float[]> _segmentsOffsets = new Dictionary<WhipAntennaStyles, float[]>() {
+            { WhipAntennaStyles.Simple, new float[] { 0, -0.78f, -0.72f, -0.59f, -0.53f, -0.45f, -0.4f } },
+            { WhipAntennaStyles.Thin, new float[] { 0, -1.33f, -1.33f, -1.3f }} };
+        private readonly Dictionary<WhipAntennaStyles, int> _segmentCounts = new Dictionary<WhipAntennaStyles, int>() {
+            { WhipAntennaStyles.Simple, 7 },
+            { WhipAntennaStyles.Thin, 4 } };
+        private readonly Dictionary<WhipAntennaStyles, string> _stylePrefabNames = new Dictionary<WhipAntennaStyles, string>() {
+            { WhipAntennaStyles.Simple, "DeployableWhipAntenna1" },
+            { WhipAntennaStyles.Thin, "DeployableWhipAntenna3" } };
+        private WhipAntennaStyles _style;
 
         public void Initialize(Transform parent, bool customAntenna, WhipAntennaData data)
         {
             this.parent = parent;
             custom = customAntenna;
             opened = data.startOpen;
-            _style = (DeployableAntennaStyles)Enum.Parse(typeof(DeployableAntennaStyles), data.antennaStyle);
+            _style = data.antennaStyle;
 
             if (!custom)
             {
@@ -50,9 +47,9 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.WhipAntennas
             }
         }
 
-        public void Update(float size)
+        public void Update(WhipAntennaData data)
         {
-            if (!custom) _segments[0].transform.localScale = new Vector3(size, size, size);
+            if (!custom) _segments[0].transform.localScale = new Vector3(data.size, data.size, data.size);
         }
 
         public void SetPosition(bool startOpen)
@@ -100,7 +97,7 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.WhipAntennas
         {
             if (_segments != null)
             {
-                GameObject.Destroy(_segments[0]);
+                UnityEngine.Object.DestroyImmediate(_segments[0]);
             }
         }
     }

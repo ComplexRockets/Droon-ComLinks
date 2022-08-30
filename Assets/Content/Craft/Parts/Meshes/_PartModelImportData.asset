@@ -199,6 +199,25 @@ MonoBehaviour:
       _submeshMap: 00000000
       _subpartId: 0
     _model: {fileID: 919132149155446097, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+  - _id: FixedMonopoleAntenna1
+    _meshes:
+    - _id: FixedMonopoleAntenna1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -6509879446675013612, guid: 23be0604ff04a4b7a8153efbb9218f91, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Segment1.002
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 6757039442794172243, guid: 23be0604ff04a4b7a8153efbb9218f91, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
+    _model: {fileID: 919132149155446097, guid: 23be0604ff04a4b7a8153efbb9218f91, type: 3}
   - _id: LowPolyCylinder
     _meshes:
     - _id: Cylinder

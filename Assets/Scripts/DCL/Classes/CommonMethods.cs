@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Flight;
-using Assets.Scripts.Flight.MapView.Interfaces;
-using Assets.Scripts.Flight.Sim;
-using Assets.Scripts.State;
+using ModApi.Design.PartProperties;
+using UnityEngine;
 
 namespace Assets.Scripts.DroonComLinks
 {
@@ -26,5 +23,16 @@ namespace Assets.Scripts.DroonComLinks
             yield return 0;
             action.Invoke();
         }
+
+        public static void SetDesignerSliderMinMax(ISliderProperty property, ref float value, float min, float max, int step = 1000)
+        {
+            property.UpdateSliderSettings(min, max, step);
+            if (value < min) value = min;
+            else if (value > max) value = max;
+        }
+
+        public static float Pythagore(float a, float b) => Mathf.Sqrt(a * a + b * b);
+        public static float SphereVolume(float r) => (4 * Mathf.PI * r * r * r) / 3;
+        public static float CircleSurface(float r) => Mathf.PI * r * r;
     }
 }

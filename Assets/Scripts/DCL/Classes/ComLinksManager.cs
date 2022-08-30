@@ -1,6 +1,5 @@
 ﻿//The mod uses Harmony https://github.com/pardeike/Harmony Copyright (c) 2017 Andreas Pardeike
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,22 +111,6 @@ namespace Assets.Scripts.DroonComLinks
             Game.Instance.FlightScene.ViewManager.MapViewManager.ForegroundStateChanged += OnForegroundStateChanged;
             Game.Instance.FlightScene.CraftChanged += OnPlayerCraftChanged;
             Game.Instance.FlightScene.ActiveCommandPodChanged += OnPlayerCraftChanged;
-            // Game.Instance.FlightScene.CraftNode.CraftScript.CraftSplit += OnCraftSplited;
-            // Game.Instance.FlightScene.CraftNode.CraftScript.CraftStructureChanged += OnCraftStructureChanged;
-            // Game.Instance.FlightScene.CraftNode.CraftScript.DockComplete += OnDocked;
-
-            DevConsoleApi.RegisterCommand("GetPropertyValue", delegate (string propertyName)
-            {
-                PropertyInfo property = this.GetType().GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.GetProperty);
-                if (property != null)
-                {
-                    if (ModSettings.Instance.debugMode) Debug.Log(propertyName + " = " + property.GetValue(this).ToString());
-                }
-                else
-                {
-                    if (ModSettings.Instance.debugMode) Debug.LogError("Property [" + propertyName + "] not found");
-                }
-            });
         }
 
         private void InitialiseFixedNodes()

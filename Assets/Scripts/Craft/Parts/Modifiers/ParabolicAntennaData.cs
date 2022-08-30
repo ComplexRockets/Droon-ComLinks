@@ -27,23 +27,22 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             get
             {
-                float bottomDiameterSurface = CircleSurface(bottomDiameter);
-                float volume = (SphereVolume(radius + thickness) - SphereVolume(radius)) * depth; // Parabola volume
-                volume += (bottomDiameterSurface - CircleSurface(bottomDiameter - thickness)) * bottomOffset; // Bottom offset volume
-                volume += (bottomDiameterSurface - CircleSurface(bottomDiameter - thickness)) * bottomDepth + 2 * bottomDiameterSurface; // Bottom Depth volume
-                volume += CircleSurface(supportArmDiameter / 2) * Pythagore(focalLength, radius) * supportArmCount * doubleSupportArm * 2; // SupportArms volume
-                return volume * 2.7f * size; // Volume * aluminium volumic mass
+                float bottomDiameterSurface = CommonMethods.CircleSurface(bottomDiameter);
+                float volume = (CommonMethods.SphereVolume(radius + thickness) - CommonMethods.SphereVolume(radius)) * depth; // Parabola volume
+                volume += (bottomDiameterSurface - CommonMethods.CircleSurface(bottomDiameter - thickness)) * bottomOffset; // Bottom offset volume
+                volume += (bottomDiameterSurface - CommonMethods.CircleSurface(bottomDiameter - thickness)) * bottomDepth + 2 * bottomDiameterSurface; // Bottom Depth volume
+                volume += CommonMethods.CircleSurface(supportArmDiameter / 2) * CommonMethods.Pythagore(focalLength, radius) * supportArmCount * doubleSupportArm * 2; // SupportArms volume
+                return volume * 2.7f / size; // Volume * aluminium volumic mass
             }
         }
         public int price
         {
             get
             {
-                int p = 5000; // base electronic price
-                p += (int)(mass * 5); //mass * massic price of metal
-                p += Script.upperElement.elementData.price; //Upper Element Price
-                if (secondaryReflector) p += Script.lowerElement.elementData.price; //Lower Element Price
-                return p;
+                float p = mass * size * 7; //mass * (massic price of metal (5) + price of manufacturing (2))
+                p += Script.upperElement.elementData.price * diameter; //Upper Element Price
+                if (secondaryReflector) p += Script.lowerElement.elementData.price * diameter; //Lower Element Price
+                return (int)(p);
             }
         }
         private float _aperture => Mathf.PI * diameter * diameter / 4;
@@ -161,9 +160,9 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             d.OnAnyPropertyChanged(() =>
             {
-                SetSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, _diameter / 50, _diameter / 4);
-                SetSliderMinMax(d.GetSliderProperty(() => _bottomDiameter), ref _bottomDiameter, (_straightSide || bottomOffset > 0) ? Mathf.Max(_diameter / 2 - 10 * _bottomDepth, 0) : 0, _diameter);
-                SetSliderMinMax(d.GetSliderProperty(() => _bottomDepth), ref _bottomDepth, _thickness, 0.75f);
+                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, _diameter / 50, _diameter / 4);
+                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDiameter), ref _bottomDiameter, (_straightSide || bottomOffset > 0) ? Mathf.Max(_diameter / 2 - 10 * _bottomDepth, 0) : 0, _diameter);
+                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDepth), ref _bottomDepth, _thickness, 0.75f);
 
                 Script.antennaData?.Script.UpdateAntenna();
             });
@@ -187,10 +186,10 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
             d.OnValueLabelRequested(() => _diameter, (float x) => diameter.ToString("n2") + "m");
             d.OnValueLabelRequested(() => _depth, (float x) => depth.ToString("n2") + "m");
-            d.OnValueLabelRequested(() => _thickness, (float x) => thickness.ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _thickness, (float x) => (thickness * 100).ToString("n2") + "cm");
             d.OnValueLabelRequested(() => _supportArmPos, (float x) => Utilities.FormatPercentage(x));
             d.OnValueLabelRequested(() => _doubleSupportArmOffset, (float x) => Utilities.FormatPercentage(x));
-            d.OnValueLabelRequested(() => _supportArmDiameter, (float x) => supportArmDiameter.ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _supportArmDiameter, (float x) => (supportArmDiameter * 100).ToString("n2") + "cm");
             d.OnValueLabelRequested(() => _ridgeWidth, (float x) => x.ToString("n2"));
             d.OnValueLabelRequested(() => _ridgeA, (float x) => (x * 100).ToString("n2"));
             d.OnValueLabelRequested(() => _ridgeB, (float x) => (x * 100).ToString("n2"));
@@ -201,13 +200,6 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             d.OnVisibilityRequested(() => _lowerElement, (bool x) => _secondaryReflector);
             d.OnVisibilityRequested(() => _bottomDepth, (bool x) => _straightSide);
             d.OnVisibilityRequested(() => _bottomDiameter, (bool x) => _straightSide || bottomOffset > 0);
-        }
-
-        private void SetSliderMinMax(ISliderProperty property, ref float value, float min, float max, int step = 1000)
-        {
-            property.UpdateSliderSettings(min, max, step);
-            if (value < min) value = min;
-            else if (value > max) value = max;
         }
 
         public void OnSizeChanged(float _size)
@@ -222,9 +214,5 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
                 d.Script.UpdateAntenna();
             });
         }
-
-        private float Pythagore(float a, float b) => Mathf.Sqrt(a * a + b * b);
-        private float SphereVolume(float r) => (4 * Mathf.PI * r * r * r) / 3;
-        private float CircleSurface(float r) => Mathf.PI * r * r;
     }
 }

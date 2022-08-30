@@ -14,7 +14,7 @@ namespace Assets.Scripts.DroonComLinks.Interfaces
         bool animating { get; set; }
         bool opened { get; set; }
         void Initialize(Transform parent, bool customAntenna, WhipAntennaData data);
-        void Update(float size);
+        void Update(WhipAntennaData data);
         void SetPosition(bool startOpen);
         IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data);
         void Destroy();

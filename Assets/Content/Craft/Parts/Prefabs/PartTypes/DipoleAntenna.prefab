@@ -168,7 +168,8 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
-    _length: 1.17
+    _length: 0.7
+    _width: 0.04
     _antennaType: 0
 --- !u!114 &8999818568977094435
 MonoBehaviour:

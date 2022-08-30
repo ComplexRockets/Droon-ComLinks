@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.Craft.Parts;
 using Assets.Scripts.Craft.Parts.Modifiers;
 using Assets.Scripts.DroonComLinks.Interfaces;
@@ -9,51 +11,48 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.WhipAntennas
 {
     public class FixedWhipAntenna : IWhipAntenna
     {
-        public WhipAntennaTypes type => throw new System.NotImplementedException();
-
-        public bool custom { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public bool animating { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public bool opened { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public Transform parent { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public void Destroy()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Initialize(bool customAntenna, bool startOpen)
-        {
-            throw new System.NotImplementedException();
-        }
+        public WhipAntennaTypes type => WhipAntennaTypes.Fixed;
+        public bool custom { get; set; }
+        public bool animating { get; set; } = false;
+        public bool opened { get; set; } = true;
+        public Transform parent { get; set; }
+        private Dictionary<WhipAntennaStyles, string> _stylePrefabNames = new Dictionary<WhipAntennaStyles, string>() {
+            { WhipAntennaStyles.Simple, "FixedMonopoleAntenna1" }};
+        private WhipAntennaStyles _style;
+        private Transform antenna;
+        private Transform antennaRod;
+        private Transform antennaBase;
 
         public void Initialize(Transform parent, bool customAntenna, WhipAntennaData data)
         {
-            throw new System.NotImplementedException();
+            this.parent = parent;
+            custom = customAntenna;
+            _style = data.antennaStyle;
+
+            if (!custom)
+            {
+                antenna = UnityEngine.Object.Instantiate(Mod.Instance.ResourceLoader.LoadAsset<GameObject>("Assets/Content/Craft/Parts/WhipAntenna/Prefabs/" + _stylePrefabNames[_style] + ".prefab")).transform;
+                antennaBase = antenna.Find("AntennaBase");
+                antennaRod = antenna.Find("AntennaRod");
+                antenna.SetParent(parent, worldPositionStays: false);
+            }
         }
 
-        public void Initialize(Transform parent, PartMaterialScript partMaterialScript, bool customAntenna, bool startOpen)
+        public void SetPosition(bool startOpen) { if (ModSettings.Instance.debugMode) Debug.LogError("Trying to set position of fixed antenna"); }
+
+        public IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data) { if (ModSettings.Instance.debugMode) Debug.LogError("Trying to toggle fixed antenna"); yield return 0; }
+
+        public void Update(WhipAntennaData data)
         {
-            throw new System.NotImplementedException();
+            float thicknessOffset = data.thickness > 0.02f ? data.thickness - 0.02f : 0;
+            antenna.localScale = Vector3.one * data.size;
+            antennaBase.localScale = Vector3.one * (0.014f + thicknessOffset) / 0.014f;
+            antennaRod.localScale = new Vector3(data.thickness / 0.01f, data.length, data.thickness / 0.01f);
         }
 
-        public void Initialize(Transform parent, IPartMaterialScript partMaterialScript, bool customAntenna, bool startOpen)
+        public void Destroy()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetPosition(bool startOpen)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(float size)
-        {
-            throw new System.NotImplementedException();
+            UnityEngine.Object.DestroyImmediate(antenna.gameObject);
         }
     }
 }

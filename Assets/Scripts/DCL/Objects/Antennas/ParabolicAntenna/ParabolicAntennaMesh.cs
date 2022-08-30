@@ -69,7 +69,7 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna
             float height = 0;
             float divHeight = _depth / _parabolaDivCount;
             float curentRadius = _parabolaDivWidth = _radius / _parabolaDivCount; ;
-            _totalDivCount = subPartId = 0;
+            _totalDivCount = subPartId = 0; //Top parabola sub part id
             _ridgeEndX = _ridgeEndY = 0;
             lowestPoint = -_bottomdepth - _bottomOffset - (_straightSide ? 0 : _thickness);
 
@@ -79,6 +79,8 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna
 
             //Vertices
             GenerateParabola(curentRadius, 0, 1, out curentRadius, out height, 0); //Top Parabola
+
+            subPartId = 1; //Ridge sub part id
             AddDivision(height, curentRadius, 2); //Sharp Edge
 
             if (_ridgeWidth > 0)
@@ -86,9 +88,10 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna
                 GenerateRidge(curentRadius, 0, 1, out curentRadius, out height, 2); //Top Ridge
                 AddDivision(height - _thickness, curentRadius, 2); //Antenna Thickness
                 GenerateRidge(curentRadius, -_thickness, -1, out curentRadius, out height, 2); //Bottom Ridge
-                AddDivision(height, curentRadius, 1); //Sharp Edge
             }
 
+            subPartId = 2; //Bottom parabola sub part id
+            AddDivision(height, curentRadius, 1); //Sharp Edge
             if (_straightSide) AddDivision(-_bottomdepth, _bottomRadius, 1); //Straight Side
             else GenerateParabola(curentRadius, -_thickness, -1, out curentRadius, out height, 1, _bottomRadius); //Round Side
             if (_bottomOffset != 0)
@@ -209,9 +212,9 @@ namespace Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna
             float angleStep = 2 * Mathf.PI / _suportArmCount;
             structureDivAngle = 2 * Mathf.PI / _structureRes;
             pointsToConnect = 0;
-            subPartId = 1;
             preVertices = verticsIndex;
             triangleIndex = _triangles.Length;
+            subPartId = 3; //Structure sub part id
 
             for (int i = 0; i < _suportArmCount; i++, angle += angleStep)
             {

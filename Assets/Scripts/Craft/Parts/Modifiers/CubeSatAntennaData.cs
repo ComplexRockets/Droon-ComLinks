@@ -21,7 +21,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         //public float gain => 10 * Mathf.Log (4100 / (azAngle * eqAngle)) * size;
         public float gain => AntennaMath.GetGain(type, Script.antennaData.waveLength, size, Script.antennaData.efficiency);
         public int price => 0;
-        public float mass => 0.02f * size;
+        public float mass => 0.02f;
 
         public void OnSizeChanged(float _size)
         {
