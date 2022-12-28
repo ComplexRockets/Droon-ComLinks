@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna;
 using ModApi.Craft.Parts;
 using UnityEngine;
+using Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna;
 
 public class Cylinder : MonoBehaviour {
     private Mod _mod => Mod.Instance;

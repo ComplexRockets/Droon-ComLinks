@@ -2,12 +2,13 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System;
     using Assets.Scripts.Design;
-    using Assets.Scripts.DroonComLinks;
+    using Assets.Scripts.DroonComLinks.Antennas;
     using ModApi.Craft.Parts.Attributes;
     using ModApi.Craft.Parts;
     using ModApi.Design.PartProperties;
     using ModApi;
     using UnityEngine;
+    using Assets.Scripts.DroonComLinks;
 
     [Serializable]
     [DesignerPartModifier("DCL Antenna")]
@@ -24,11 +25,11 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
                 return mass;
             }
         }
-        public override int Price
+        public override long Price
         {
             get
             {
-                int price = 1000;
+                long price = 1000;
                 try
                 {
                     price += AntennaMath.GetBasePrice(this) + Script.antennaData.price;
@@ -45,15 +46,20 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         [SerializeField]
         [DesignerPropertySlider(Label = "Size", MinValue = 0.25f, MaxValue = 5, Order = 1, Tooltip = "Change the Size of the antenna", NumberOfSteps = 1000)]
         private float _size = 0;
-        public float size => _size;
+        public float size => DCLUtilities.RoundN2(_size);
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Max Power", MinValue = 1, MaxValue = 100, Order = 2, Tooltip = "Changes the maximum power the antenna can draw", NumberOfSteps = 1000)]
-        public float maxPower = 0;
+        private float _maxPower = 0;
+        public float maxPower
+        {
+            get => DCLUtilities.RoundN2(_maxPower);
+            set => _maxPower = DCLUtilities.RoundN2(value);
+        }
         public float maxTransmittedPower
         {
-            get => maxPower * Script.antennaData.type.txPowerRatio;
-            set => maxPower = value / Script.antennaData.type.txPowerRatio;
+            get => _maxPower * Script.antennaData.type.txPowerRatio;
+            set => _maxPower = DCLUtilities.RoundN2(value / Script.antennaData.type.txPowerRatio);
         }
 
         [SerializeField]
@@ -61,11 +67,8 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         private float _frequency = 0;
         public float frequency
         {
-            get => Mathf.Round(_frequency * 100f) / 100f;
-            set
-            {
-                _frequency = Mathf.Round(value * 100f) / 100f;
-            }
+            get => DCLUtilities.RoundN2(_frequency);
+            set => _frequency = DCLUtilities.RoundN2(value);
         }
 
         [SerializeField]
@@ -76,7 +79,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         [SerializeField]
         [DesignerPropertySlider(Label = "Efficiency", MinValue = 0.1f, MaxValue = 0.9f, Order = 4, Tooltip = "Change the Efficiency of the antenna", NumberOfSteps = 1000)]
         private float _efficiency = 0;
-        public float efficiency => _efficiency;
+        public float efficiency => DCLUtilities.RoundN2(_efficiency);
 
         [SerializeField]
         [PartModifierProperty(true, false)]
@@ -101,15 +104,15 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
             d.OnValueLabelRequested(() => _size, (float x) => Utilities.FormatPercentage(x));
             d.OnValueLabelRequested(() => _efficiency, (float x) => Utilities.FormatPercentage(x));
-            d.OnValueLabelRequested(() => maxPower, (float x) => maxPower.ToString("n2") + "W");
-            d.OnValueLabelRequested(() => _frequency, (float x) => _frequency.ToString("n2") + "GHz");
-            d.OnValueLabelRequested(() => _fractionalBandWidth, (float x) => (_fractionalBandWidth * 100).ToString("n2") + "%");
+            d.OnValueLabelRequested(() => _maxPower, (float x) => x.ToString("n2") + "W");
+            d.OnValueLabelRequested(() => _frequency, (float x) => x.ToString("n2") + "GHz");
+            d.OnValueLabelRequested(() => _fractionalBandWidth, (float x) => Utilities.FormatPercentage(x));
         }
 
         public void InitializeFields()
         {
             _size = Script.antennaData.type.defaultSize;
-            _frequency = Script.antennaData.type.defaultFrequency;
+            frequency = Script.antennaData.type.defaultFrequency;
             _fractionalBandWidth = Script.antennaData.type.defaultFractionalBandWidth;
             _efficiency = Script.antennaData.type.defaultEfficiency;
             maxPower = Script.antennaData.type.defaultMaxPowerConsumption;
@@ -120,7 +123,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             DesignerPartProperties?.GetSliderProperty(() => _frequency)?.UpdateSliderSettings(Script.antennaData.type.minFrenquency, Script.antennaData.type.maxFrenquency, 1000);
             DesignerPartProperties?.GetSliderProperty(() => _fractionalBandWidth)?.UpdateSliderSettings(0.01f, Script.antennaData.type.maxFractionalBandWidth, 1000);
-            DesignerPartProperties?.GetSliderProperty(() => maxPower)?.UpdateSliderSettings(0, Script.antennaData.type.maxPower, 1000);
+            DesignerPartProperties?.GetSliderProperty(() => _maxPower)?.UpdateSliderSettings(0, Script.antennaData.type.maxPower, 1000);
         }
 
         public void UpdateAntenna()

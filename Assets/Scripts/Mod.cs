@@ -5,8 +5,10 @@ namespace Assets.Scripts
     using System.Collections.Generic;
     using System.Reflection;
     using Assets.Packages.DevConsole;
+    using Assets.Scripts.DroonComlinks.Ui;
     using Assets.Scripts.DroonComLinks;
-    using Assets.Scripts.Ui;
+    using Assets.Scripts.DroonComLinks.Antennas;
+    using Assets.Scripts.DroonComLinks.Network;
     using ModApi.Settings.Core.Events;
     using ModApi.Ui.Inspector;
     using UnityEngine;

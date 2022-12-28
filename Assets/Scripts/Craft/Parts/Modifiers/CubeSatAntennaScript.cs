@@ -1,8 +1,8 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
-    using Assets.Scripts.DroonComLinks.Interfaces;
     using ModApi.Craft.Parts;
     using UnityEngine;
+    using Assets.Scripts.DroonComLinks.Antennas;
 
     public class CubeSatAntennaScript : PartModifierScript<CubeSatAntennaData>, IDCLAntennaScript
     {

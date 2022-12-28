@@ -1,11 +1,10 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks;
     using ModApi.Craft.Parts.Attributes;
     using ModApi.Craft.Parts;
     using Assets.Scripts.Design;
+    using Assets.Scripts.DroonComLinks.Antennas;
 
     [Serializable]
     [DesignerPartModifier("CubeSatAntenna")]

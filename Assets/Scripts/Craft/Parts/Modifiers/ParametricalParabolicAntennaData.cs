@@ -2,14 +2,13 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System.Collections.Generic;
     using System;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna;
-    using Assets.Scripts.DroonComLinks;
+    using Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna;
     using ModApi.Craft.Parts.Attributes;
     using ModApi.Craft.Parts;
     using ModApi.Design.PartProperties;
     using ModApi;
     using UnityEngine;
+    using Assets.Scripts.DroonComLinks.Antennas;
 
     [Serializable]
     [DesignerPartModifier("Parametric Antenna")]

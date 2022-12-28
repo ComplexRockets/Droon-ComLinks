@@ -52,7 +52,7 @@ MonoBehaviour:
   _steamTitle: 
   _steamVisibility: 0
   _versionMajor: 0
-  _versionMinor: 3
+  _versionMinor: 31
   _partCategories:
   - {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
   _parts:
@@ -64,4 +64,5 @@ MonoBehaviour:
   _partTextureStyles: []
   _persistentObjects:
   - {fileID: 7304565558708299780, guid: 0a0e6b0c1fdd64092881142c8415bb24, type: 3}
-  _uiResourceDatabases: []
+  _uiResourceDatabases:
+  - {fileID: 11400000, guid: 9ee8db32d8ea443b294b30220300bf86, type: 2}

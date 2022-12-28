@@ -1,7 +1,7 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using Assets.Scripts.Design;
-    using Assets.Scripts.DroonComLinks.Interfaces;
+    using Assets.Scripts.DroonComLinks.Antennas;
     using ModApi.Craft.Parts;
     using UnityEngine;
 

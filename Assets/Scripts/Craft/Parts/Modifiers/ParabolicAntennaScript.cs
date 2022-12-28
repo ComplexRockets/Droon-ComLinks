@@ -1,8 +1,8 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using Assets.Scripts.Design;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna;
+    using Assets.Scripts.DroonComLinks.Antennas;
+    using Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna;
     using ModApi.Craft.Parts;
     using UnityEngine;
 

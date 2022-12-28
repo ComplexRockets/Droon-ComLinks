@@ -2,18 +2,15 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System.Collections;
     using System;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects.Antennas;
-    using Assets.Scripts.DroonComLinks;
+    using Assets.Scripts.DroonComLinks.Antennas;
     using ModApi.Craft.Parts;
     using ModApi.Ui.Inspector;
     using ModApi.Ui;
     using Assets.Scripts.Design;
     using System.Collections.Generic;
-    using ModApi.Craft;
-    using ModApi.GameLoop.Interfaces;
-    using ModApi.GameLoop;
     using UnityEngine;
+    using Assets.Scripts.DroonComLinks.Controls;
+    using Assets.Scripts.Craft.Parts.Modifiers.Input;
 
     public class DCLAntennaScript : PartModifierScript<DCLAntennaData> //, IFlightUpdate, IGameLoopItem
     {
@@ -111,7 +108,12 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             model.Add(new TextModel("Min Rx Power", () => (Data.minReceivablePower * Math.Pow(10, 19)).ToString("n2") + " E-19 W"));
             model.Add(new TextModel("Freq", () => antenna.frequencies[1].ToString("n2") + " GHz"));
             model.Add(new TextModel("Min / Max Freq", () => antenna.frequencies[0].ToString("n2") + " / " + antenna.frequencies[2].ToString("n2") + " GHz"));
-            model.Add(new TextModel("Gain", () => (10 * Math.Log10(antennaData.gain)).ToString("n0") + " dB"));
+            model.Add(new TextModel("Gain", () => (10 * Math.Log10(antennaData.gain)).ToString("n2  ") + " dB"));
+
+            // InputControllerScript inputController = PartScript.GetModifier<InputControllerScript>();
+            // if (inputController != null && inputController.InputId == "OpenCloseAntenna" && inputController.enabled)
+            // {
+            // }
 
             base.OnGenerateInspectorModel(model);
         }

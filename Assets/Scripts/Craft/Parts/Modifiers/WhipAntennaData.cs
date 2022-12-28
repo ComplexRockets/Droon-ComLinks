@@ -1,14 +1,15 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks;
+
     using ModApi.Craft.Parts.Attributes;
     using ModApi.Craft.Parts;
     using ModApi.Design.PartProperties;
     using UnityEngine;
     using System.Collections.Generic;
     using Assets.Scripts.Design;
+    using Assets.Scripts.DroonComLinks.Antennas;
+    using Assets.Scripts.DroonComLinks;
 
     public enum WhipAntennaTypes { None, Deployable, Fixed }
     public enum WhipAntennaStyles { None, Simple, Thin }
@@ -21,7 +22,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         public IAntennaType type => AntennaTypes.whip;
         //public float gain => 10 * Mathf.Log (4100 / (azAngle * eqAngle)) * size;
         public float gain => AntennaMath.GetGain(type, Script.antennaData.waveLength, size, Script.antennaData.efficiency);
-        public float mass => 0.6f;
+        public float mass => Script.whipAntenna.mass;
         public int price => 0;
         public float size
         {
@@ -57,18 +58,18 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Deployment duration", Order = 3, MinValue = 0.2f, MaxValue = 10f, Tooltip = "", NumberOfSteps = 1000)]
-        private float _deploymentDuration = 2;
-        public float deploymentDuration => _deploymentDuration;
+        private float _deploymentDuration = 5f;
+        public float deploymentDuration => DCLUtilities.RoundN2(_deploymentDuration);
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Length", Order = 2, MinValue = 0.2f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
         private float _length = 0.7f;
-        public float length => _length;
+        public float length => DCLUtilities.RoundN2(_length);
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Thickness", Order = 3, MinValue = 0.01f, MaxValue = 0.15f, Tooltip = "", NumberOfSteps = 1000)]
         private float _thickness = 0.015f;
-        public float thickness => _thickness;
+        public float thickness => DCLUtilities.Round(_thickness, 4);
 
         protected override void OnDesignerInitialization(IDesignerPartPropertiesModifierInterface d)
         {
@@ -82,8 +83,8 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             d.OnPropertyChanged(() => _antennaType, (string oldType, string newType) => _antennaStyle = typeStyles[antennaType][0].ToString());
 
             d.OnValueLabelRequested(() => _deploymentDuration, (float x) => deploymentDuration.ToString("n1") + "s");
-            d.OnValueLabelRequested(() => _length, (float x) => (_length * size).ToString("n2") + "m");
-            d.OnValueLabelRequested(() => _thickness, (float x) => (_thickness * 100 * size).ToString("n2") + "cm");
+            d.OnValueLabelRequested(() => _length, (float x) => (x * size).ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _thickness, (float x) => (x * 100 * size).ToString("n2") + "cm");
 
             d.OnSpinnerValuesRequested(() => _antennaType, delegate (List<string> x)
             {

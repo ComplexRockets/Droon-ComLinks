@@ -2,8 +2,8 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System.Collections.Generic;
     using System;
-    using Assets.Scripts.DroonComLinks.Interfaces;
-    using Assets.Scripts.DroonComLinks.Objects.Antennas.ParabolicAntenna;
+    using Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna;
+    using Assets.Scripts.DroonComLinks.Antennas;
     using Assets.Scripts.DroonComLinks;
     using ModApi.Craft.Parts.Attributes;
     using ModApi.Craft.Parts;
@@ -27,11 +27,11 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             get
             {
-                float bottomDiameterSurface = CommonMethods.CircleSurface(bottomDiameter);
-                float volume = (CommonMethods.SphereVolume(radius + thickness) - CommonMethods.SphereVolume(radius)) * depth; // Parabola volume
-                volume += (bottomDiameterSurface - CommonMethods.CircleSurface(bottomDiameter - thickness)) * bottomOffset; // Bottom offset volume
-                volume += (bottomDiameterSurface - CommonMethods.CircleSurface(bottomDiameter - thickness)) * bottomDepth + 2 * bottomDiameterSurface; // Bottom Depth volume
-                volume += CommonMethods.CircleSurface(supportArmDiameter / 2) * CommonMethods.Pythagore(focalLength, radius) * supportArmCount * doubleSupportArm * 2; // SupportArms volume
+                float bottomDiameterSurface = DCLUtilities.CircleSurface(bottomDiameter);
+                float volume = (DCLUtilities.SphereVolume(radius + thickness) - DCLUtilities.SphereVolume(radius)) * depth; // Parabola volume
+                volume += (bottomDiameterSurface - DCLUtilities.CircleSurface(bottomDiameter - thickness)) * bottomOffset; // Bottom offset volume
+                volume += (bottomDiameterSurface - DCLUtilities.CircleSurface(bottomDiameter - thickness)) * bottomDepth + 2 * bottomDiameterSurface; // Bottom Depth volume
+                volume += DCLUtilities.CircleSurface(supportArmDiameter / 2) * DCLUtilities.Pythagore(focalLength, radius) * supportArmCount * doubleSupportArm * 2; // SupportArms volume
                 return volume * 2.7f / size; // Volume * aluminium volumic mass
             }
         }
@@ -51,18 +51,18 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         [SerializeField]
         [DesignerPropertySlider(Label = "Diameter", Order = 1, MinValue = 0.2f, MaxValue = 5f, Tooltip = "", NumberOfSteps = 1000)]
         private float _diameter = AntennaTypes.Defaults.parabolicDiameter;
-        public float diameter => _diameter * size;
+        public float diameter => DCLUtilities.RoundN2(_diameter) * size;
         public float radius => diameter / 2;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Depth", Order = 2, MinValue = 0.1f, MaxValue = 1f, Tooltip = "", NumberOfSteps = 1000)]
         private float _depth = AntennaTypes.Defaults.parabolicDepth;
-        public float depth => _depth * size;
+        public float depth => DCLUtilities.RoundN2(_depth) * size;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Thickness", Order = 3, MinValue = 0.01f, MaxValue = 0.5f, Tooltip = "", NumberOfSteps = 1000)]
         private float _thickness = 0.05f;
-        public float thickness => _thickness * size;
+        public float thickness => DCLUtilities.RoundN2(_thickness) * size;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Support Arm count", Order = 7, MinValue = 1, MaxValue = 8, Tooltip = "", NumberOfSteps = 8)]
@@ -77,28 +77,28 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         [SerializeField]
         [DesignerPropertySlider(Label = "Double Support Arm Offset", Order = 10, MinValue = 0f, MaxValue = 1f, Tooltip = "", NumberOfSteps = 1000)]
         private float _doubleSupportArmOffset = 0f;
-        public float doubleSupportArmOffset => _doubleSupportArmOffset;
+        public float doubleSupportArmOffset => DCLUtilities.RoundN2(_doubleSupportArmOffset);
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Support Arm Diameter", Order = 11, MinValue = 0.01f, MaxValue = 0.1f, Tooltip = "", NumberOfSteps = 1000)]
         private float _supportArmDiameter = 0.04f;
-        public float supportArmDiameter => _supportArmDiameter * size;
+        public float supportArmDiameter => DCLUtilities.Round(_supportArmDiameter, 4) * size;
         public float supportArmRadius => supportArmDiameter / 2;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Ridge Length", Order = 11, MinValue = 0f, MaxValue = 0.1f, Tooltip = "", NumberOfSteps = 1000)]
         private float _ridgeWidth = 0.035f;
-        public float ridgeWidth => _ridgeWidth * size;
+        public float ridgeWidth => DCLUtilities.Round(_ridgeWidth, 4) * size;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Ridge A", Order = 11, MinValue = 0.01f, MaxValue = 0.05f, Tooltip = "", NumberOfSteps = 1000)]
         private float _ridgeA = 0.01f;
-        public float ridgeA => _ridgeA;
+        public float ridgeA => DCLUtilities.Round(_ridgeA, 4);
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Ridge B", Order = 11, MinValue = -0.02f, MaxValue = 0.02f, Tooltip = "", NumberOfSteps = 1000)]
         private float _ridgeB = 0.002f;
-        public float ridgeB => _ridgeB;
+        public float ridgeB => DCLUtilities.Round(_ridgeB, 4);
 
         [SerializeField]
         [DesignerPropertyToggleButton(Label = "Straight Side", Order = 15, Tooltip = "")]
@@ -107,18 +107,18 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Bottom Depth", Order = 11, MinValue = 0f, MaxValue = 0.75f, Tooltip = "", NumberOfSteps = 1000)]
-        private float _bottomDepth = 0;
-        public float bottomDepth => _bottomDepth * size;
+        private float _bottomDepth = 0f;
+        public float bottomDepth => DCLUtilities.RoundN2(_bottomDepth) * size;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Bottom Offset", Order = 11, MinValue = 0, MaxValue = 0.5f, Tooltip = "", NumberOfSteps = 1000)]
         private float _bottomOffset = 0f;
-        public float bottomOffset => _bottomOffset * size;
+        public float bottomOffset => DCLUtilities.RoundN2(_bottomOffset) * size;
 
         [SerializeField]
         [DesignerPropertySlider(Label = "Bottom Diameter", Order = 11, MinValue = 0f, MaxValue = 4f, Tooltip = "", NumberOfSteps = 1000)]
         private float _bottomDiameter = 0f;
-        public float bottomDiameter => _bottomDiameter * size;
+        public float bottomDiameter => DCLUtilities.RoundN2(_bottomDiameter) * size;
         public float bottomRadius => bottomDiameter / 2;
 
         [SerializeField]
@@ -160,9 +160,9 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             d.OnAnyPropertyChanged(() =>
             {
-                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, _diameter / 50, _diameter / 4);
-                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDiameter), ref _bottomDiameter, (_straightSide || bottomOffset > 0) ? Mathf.Max(_diameter / 2 - 10 * _bottomDepth, 0) : 0, _diameter);
-                CommonMethods.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDepth), ref _bottomDepth, _thickness, 0.75f);
+                DCLUtilities.SetDesignerSliderMinMax(d.GetSliderProperty(() => _depth), ref _depth, _diameter / 50, _diameter / 4);
+                DCLUtilities.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDiameter), ref _bottomDiameter, (_straightSide || bottomOffset > 0) ? Mathf.Max(_diameter / 2 - 10 * _bottomDepth, 0) : 0, _diameter);
+                DCLUtilities.SetDesignerSliderMinMax(d.GetSliderProperty(() => _bottomDepth), ref _bottomDepth, _thickness, 0.75f);
 
                 Script.antennaData?.Script.UpdateAntenna();
             });
