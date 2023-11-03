@@ -1,4 +1,3 @@
-using Assets.Scripts.DroonComlinks.Ui;
 using UI.Xml;
 using UnityEngine;
 
@@ -9,8 +8,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.ListItems
         public delegate void strDelegate(string itemType, string source, string text, string data);
         public static string buttonId = "button-list-item", labelButtonId = "labelbutton-list-item", textValueId = "textvalue-list-item", dropDownId = "dropdown-list-item";
         public static string antennasDropDownID = "antennas_dropdown", nodesInDirectRangeDropDownID = "nodes_in_direct_range_dropdown", nodesInRelayRangeDropDownID = "nodes_in_relay_range_dropdown";
-        public static IUIListItem emptyListItem => new UIListTextValue<string>("---", () => "---");
-        public static string GetButtonId(string parentId, string text) => UIListItems.buttonId + "," + parentId + "," + text;
+        public static string GetButtonId(string parentId, string text) => buttonId + "," + parentId + "," + text;
 
         public static XmlElement InitiliseTemplate(XmlElement template, XmlElement parent, out string parentId)
         {

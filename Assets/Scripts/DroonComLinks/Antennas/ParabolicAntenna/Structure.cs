@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna {
@@ -11,10 +9,24 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna {
         private Mesh _colliderMesh;
         private Vector3[] _vertices;
         private Vector4[] _uvs;
-        private Vector3 noPoint = new Vector3 (9182367, 2973, 0209736);
+        private Vector3 noPoint = new(9182367, 2973, 0209736);
         private int[] _triangles;
-        private int verticsIndex, triangleIndex, _verticsToShow, _parabolaDivCount, pointsToConnect, _totalVertices, _resolution, subPartId;
-        private float parabolaDivWidth, ridgeDivWidth, _focalLength, _depth, _verticsScale, _radius, _strucureRadius, structureDivAngle;
+        private int verticsIndex;
+        private int triangleIndex;
+        private readonly int _verticsToShow;
+        private readonly int _parabolaDivCount;
+        private int pointsToConnect;
+        private int _totalVertices;
+        private int _resolution;
+        private int subPartId;
+        private readonly float parabolaDivWidth;
+        private readonly float ridgeDivWidth;
+        private float _focalLength;
+        private float _depth;
+        private readonly float _verticsScale;
+        private float _radius;
+        private float _strucureRadius;
+        private float structureDivAngle;
 
         public void Initialize () {
             _mesh = new Mesh ();
@@ -43,8 +55,8 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna {
 
             for (int i = 0; i < suportArmCount; i++, angle += angleStep) {
                 float pos = structurePos * _radius;
-                Vector3 A = new Vector3 (offset.y, _focalLength, 0);
-                Vector3 B = new Vector3 (pos, HeightOnParabola (pos));
+                Vector3 A = new(offset.y, _focalLength, 0);
+                Vector3 B = new(pos, HeightOnParabola (pos));
 
                 Point (_focalLength + offset.x * radius, 0, angle, Vector3.right);
                 AnglePoint (_focalLength + offset.x * radius, offset.y * radius, angle, Vector3.right, B - A);
@@ -81,10 +93,10 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna {
 
         private void Point (float height, float centerOffset, float angle, Vector3 rotation, float hemiOffset = 0) {
             Point ();
-            Vector3 center = new Vector3 (Mathf.Cos (angle) * centerOffset, height, Mathf.Sin (angle) * centerOffset);
+            Vector3 center = new(Mathf.Cos (angle) * centerOffset, height, Mathf.Sin (angle) * centerOffset);
             rotation = Quaternion.Euler (0, -angle * Mathf.Rad2Deg, 0) * rotation;
 
-            Plane p = new Plane (Vector3.forward, Vector3.zero);
+            Plane p = new(Vector3.forward, Vector3.zero);
             Vector3 xAxis = Vector3.up;
             Vector3 yAxis = Vector3.right;
             if (p.GetSide (rotation)) {
@@ -108,7 +120,7 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna {
             float f = 1 / (4 * _focalLength);
 
             rotation = Quaternion.Euler (0, -angle * Mathf.Rad2Deg, 0) * rotation;
-            Plane p = new Plane (Vector3.forward, Vector3.zero);
+            Plane p = new(Vector3.forward, Vector3.zero);
             Vector3 xAxis = Vector3.up;
             Vector3 yAxis = Vector3.right;
 

@@ -31,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,7 +53,7 @@ MonoBehaviour:
     _allowIndividualPartRemoval: 0
     _defaultColorIndexPrimary: 0
     _defaultColorIndexTrim1: 1
-    _defaultColorIndexTrim2: 1
+    _defaultColorIndexTrim2: 2
     _defaultColorIndexTrim3: 3
     _defaultColorIndexTrim4: 4
     _id: DipoleAntenna
@@ -60,7 +61,7 @@ MonoBehaviour:
     _mirrorConfig:
       _hasRotationOffset: 0
       _rotationOffsetEuler: {x: 0, y: 0, z: 0}
-    _name: DipoleAntenna
+    _name: Dipole Antenna
     _partCollisionHandling: 0
     _price: 0
     _unscaledMass: 0
@@ -79,9 +80,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     _activationGroup: 0
-    _category: {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
-    _description: An antenna made of two metal rods.
-    _displayOrder: 10
+    _category: {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
+    _description: 
+    _displayOrder: 0
     _iconPath: 
     _iconType: 0
     _name: Dipole Antenna
@@ -111,6 +112,8 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _autoActivateIfNoStageOrActivationGroup: 1
     _buoyancyBaseScale: 1
     _buoyancyUserScale: 1
@@ -124,16 +127,20 @@ MonoBehaviour:
     _collisionVelocityMode: 2
     _dragScale: 1
     _dragScaleActive: 1
+    _dragScaleAngular: 1
     _explosiveness: 0
     _fuelLine: 0
     _heatShield: 0
     _heatShieldBaseScale: 1
     _heatShieldMass: 0
     _heatShieldScale: -1
+    _heatShieldValidation: 1
+    _ignoreValidation: 0
     _includeInDrag: 1
     _inertiaTensorBaseScale: 1
     _inertiaTensorMin: 0.05
     _inertiaTensorUserScale: 1
+    _initialCraftNodeId: -1
     _massScale: 1
     _maxDamage: 100
     _maxDrag: 0
@@ -143,13 +150,16 @@ MonoBehaviour:
     _partCollisionHandling: 0
     _partCollisionResponse: 2
     _partScale: {x: 1, y: 1, z: 1}
+    _partSelectionEnabled: 1
     _preventDebris: 0
+    _priceScale: 1
     _raiseWaterEventsEvenIfNotBuoyant: 0
     _renderQueue: 0
     _stageActivationType: 0
-    _supportsActivation: 1
+    _supportsActivation: 0
     _supportsTransparency: 1
     _thermalMassRatio: 1
+    _tutorialId: 
 --- !u!114 &3858852111631697370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,9 +178,11 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
-    _length: 0.7
-    _width: 0.04
+    _version: 1
+    _versionLast: 1
     _antennaType: 0
+    _length: 0.7
+    _thickness: 0.04
 --- !u!114 &8999818568977094435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,10 +201,12 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _size: 1
-    maxPower: 7
-    _frequency: 10
-    _fractionalBandWidth: 0.1
+    _maxPower: 0
+    _frequency: 0
+    _fractionalBandWidth: 0
     _efficiency: 0.6
     _bitPerCycle: 1
     _customAntenna: 0

@@ -5,7 +5,6 @@ namespace Assets.Scripts.DroonComLinks.Antennas
     public interface IDCLAntennaData
     {
         IAntennaType type { get; }
-        float gain { get; }
         int price { get; } //$
         float mass { get; } //Kg
         void OnSizeChanged(float _size);

@@ -20,7 +20,7 @@
 
         <!-- Main Panel -->
         <VerticalLayout class="panel border dialog-panel" preferredHeight="150" childAlignment="UpperCenter" childForceExpandHeight="false" padding="10" spacing="5">
-            <!-- Slected Part Text -->
+            <!-- Selected Part Text -->
             <Panel class="property-row row ">
                 <TextMeshPro class="label" text="Selected Part" />
                 <TextMeshPro id="selected-part-text" class="value" text="none" alignment="Right" />

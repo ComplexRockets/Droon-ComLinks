@@ -1,32 +1,31 @@
 using System;
 using Assets.Scripts.DroonComlinks.Ui;
+using Assets.Scripts.DroonComLinks.Network;
 using TMPro;
 using UI.Xml;
-using UnityEngine;
 
 namespace Assets.Scripts.DroonComLinks.Ui.ListItems
 {
     public class UIListTextValue<T> : IUIListItem
     {
-        public XmlElement template = new XmlElement();
+        public XmlElement template = new();
         public string Id { get; private set; }
-        private string _label;
-        private Func<T> ValueGetter;
+        private readonly string _label;
+        private readonly Func<T> ValueGetter;
         private XmlElement _component;
         private TextMeshProUGUI _labelElement;
         private TextMeshProUGUI _valueElement;
 
-        public UIListTextValue(string label, Func<T> valueGetter)
+        public UIListTextValue(string label, Func<T> valueGetter, UIListItems.strDelegate OnInteracted)
         {
             ValueGetter = valueGetter;
             _label = label;
-            template = Mod.Instance.comLinksManager.flightUI.textValueListItemTemplate;
+            template = ComLinksManager.Instance.FlightUI.textValueListItemTemplate;
         }
 
-        public void AddTo(XmlElement parent, UIListItems.strDelegate OnInteracted)
+        public void AddTo(XmlElement parent)
         {
-            string parentId;
-            _component = UIListItems.InitiliseTemplate(template, parent, out parentId);
+            _component = UIListItems.InitiliseTemplate(template, parent, out string parentId);
             _component.SetAttribute("id", GetId(parent));
             _component.ApplyAttributes();
 

@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512117658380228111}
   m_RootOrder: 3
@@ -57,6 +58,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5803097314655645457}
   m_RootOrder: 0
@@ -79,6 +81,7 @@ MonoBehaviour:
     _canReceive: 1
     _canSeek: 1
     _connectionType: 1
+    _crewTraversable: 0
     _disableJointCollisions: 0
     _displayName: 
     _fuelLine: 0
@@ -86,13 +89,17 @@ MonoBehaviour:
     _ignoreSurfaces: 0
     _jointType: 0
     _localJointAxis: {x: 0, y: 0, z: 1}
+    _position: {x: 0, y: 0, z: 0}
     _radius: 0
     _rayCastFromCursor: 0
     _renderQueue: 0
     _requiresPhysicsJoint: 0
+    _rotation: {x: 0, y: 0, z: 0}
+    _scale: 1
     _surfaceCollider: {fileID: 0}
     _surfaceColliderName: 
     _tag: 
+    _upVectorOverride: {x: 0, y: 0, z: 0}
 --- !u!1 &1884705087902628143
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +126,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3634286720523054139}
   m_Father: {fileID: 512117658380228111}
@@ -151,6 +159,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3782678961892799103}
   m_Father: {fileID: 512117658380228111}
@@ -201,6 +210,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6562784638322974499}
   m_RootOrder: 0
@@ -250,6 +260,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6287563923038907853}
   m_Father: {fileID: 512117658380228111}
@@ -282,6 +293,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1717408783855168351}
   - {fileID: 6214362836056665158}
@@ -372,6 +384,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6214362836056665158}
     m_Modifications:
+    - target: {fileID: 1059162843964757239, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
+      propertyPath: Data._maxPower
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059162843964757239, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
+      propertyPath: Data._frequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059162843964757239, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
+      propertyPath: Data._fractionalBandWidth
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1517897235081410677, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
       propertyPath: Data._defaultColorIndexTrim1
       value: 0
@@ -388,6 +412,14 @@ PrefabInstance:
       propertyPath: Data._defaultColorIndexTrim4
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5151027125226839649, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
+      propertyPath: Data._name
+      value: Whip Antenna
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151027125226839649, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
+      propertyPath: Data._category
+      value: 
+      objectReference: {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
     - target: {fileID: 5151027125226839649, guid: 50d3f6a7db2164504ab75ff51e0be91b, type: 3}
       propertyPath: Data._showInDesigner
       value: 1

@@ -13,7 +13,7 @@ namespace Assets.Scripts.DroonComLinks.Antennas.WhipAntennas
         bool animating { get; set; }
         bool opened { get; set; }
         void Initialize(Transform parent, bool customAntenna, WhipAntennaData data);
-        void Update(WhipAntennaData data);
+        void UpdateAntenna(WhipAntennaData data);
         void SetPosition(bool startOpen);
         IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data);
         void Destroy();

@@ -53,9 +53,9 @@ namespace Assets.Scripts.DroonComLinks.Antennas.WhipAntennas.Deployable
             }
         }
 
-        public void Update(WhipAntennaData data)
+        public void UpdateAntenna(WhipAntennaData data)
         {
-            if (!custom) _segments[0].transform.localScale = new Vector3(data.size, data.size, data.size);
+            if (!custom) _segments[0].transform.localScale = new Vector3(data.Size, data.Size, data.Size);
         }
 
         public void SetPosition(bool startOpen)

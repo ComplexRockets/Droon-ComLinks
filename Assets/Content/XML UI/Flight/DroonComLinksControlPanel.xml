@@ -14,7 +14,7 @@
 
     <RectTransform class="safe-area">
         <!--Status Icons-->
-        <Panel id="status-icons-panel" class="flight-panel" width="80" height="39.5" rectAlignment="UpperRight" offsetXY="-279.5 0" onClick="OnToggleReducedStatus();" tooltip="Open DCL Status Panel" tooltipPosition="Left" active="true">
+        <Panel id="status-icons-panel" class="flight-panel" width="80" height="39.5" rectAlignment="UpperRight" offsetXY="-279.5 0" onClick="OnToggleNetworkStatus();" tooltip="Open DCL Status Panel" tooltipPosition="Left" active="true">
             <!--<Panel class="no-image" width="30" height="35" rectAlignment="CenterLeft" offsetXY="-20 2">
                 <Image id="2Connection3" color="FaintGreen" sprite="Droon ComLinks/Sprites/NetworkD" width="4" height="17" rectAlignment="LowerLeft" offsetXY="12 0" />
                 <Image id="2Connection2" color="SuccessHover" sprite="Droon ComLinks/Sprites/NetworkC" width="4" height="13" rectAlignment="LowerLeft" offsetXY="8 0" />
@@ -171,7 +171,7 @@
                                 <Button class="btn menu-button" onClick="">
                                     <TextMeshPro text="Mod On/Off" color="White" />
                                 </Button>
-                                <Button class="btn menu-button" onClick="OnToggleStatus();">
+                                <Button class="btn menu-button" onClick="OnToggleNetworkStatus();">
                                     <TextMeshPro text="Debug" color="White" />
                                 </Button>
                                 <Button class="btn menu-button" onClick="">
@@ -201,7 +201,7 @@
                 <!--Header-->
                 <Panel class="inspector-header" preferredHeight="30">
                     <TextMeshPro text="DCL Network Status [This Panel is a work in progress, its pretty buggy]" color="Primary" fontStyle="UpperCase" alignment="Center" />
-                    <Image class="audio-btn-click inspector-panel-pin dcl-button" sprite="Ui/Sprites/Common/IconCloseFlyout" onClick="OnToggleStatus" />
+                    <Image class="audio-btn-click inspector-panel-pin dcl-button" sprite="Ui/Sprites/Common/IconCloseFlyout" onClick="OnToggleNetworkStatus" />
                 </Panel>
 
                 <!--Global Info Panel-->

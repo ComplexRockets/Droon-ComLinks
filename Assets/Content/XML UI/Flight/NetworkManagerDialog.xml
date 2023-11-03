@@ -1,0 +1,27 @@
+<XmlLayout xmlns="http://www.w3schools.com"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Packages/ThirdParty/XmlLayout/UI/XmlLayout/Configuration/XmlLayout.xsd">
+    <Include path="Ui/Xml/Styles.xml" />
+    <Defaults>
+        <Panel class="main-panel" maxSize="1080,600" />
+        <Panel class="main-panel-size" width="80%" height="90%" device="desktop" />
+        <ContentButton class="category" color="#ffffff33" />
+        <ContentButton class="selected" color="#ffffffff" />
+        <Image class="category-icon" width="64" height="64" />
+    </Defaults>
+
+    <Panel id="click-blocker" class="audio-btn-back" opacity="0" height="100%" width="100%" raycastTarget="true" onClick="OnCloseButtonClicked();" />
+
+    <Panel class="translucent-panel border safe-area main-panel main-panel-size" raycastTarget="true">
+        <VerticalLayout width="100" childForceExpandHeight="true" spacing="0" pivot="1 1" padding="0" rectAlignment="UpperLeft" offsetMin="0 0" offsetMax="100 0">
+            <ContentButton class="category btn icon-button audio-btn-click" internalId="nodes" onClick="OnCategoryClicked(this);">
+                <Image sprite="Ui/Sprites/Career/IconCareerContracts" class="category-icon" />
+            </ContentButton>
+            <ContentButton class="category btn icon-button audio-btn-click" internalId="connections" onClick="OnCategoryClicked(this);">
+                <Image sprite="Ui/Sprites/Career/IconCareerMilestones" class="category-icon" />
+            </ContentButton>
+        </VerticalLayout>
+
+        <Panel id="list-view-panel" offsetMin="100 0">
+        </Panel>
+    </Panel>
+</XmlLayout>

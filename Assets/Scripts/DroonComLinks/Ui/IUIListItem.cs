@@ -5,7 +5,7 @@ namespace Assets.Scripts.DroonComlinks.Ui
 {
     public interface IUIListItem
     {
-        void AddTo(XmlElement parent, UIListItems.strDelegate OnInteracted);
+        void AddTo(XmlElement parent);
         void Update();
         string GetId(XmlElement parent);
         string Id { get; }

@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.DroonComlinks.Ui;
+using Assets.Scripts.DroonComLinks.Network;
 using TMPro;
 using UI.Xml;
 
@@ -7,22 +8,24 @@ namespace Assets.Scripts.DroonComLinks.Ui.ListItems
 {
     public class UIListButton : IUIListItem
     {
-        public XmlElement template = new XmlElement();
+        public XmlElement template = new();
         public string Id { get; private set; }
-        private string _text;
+        private readonly string _text;
+        private readonly UIListItems.strDelegate _OnInteracted;
 
-        public UIListButton(string text)
+        public UIListButton(string text, UIListItems.strDelegate OnInteracted)
         {
             _text = text;
-            template = Mod.Instance.comLinksManager.flightUI.buttonListItemTemplate;
+            if (OnInteracted == null) _OnInteracted = delegate (string T, string s, string t, string d) { DCLUIManager.flightUI.OnListItemInteracted(T, s, t, d); };
+            else _OnInteracted = OnInteracted;
+            template = ComLinksManager.Instance.FlightUI.buttonListItemTemplate;
         }
 
-        public void AddTo(XmlElement parent, UIListItems.strDelegate OnInteracted)
+        public void AddTo(XmlElement parent)
         {
-            string parentId;
-            XmlElement component = UIListItems.InitiliseTemplate(template, parent, out parentId);
+            XmlElement component = UIListItems.InitiliseTemplate(template, parent, out string parentId);
 
-            component.AddOnClickEvent(delegate { OnInteracted(UIListItems.buttonId, parentId, _text, _text); });
+            component.AddOnClickEvent(delegate { _OnInteracted(UIListItems.buttonId, parentId, _text, _text); });
             component.SetAttribute("id", GetId(parentId));
             component.GetElementByInternalId<TextMeshProUGUI>("text").SetText(_text);
             component.ApplyAttributes();

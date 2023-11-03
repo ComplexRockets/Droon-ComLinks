@@ -9,7 +9,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     public class ParabolicAntennaScript : PartModifierScript<ParabolicAntennaData>, IDCLAntennaScript
     {
         public IDCLAntennaData data => Data;
-        public DCLAntennaData antennaData
+        public DCLAntennaData AntennaData
         {
             get
             {
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             }
         }
         private DCLAntennaData _antennaData;
-        private Mod _mod = Mod.Instance;
+        private readonly Mod _mod = Mod.Instance;
         private GameObject _parabolaParent;
         private ParabolicAntennaMesh _parabola;
         public UpperElement upperElement { get; private set; }
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         public void Initialize(DCLAntennaData AntennaData, float size)
         {
             _antennaData = AntennaData;
-            if (!antennaData.customAntenna)
+            if (!this.AntennaData.CustomAntenna)
             {
                 _parabolaParent = transform.Find("Mesh").gameObject;
                 _parabola = transform.GetComponentInChildren<ParabolicAntennaMesh>();
@@ -44,25 +44,23 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         public void UpdateAntenna()
         {
-            if (!antennaData.customAntenna)
+
+            if (!AntennaData.CustomAntenna)
             {
                 upperElement?.Destroy();
-                upperElement = new UpperElement(Data.upperElement, Data.secondaryReflector, _parabolaParent.transform, PartScript);
-                upperElement.gameObject.transform.localPosition = new Vector3(0, Data.focalLength, 0);
-                upperElement.gameObject.transform.localScale = new Vector3(Data.radius, Data.radius, Data.radius);
+                upperElement = new UpperElement(Data.UpperElement, Data.SecondaryReflector, _parabolaParent.transform, PartScript);
+                upperElement.gameObject.transform.localPosition = new Vector3(0, Data.FocalLength, 0);
+                upperElement.gameObject.transform.localScale = new Vector3(Data.Radius, Data.Radius, Data.Radius);
 
                 lowerElement?.Destroy();
-                if (Data.secondaryReflector)
+                if (Data.SecondaryReflector)
                 {
-                    lowerElement = new LowerElement(Data.lowerElement, _parabolaParent.transform, PartScript);
-                    lowerElement.gameObject.transform.localScale = new Vector3(Data.radius, Data.radius, Data.radius);
+                    lowerElement = new LowerElement(Data.LowerElement, _parabolaParent.transform, PartScript);
+                    lowerElement.gameObject.transform.localScale = new Vector3(Data.Radius, Data.Radius, Data.Radius);
                 }
 
-                _parabola.CreateMesh( //TODO: make that cleaner or maybe not
-                    Data.radius, Data.depth, Data.parabolaResolution, Data.parabolaDivCount, Data.thickness, Data.ridgeA, Data.ridgeB, Data.ridgeDivCount, Data.ridgeWidth, Data.straightSide, Data.bottomRadius, Data.bottomDepth, Data.bottomOffset,
-                    Data.structureResolution, Data.supportArmPos, Data.supportArmRadius, Data.supportArmCount, Data.doubleSupportArmOffset, upperElement.offset
-                );
-                _parabolaParent.transform.localPosition = new Vector3(0, -_parabola.lowestPoint, 0);
+                _parabola.CreateMesh(Data, upperElement.offset);
+                _parabolaParent.transform.localPosition = new Vector3(0, -_parabola.LowestPoint, 0);
 
                 PartScript.InitializeColliders();
                 foreach (Renderer r in _parabola.GetComponentsInChildren<Renderer>())

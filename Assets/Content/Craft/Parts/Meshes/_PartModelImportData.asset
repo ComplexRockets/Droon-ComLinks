@@ -24,59 +24,16 @@ MonoBehaviour:
       _submeshMap: 00000000
       _subpartId: 0
     _model: {fileID: -927199367670048503, guid: 0ff3498247a3544118d5b8230f688c3f, type: 3}
-  - _id: CassiniAntennaDecimated
+  - _id: Patch Antenna
     _meshes:
-    - _id: Body8
+    - _id: Trim22
       _initialized: 1
       _isCollider: 0
       _antiDistortion: 0
-      _mesh: {fileID: -5646418913876977197, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
-      _subpartId: 0
-    - _id: Body10
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 4529524283109666172, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
+      _mesh: {fileID: -8446321372736730021, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
       _sortOrderOverride: 
       _submeshMap: 02000000
       _subpartId: 0
-    - _id: Body20
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 2425885328825229046, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Body21
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -6443314645571437240, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 03000000
-      _subpartId: 0
-    - _id: Body26
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -8640798940867185924, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 04000000
-      _subpartId: 0
-    - _id: Body27
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -9026155364463262221, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 04000000
-      _subpartId: 0
-    _model: {fileID: -927199367670048503, guid: 2a4cfefff40214aa19567ee96e6905f8, type: 3}
-  - _id: Cubesat S-Band Antenna
-    _meshes:
     - _id: Primary
       _initialized: 1
       _isCollider: 0
@@ -85,29 +42,13 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 00000000
       _subpartId: 0
-    - _id: Trim1
+    - _id: Trim33
       _initialized: 1
       _isCollider: 0
       _antiDistortion: 0
-      _mesh: {fileID: -5230616835874375908, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _mesh: {fileID: 6524174534790634046, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
       _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim21
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 5311703848790529931, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 02000000
-      _subpartId: 0
-    - _id: Trim22
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -8446321372736730021, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 02000000
+      _submeshMap: 03000000
       _subpartId: 0
     - _id: Trim31
       _initialized: 1
@@ -125,14 +66,6 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 03000000
       _subpartId: 0
-    - _id: Trim33
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 6524174534790634046, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 03000000
-      _subpartId: 0
     - _id: Trim34
       _initialized: 1
       _isCollider: 0
@@ -140,6 +73,22 @@ MonoBehaviour:
       _mesh: {fileID: -7220215946760863394, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
       _sortOrderOverride: 
       _submeshMap: 03000000
+      _subpartId: 0
+    - _id: Trim1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5230616835874375908, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
+    - _id: Trim21
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 5311703848790529931, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 02000000
       _subpartId: 0
     _model: {fileID: -927199367670048503, guid: 66513c232c37d4db7ac366922d64cdd7, type: 3}
   - _id: Cylinder
@@ -174,6 +123,14 @@ MonoBehaviour:
     _model: {fileID: 919132149155446097, guid: 474fc1b1ada4f41969bb41c1c3309ac5, type: 3}
   - _id: DoubleDipoleAntenna1
     _meshes:
+    - _id: DoubleDipoleAntenna1
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 3859604845735419590, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
     - _id: Cylinder.001
       _initialized: 1
       _isCollider: 0
@@ -189,14 +146,6 @@ MonoBehaviour:
       _mesh: {fileID: 8691780276856062721, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
       _sortOrderOverride: 
       _submeshMap: 02000000
-      _subpartId: 0
-    - _id: DoubleDipoleAntenna1
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 3859604845735419590, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
       _subpartId: 0
     _model: {fileID: 919132149155446097, guid: 383355bbb9be94d65818fcf7d0500dec, type: 3}
   - _id: FixedMonopoleAntenna1
@@ -240,153 +189,6 @@ MonoBehaviour:
       _submeshMap: 02000000
       _subpartId: 2
     _model: {fileID: -927199367670048503, guid: ac524eaab42964b84b26ade41e1e0f69, type: 3}
-  - _id: Mobile LaserAntenna
-    _meshes:
-    - _id: Primary1
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 3583862473919851754, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
-      _subpartId: 0
-    - _id: Primary2
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -8796708376038297712, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
-      _subpartId: 0
-    - _id: Primary3
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 4182579778746039484, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
-      _subpartId: 0
-    - _id: Trim11
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 943518090189540724, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim12
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -1307931947558602985, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim13
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -945593978242962699, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim14
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 7189775390134331234, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim15
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -7404687883466274150, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim16
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 7786599114484539436, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim17
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -6269370193215814616, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim18
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -4996251738672175086, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim19
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 4902308439008885043, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim21
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 5311703848790529931, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 02000000
-      _subpartId: 0
-    - _id: Trim22
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -8446321372736730021, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 02000000
-      _subpartId: 0
-    - _id: Trim110
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -7390889914436891193, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim111
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -5242856339698189210, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim112
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 7196962531966370064, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    - _id: Trim113
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -8065571109082864756, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
-    _model: {fileID: -927199367670048503, guid: ade4a5ffd5cb84784b4d4d518c5d6beb, type: 3}
   - _id: Parabola
     _meshes:
     - _id: Sphere.002
@@ -449,13 +251,13 @@ MonoBehaviour:
     _model: {fileID: 919132149155446097, guid: 6962298725335460eb8b2d35e5b2da70, type: 3}
   - _id: ReceiverUP1
     _meshes:
-    - _id: BezierCurve
+    - _id: ReceiverUP1
       _initialized: 1
       _isCollider: 0
       _antiDistortion: 0
-      _mesh: {fileID: 150581138598605843, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+      _mesh: {fileID: 2937698237522372156, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
       _sortOrderOverride: 
-      _submeshMap: 04000000
+      _submeshMap: 03000000
       _subpartId: 4
     - _id: BezierCurve.001
       _initialized: 1
@@ -465,13 +267,13 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 04000000
       _subpartId: 4
-    - _id: ReceiverUP1
+    - _id: BezierCurve
       _initialized: 1
       _isCollider: 0
       _antiDistortion: 0
-      _mesh: {fileID: 2937698237522372156, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
+      _mesh: {fileID: 150581138598605843, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
       _sortOrderOverride: 
-      _submeshMap: 03000000
+      _submeshMap: 04000000
       _subpartId: 4
     _model: {fileID: -927199367670048503, guid: cfb3f1c7f3c1e42e58cfdc28b922cd68, type: 3}
   - _id: ReflectorUP1
@@ -487,14 +289,6 @@ MonoBehaviour:
     _model: {fileID: -927199367670048503, guid: 0bba3799438b847169a8be6cb51dc13a, type: 3}
   - _id: ReflectorUP2
     _meshes:
-    - _id: Cube
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -5495902117074765545, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 03000000
-      _subpartId: 4
     - _id: ReflectorUP2
       _initialized: 1
       _isCollider: 0
@@ -502,6 +296,14 @@ MonoBehaviour:
       _mesh: {fileID: 6570371372631914681, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
       _sortOrderOverride: 
       _submeshMap: 04000000
+      _subpartId: 4
+    - _id: Cube
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -5495902117074765545, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 03000000
       _subpartId: 4
     _model: {fileID: -927199367670048503, guid: ffa6bf3a7203c4e4590ff3c737e78b1e, type: 3}
   - _id: ReflectorUP2.1
@@ -539,6 +341,14 @@ MonoBehaviour:
     _model: {fileID: -927199367670048503, guid: 27d92a605c80b49e88f17f8285f582fd, type: 3}
   - _id: WhipAntenna
     _meshes:
+    - _id: WipAntenna
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4190129258100037064, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
     - _id: LowPolyCylinder.001
       _initialized: 1
       _isCollider: 0
@@ -587,38 +397,22 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 02000000
       _subpartId: 0
-    - _id: WipAntenna
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 4190129258100037064, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
-      _subpartId: 0
     _model: {fileID: 919132149155446097, guid: eaada6c76f04743bc94d324ccca31df0, type: 3}
   - _id: WhipAntenna2
     _meshes:
+    - _id: Whip Antenna 2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -840199876072796960, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 01000000
+      _subpartId: 0
     - _id: Hinge1
       _initialized: 1
       _isCollider: 0
       _antiDistortion: 0
       _mesh: {fileID: 123211937855103052, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 04000000
-      _subpartId: 0
-    - _id: Hinge2
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 4759731074568979303, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 04000000
-      _subpartId: 0
-    - _id: Hinge3
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -2923822569955819319, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
       _sortOrderOverride: 
       _submeshMap: 04000000
       _subpartId: 0
@@ -630,6 +424,14 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 00000000
       _subpartId: 0
+    - _id: Hinge2
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 4759731074568979303, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
+      _subpartId: 0
     - _id: Segment2
       _initialized: 1
       _isCollider: 0
@@ -637,6 +439,14 @@ MonoBehaviour:
       _mesh: {fileID: 6114851100424566214, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
       _sortOrderOverride: 
       _submeshMap: 02000000
+      _subpartId: 0
+    - _id: Hinge3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: -2923822569955819319, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 04000000
       _subpartId: 0
     - _id: Segment3
       _initialized: 1
@@ -646,17 +456,17 @@ MonoBehaviour:
       _sortOrderOverride: 
       _submeshMap: 03000000
       _subpartId: 0
-    - _id: Whip Antenna 2
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: -840199876072796960, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 01000000
-      _subpartId: 0
     _model: {fileID: 919132149155446097, guid: cedbed89b7ed74c86b576aa8f2b56909, type: 3}
   - _id: WhipAntenna3
     _meshes:
+    - _id: WhipAntenna 3
+      _initialized: 1
+      _isCollider: 0
+      _antiDistortion: 0
+      _mesh: {fileID: 2021709294001178597, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
+      _sortOrderOverride: 
+      _submeshMap: 00000000
+      _subpartId: 0
     - _id: Segment1
       _initialized: 1
       _isCollider: 0
@@ -680,13 +490,5 @@ MonoBehaviour:
       _mesh: {fileID: -7502714479175172880, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
       _sortOrderOverride: 
       _submeshMap: 03000000
-      _subpartId: 0
-    - _id: WhipAntenna 3
-      _initialized: 1
-      _isCollider: 0
-      _antiDistortion: 0
-      _mesh: {fileID: 2021709294001178597, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}
-      _sortOrderOverride: 
-      _submeshMap: 00000000
       _subpartId: 0
     _model: {fileID: 919132149155446097, guid: a03a3e93a5d9244f48a0960dca2f1ca5, type: 3}

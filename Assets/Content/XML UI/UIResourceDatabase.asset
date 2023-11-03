@@ -18,10 +18,16 @@ MonoBehaviour:
   - Content/XML UI
   AutomaticallyRemoveEntries: 1
   entries:
+  - path: Droon ComLinks/Designer/DCLFlyout
+    resource: {fileID: 4900000, guid: 3057ce282dffe445880fad0122cb4d49, type: 3}
   - path: Droon ComLinks/Designer/VanillaAntennaGeneratorDialog
     resource: {fileID: 4900000, guid: ec88cb3470e4d40b989b64634b9c8a25, type: 3}
   - path: Droon ComLinks/Flight/DroonComLinksControlPanel
     resource: {fileID: 4900000, guid: 22485e6608dd64816881b44b757d9597, type: 3}
+  - path: Droon ComLinks/Flight/NetworkManagerDialog
+    resource: {fileID: 4900000, guid: 9a1fbe0f2d08e46d6aea90d31d885e81, type: 3}
+  - path: Droon ComLinks/Flight/NetworkManagerListView
+    resource: {fileID: 4900000, guid: 441d1756a87cd4cee8a7a45a650a7b51, type: 3}
   - path: Droon ComLinks/Flight/XmlLayout
     resource: {fileID: 102900000, guid: 08958706396694befaac7bafe9e98f1a, type: 3}
   - path: Droon ComLinks/Sprites/AngledRect

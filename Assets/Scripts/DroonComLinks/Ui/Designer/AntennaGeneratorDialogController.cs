@@ -21,8 +21,8 @@ namespace Assets.Scripts.DroonComLinks.Ui.Designer
         private TextMeshProUGUI _partIdText;
         private TMP_Dropdown _typesSelector;
         private IPartScript _selectedPart => Game.Instance.Designer.SelectedPart;
-        private Dictionary<string, string> _properties = new Dictionary<string, string>();
-        private int _defaultHeight = 260;
+        private readonly Dictionary<string, string> _properties = new();
+        private readonly int _defaultHeight = 260;
         private int _height = 0;
 
         public static AntennaGeneratorDialogController Create()
@@ -106,7 +106,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Designer
         {
             //Reset everything
             _properties.Clear();
-            List<XmlElement> elements = new List<XmlElement>(_inputParent.childElements);
+            List<XmlElement> elements = new(_inputParent.childElements);
             foreach (XmlElement element in elements) if (element != _inputTemplate) _inputParent.RemoveChildElement(element, true);
             _height = 0;
 
@@ -130,7 +130,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Designer
 
         private void AddElment(string attribute, string value, bool fix = true, bool hidden = false)
         {
-            if (ModSettings.Instance.debugMode) Debug.Log("adding element " + attribute + " : " + value + " " + fix + " " + hidden);
+            if (ModSettings.Instance.DebugMode) Debug.Log("adding element " + attribute + " : " + value + " " + fix + " " + hidden);
             //Instantiate the new element
             XmlElement inputfield = GameObject.Instantiate(_inputTemplate);
             XmlElement component = inputfield.GetComponent<XmlElement>();
@@ -155,7 +155,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Designer
 
         private void OnInputFieldEdited(string attribute, string value)
         {
-            if (ModSettings.Instance.debugMode) Debug.Log("Attribute " + attribute + " edited " + value);
+            if (ModSettings.Instance.DebugMode) Debug.Log("Attribute " + attribute + " edited " + value);
             _properties[attribute] = value;
         }
 
@@ -172,7 +172,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Designer
                 }
                 _selectedPart.OnCraftStructureChanged();
                 Game.Instance.Designer.ShowMessage("Generated Antenna\nPart " + _selectedPart.Data.Id + " is now an antenna of type " + type);
-    
+
             }
             else
             {

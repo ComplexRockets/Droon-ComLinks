@@ -5,11 +5,11 @@ namespace Assets.Scripts.DroonComLinks.Antennas
     public interface IAntennaType
     {
         bool custom { get; }
+        AntennaNames name { get; }
         string id { get; }
-        float sensitivityConstant { get; set; }
-        float txPowerRatio { get; set;}
-        float minFrenquency { get; } //GHz
-        float maxFrenquency { get; } //GHz
+        float txPowerRatio { get; set; }
+        float minFrequency { get; } //GHz
+        float maxFrequency { get; } //GHz
         float maxFractionalBandWidth { get; }
         float maxPower { get; } //W
         float azAngle { get; } //degrees

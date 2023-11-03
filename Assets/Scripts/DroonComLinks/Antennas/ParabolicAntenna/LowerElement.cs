@@ -11,12 +11,12 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
         public string name;
         public int type;
         public GameObject gameObject;
-        private IPartScript _partScript;
+        private readonly IPartScript _partScript;
         public Element elementData => Elements[type];
-        private static Element[] Elements = new Element[3] {
-                new Element ("ReceiverDown1", "Basic", 1000),
-                new Element ("ReceiverDown2", "Saturn", 3000),
-                new Element ("ReceiverDown3", "Long", 2500)
+        private static readonly Element[] Elements = new Element[3] {
+                new("ReceiverDown1", "Basic", 1000),
+                new("ReceiverDown2", "Saturn", 3000),
+                new("ReceiverDown3", "Long", 2500)
             };
         public static List<string> Receivers = Elements.Select(e => e.displayName).ToList();
 

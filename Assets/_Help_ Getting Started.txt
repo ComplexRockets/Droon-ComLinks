@@ -1,9 +1,9 @@
-Welcome to the SimpleRockets2 Mod Tools!
+Welcome to the Juno: New Origins Mod Tools!
 
-This text file, along with the other help text files, provides a bit of information to get started modding SimpleRockets2. For additional help and support, we recommend asking on the forums on our website: https://www.simplerockets.com/Forums/.
+This text file, along with the other help text files, provides a bit of information to get started modding Juno: New Origins. For additional help and support, we recommend asking on the forums on our website: https://www.simplerockets.com/Forums/.
 
 Initial Configuration:
-The first thing to do is to remove the TextMeshPro package from your Unity project via Unity's Package Manager. Next, in the player settings, ensure that the Scripting Runtime Version is set to .NET 4.x Equivalent and set the API Compatability Level to .NET 4.x. You may need to restart Unity. If you haven't already, import the SimpleRockets2 ModTools into your project. At this point, there should be no compililation errors and you should be good to go.
+The first thing to do is to remove the TextMeshPro package from your Unity project via Unity's Package Manager. Next, in the player settings, ensure that the Scripting Runtime Version is set to .NET 4.x Equivalent and set the API Compatability Level to .NET 4.x. You may need to restart Unity. If you haven't already, import the SimpleRockets2 ModTools into your project (the name is inherited from how the name was called during Early Access). At this point, there should be no compililation errors and you should be good to go.
 
 Getting Started:
 To get started on a mod, open the Mod Builder Window via the following menu item in the toolbar the top of Unity: SimpleRockets 2 -> Mod Builder Window. In the Mod Builder Window, give your mod a unique name; fill in the author, version, and description; and click 'Start Creating Mod'. This window is used for adding assets other new stuff to your mod (some stuff is automatically added, such as assemblies).

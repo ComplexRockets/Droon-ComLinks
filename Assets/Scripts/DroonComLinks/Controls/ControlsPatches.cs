@@ -13,6 +13,7 @@ using Assets.Scripts.Flight.Sim;
 using UnityEngine;
 using ModApi.Input;
 using ModApi.Flight.UI;
+using Assets.Scripts.DroonComLinks.Network;
 
 namespace Assets.Scripts.DroonComLinks.Controls
 {
@@ -21,12 +22,12 @@ namespace Assets.Scripts.DroonComLinks.Controls
     {
         public void PatchControls()
         {
-            Harmony harmony = new Harmony("com.aram.dcl");
-            if (ModSettings.Instance.debugMode) Harmony.DEBUG = true;
+            Harmony harmony = new("com.aram.dcl");
+            if (ModSettings.Instance.DebugMode) Harmony.DEBUG = true;
             harmony.PatchAll();
         }
 
-        public static bool RegisterExternalCommand(string id, bool needsPower = true) => Mod.Instance.comLinksManager.ManageComRequest(id, needsPower);
+        public static bool RegisterExternalCommand(string id, bool needsPower = true) => ComLinksManager.Instance.ManageComRequest(id, needsPower);
     }
 
     [HarmonyPatch(typeof(InputSliderScript), "UpdateHandlePosition")]
@@ -122,7 +123,7 @@ namespace Assets.Scripts.DroonComLinks.Controls
     [HarmonyPatch(typeof(FuelTankScript), "GenerateInspectorModel")]
     class FuelTankScriptInspectorModelPatch
     {
-        static void Postfix(IGroupModel group, InspectorModel model, bool flightScene, FuelTankScript __instance)
+        static void Postfix(IGroupModel group, bool flightScene, FuelTankScript __instance)
         {
             // Debug.Log("Instepctor Created for part " + __instance.PartScript.Data.Id);
             ManageGroup(group, __instance);
@@ -163,7 +164,7 @@ namespace Assets.Scripts.DroonComLinks.Controls
                         {
                             Traverse.Create(button).Field("_action").SetValue((Action<IconButtonModel>)delegate
                             {
-                                if (Mod.Instance.comLinksManager.ManageComRequest("FuelTransferMode" + fuelTransferMode.ToString()))
+                                if (ComLinksManager.Instance.ManageComRequest("FuelTransferMode" + fuelTransferMode.ToString()))
                                     if ((bool)Traverse.Create(instance).Field("_viewTankSet").GetValue())
                                     {
                                         instance.CraftFuelSource.FuelTransferMode = fuelTransferMode;

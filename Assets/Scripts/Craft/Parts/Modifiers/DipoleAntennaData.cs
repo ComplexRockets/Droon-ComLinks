@@ -16,7 +16,6 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     public class DipoleAntennaData : PartModifierData<DipoleAntennaScript>, IDCLAntennaData
     {
         public IAntennaType type => AntennaTypes.dipole;
-        public float gain => AntennaMath.GetGain(type, Script.antennaData.waveLength, size, Script.antennaData.efficiency);
         public float mass
         {
             get

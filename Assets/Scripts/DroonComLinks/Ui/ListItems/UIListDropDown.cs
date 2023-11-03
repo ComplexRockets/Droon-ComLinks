@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.DroonComlinks.Ui;
+using Assets.Scripts.DroonComLinks.Network;
 using TMPro;
 using UI.Xml;
 
@@ -9,33 +10,31 @@ namespace Assets.Scripts.DroonComLinks.Ui.ListItems
     public class UIListDropDown : IUIListItem
     {
         public string Id { get; private set; }
-        public XmlElement template = new XmlElement();
+        public XmlElement template = new();
         private TMP_Dropdown _dropDown;
         private XmlElement _component;
         public delegate void Del(string message);
-        private string _label;
-        private Func<IEnumerable<string>> ValueGetter;
+        private readonly string _label;
+        private readonly Func<IEnumerable<string>> ValueGetter;
+        private readonly UIListItems.strDelegate _OnInteracted;
 
-        public UIListDropDown(string label, Func<IEnumerable<string>> valueGetter)
+        public UIListDropDown(string label, Func<IEnumerable<string>> valueGetter, UIListItems.strDelegate OnInteracted)
         {
             _label = label;
             ValueGetter = valueGetter;
-            template = Mod.Instance.comLinksManager.flightUI.dropDownListItemTemplate;
+            if (OnInteracted == null) _OnInteracted = delegate (string T, string s, string t, string d) { DCLUIManager.flightUI.OnListItemInteracted(T, s, t, d); };
+            else _OnInteracted = OnInteracted;
+            template = ComLinksManager.Instance.FlightUI.dropDownListItemTemplate;
         }
 
-        public void AddTo(XmlElement parent, UIListItems.strDelegate OnInteracted)
+        public void AddTo(XmlElement parent)
         {
-            string parentId;
-            _component = UIListItems.InitiliseTemplate(template, parent, out parentId);
+            _component = UIListItems.InitiliseTemplate(template, parent, out string parentId);
             _component.SetAttribute("id", GetId(parent));
             _component.ApplyAttributes();
 
             _dropDown = _component.GetComponentInChildren<TMP_Dropdown>();
-            _dropDown.onValueChanged.AddListener(delegate (int x) { OnInteracted(UIListItems.dropDownId, parentId, _label, _dropDown.options[x].text); });
-
-            //XmlElement dropdownElement = _component.GetElementByInternalId ("dropdown");
-            //dropdownElement.AddOnMouseEnterEvent (delegate { dropdownElement.SetAndApplyAttribute ("width", "240%"); });
-            //dropdownElement.AddOnMouseExitEvent (delegate { dropdownElement.SetAndApplyAttribute ("width", "100%"); });
+            _dropDown.onValueChanged.AddListener(delegate (int x) { _OnInteracted(UIListItems.dropDownId, parentId, _label, _dropDown.options[x].text); });
 
             Update();
         }
@@ -49,7 +48,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.ListItems
 
         private void AddOption(string text, TMP_Dropdown dropDown)
         {
-            TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(text);
+            TMP_Dropdown.OptionData optionData = new(text);
             dropDown.options.Add(optionData);
         }
 

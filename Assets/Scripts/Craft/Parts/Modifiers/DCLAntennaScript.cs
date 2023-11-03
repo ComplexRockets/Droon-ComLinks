@@ -7,45 +7,34 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     using ModApi.Ui.Inspector;
     using ModApi.Ui;
     using Assets.Scripts.Design;
-    using System.Collections.Generic;
-    using UnityEngine;
     using Assets.Scripts.DroonComLinks.Controls;
-    using Assets.Scripts.Craft.Parts.Modifiers.Input;
+    using Assets.Scripts.DroonComLinks;
+    using Assets.Scripts.DroonComLinks.Network;
 
     public class DCLAntennaScript : PartModifierScript<DCLAntennaData> //, IFlightUpdate, IGameLoopItem
     {
-        public IDCLAntennaScript antennaScript
+        public IDCLAntennaScript AntennaScript
         {
             get
             {
                 try
                 {
-                    if (_antennaScript == null) _antennaScript = PartScript.GetModifierWithInterface<IDCLAntennaScript>();
+                    _antennaScript ??= PartScript.GetModifierWithInterface<IDCLAntennaScript>();
                     return _antennaScript;
                 }
                 catch { return null; }
             }
         }
-        public IDCLAntennaData antennaData
+        public IDCLAntennaData AntennaData
         {
             get
             {
-                if (antennaScript == null) return null;
+                if (AntennaScript == null) return null;
                 return _antennaScript.data;
             }
         }
         private IDCLAntennaScript _antennaScript;
-        public Antenna antenna
-        {
-            get
-            {
-                Dictionary<int, Antenna> antennaFromPartId = Mod.Instance.comLinksManager?.networkNodeFromCraftNode[PartScript.CraftScript.CraftNode]?.antennaFromPartId;
-                if (antennaFromPartId == null) return null;
-                if (antennaFromPartId.ContainsKey(PartScript.Data.Id)) return antennaFromPartId[PartScript.Data.Id];
-                return null;
-            }
-        }
-        public float gain => antennaData.gain;
+        public Antenna Antenna => ComLinksManager.Instance.GetAntennaFromId(PartScript.CraftScript.CraftNode.NodeId, PartScript.Data.Id);
 
         protected override void OnInitialized()
         {
@@ -53,67 +42,56 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             StartCoroutine(InitialiseCoroutine());
         }
 
-        public override void OnAddedToCraftInDesigner(bool subAssembly)
-        {
-            base.OnAddedToCraftInDesigner(subAssembly);
-            if (!subAssembly) StartCoroutine(FirstInitialiseCoroutine());
-        }
-
         private IEnumerator InitialiseCoroutine()
         {
-            while (antennaScript == null) yield return 0;
-            antennaScript.Initialize(Data, Data.size);
-        }
+            while (AntennaScript == null) yield return 0;
+            AntennaScript.Initialize(Data, Data.Size);
+            Data.UpdateAntenna();
 
-        private IEnumerator FirstInitialiseCoroutine()
-        {
-            while (Data.manager == null || antennaData == null) yield return 0;
-            Data.InitializeFields();
+            if (Data.MaxPower == 0) PartScript.Deactivate();
+            else PartScript.Activate();
         }
 
         public override void OnGenerateInspectorModel(PartInspectorModel model)
         {
-            if (!Data.customAntenna) model.Title = antennaData.type.id;
+            if (!Data.CustomAntenna) model.Title = AntennaData.type.id;
 
-            SliderModel maxPowerSlider = new SliderModel(
+            SliderModel maxPowerSlider = new(
                 "Max Power Consumption",
-                () => Data.maxPower,
+                () => Data.MaxPower,
                 (float p) =>
                 {
                     if (ControlsPatches.RegisterExternalCommand("AntennaMaxPowerConsumptionChanging", needsPower: false))
                     {
-                        Data.maxPower = AntennaTypes.ClampFloatAtribute(antennaData.type, AntennaTypes.FloatAttributes.MaxPower, p);
+                        Data.MaxPower = AntennaTypes.ClampAntennaAtribute(AntennaData.type, AntennaAttributes.maxPower, p);
 
-                        if (Data.maxPower == 0) PartScript.Deactivate();
+                        if (Data.MaxPower == 0) PartScript.Deactivate();
                         else PartScript.Activate();
                     }
                 },
                 0,
-                antennaData.type.maxPower
+                AntennaData.type.maxPower
             );
             maxPowerSlider.ValueChangedByUserInput += delegate
             {
                 ControlsPatches.RegisterExternalCommand("UserInputChangeAntennaMaxPowerConsumption");
-                Mod.Instance.comLinksManager?.ForceRefresh();
+                ComLinksManager.Instance.ForceRefresh();
             };
             maxPowerSlider.OnSliderAdjustmentEnded += delegate
             {
                 ControlsPatches.RegisterExternalCommand("ChangeAntennaMaxPowerConsumption");
-                Mod.Instance.comLinksManager?.ForceRefresh();
+                ComLinksManager.Instance.ForceRefresh();
             };
-            maxPowerSlider.ValueFormatter = ((float x) => $"{(x):n2} W");
+            maxPowerSlider.ValueFormatter = (float x) => $"{x:n2} W";
 
             model.Add(maxPowerSlider);
-            model.Add(new TextModel("Max Tx Power", () => (Data.maxTransmittedPower.ToString("n2") + " W")));
-            model.Add(new TextModel("Min Rx Power", () => (Data.minReceivablePower * Math.Pow(10, 19)).ToString("n2") + " E-19 W"));
-            model.Add(new TextModel("Freq", () => antenna.frequencies[1].ToString("n2") + " GHz"));
-            model.Add(new TextModel("Min / Max Freq", () => antenna.frequencies[0].ToString("n2") + " / " + antenna.frequencies[2].ToString("n2") + " GHz"));
-            model.Add(new TextModel("Gain", () => (10 * Math.Log10(antennaData.gain)).ToString("n2  ") + " dB"));
+            model.Add(new TextModel("Max Tx Power", () => Data.MaxTransmittedPower.ToString("n2") + " W"));
+            model.Add(new TextModel("Min Rx Power", () => (AntennaMath.GetMinReceivablePower(Data.Efficiency) * Math.Pow(10, 15)).ToString("n2") + " E-15 W"));
+            model.Add(new TextModel("Freq", () => DCLUtilities.FormatFrequency(Antenna.Frequencies[1])));
+            model.Add(new TextModel("Min / Max Freq", () => Antenna.Frequencies[0].ToString("n2") + " / " + DCLUtilities.FormatFrequency(Antenna.Frequencies[2])));
+            model.Add(new TextModel("Gain", () => (10 * Math.Log10(Antenna.CenterFrequencyGain)).ToString("n2") + " dB"));
 
-            // InputControllerScript inputController = PartScript.GetModifier<InputControllerScript>();
-            // if (inputController != null && inputController.InputId == "OpenCloseAntenna" && inputController.enabled)
-            // {
-            // }
+            if (ModSettings.Instance.DebugMode) model.Add(new TextButtonModel("Show Xml", b => Antenna.OnPrintAntennaXML()));
 
             base.OnGenerateInspectorModel(model);
         }
@@ -129,25 +107,21 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         public override void OnActivated()
         {
             base.OnActivated();
-            if (antenna != null)
+            if (Antenna != null)
             {
-                antenna?.toggle(true);
-                Mod.Instance.comLinksManager.ForceRefresh();
+                Antenna.toggle(true);
+                ComLinksManager.Instance.ForceRefresh();
             }
-            else
-            {
-                if (ModSettings.Instance.debugMode) Debug.Log("On antenna activated requestFlightStateUpdate");
-                Mod.Instance.comLinksManager.requestFlightStateUpdate = true;
-            }
+            else ComLinksManager.Instance.RequestFlightStateUpdate("Antenna missing");
 
-            if (Data.maxPower == 0) Data.maxPower = antennaData.type.defaultMaxPowerConsumption;
+            if (Data.MaxPower == 0) Data.MaxPower = AntennaData.type.defaultMaxPowerConsumption;
         }
         public override void OnDeactivated()
         {
-            if (!(bool)Mod.Instance.comLinksManager?.playerHasDroonControl && Mod.Instance.comLinksManager?.networkNodeFromCraftNode[PartScript.CraftScript.CraftNode]?.antennas.FindAll(a => a.activated).Count == 1)
+            if (!ComLinksManager.Instance.PlayerHasDroonControl && ComLinksManager.Instance.GetNetworkNodeFromCraftId(PartScript.CraftScript.CraftNode.NodeId)?.AvailableAntennas.Count == 1)
             {
                 MessageDialogScript dialog = Game.Instance.UserInterface.CreateMessageDialog(MessageDialogType.OkayCancel);
-                dialog.MessageText = "This is the last activated antenna,\n disabling it might make the craft uncontrollable\n Do you want to proceed?";
+                dialog.MessageText = "This is the last available antenna,\n disabling it might make the craft uncontrollable\n Do you want to proceed?";
                 dialog.CancelButtonText = "Yes";
                 dialog.OkayButtonText = "No";
                 dialog.CancelClicked += delegate (MessageDialogScript d)
@@ -167,16 +141,12 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         private void Deactivate()
         {
             base.OnDeactivated();
-            if (antenna != null)
+            if (Antenna != null)
             {
-                antenna?.toggle(false);
-                Mod.Instance.comLinksManager.ForceRefresh();
+                Antenna.toggle(false);
+                ComLinksManager.Instance.ForceRefresh();
             }
-            else
-            {
-                if (ModSettings.Instance.debugMode) Debug.Log("On antenna deactivated requestFlightStateUpdate");
-                Mod.Instance.comLinksManager.requestFlightStateUpdate = true;
-            }
+            else ComLinksManager.Instance.RequestFlightStateUpdate("Antenna missing");
         }
 
         // public override void OnCraftLoaded(ICraftScript craftScript, bool movedToNewCraft)
@@ -195,23 +165,11 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             Symmetry.ExecuteOnSymmetricPartModifiers(this.Data, true, delegate (DCLAntennaData d)
             {
-                d.Script.antennaScript.UpdateAntenna();
+                d.Script.AntennaScript.UpdateAntenna();
                 d.UpdateAntenna();
             });
         }
 
-        // void IFlightUpdate.FlightUpdate(in FlightFrameData frame)
-        // {
-        //     if (base.PartScript.Data.Activated && _battery.TotalFuel > 0.0)
-        //     {
-        //         _battery.RemoveFuel(base.Data.idle * Time.deltaTime * 0.001f);
-        //     }
-        // }
-
-        private void OnDestroy()
-        {
-            if (ModSettings.Instance.debugMode) Debug.Log("On antenna part destroyed requestFlightStateUpdate");
-            Mod.Instance.comLinksManager.requestFlightStateUpdate = true;
-        }
+        private void OnDestroy() => ComLinksManager.Instance.RequestFlightStateUpdate("On antenna part destroyed");
     }
 }

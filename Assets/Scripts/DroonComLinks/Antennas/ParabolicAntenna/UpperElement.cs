@@ -11,13 +11,13 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
         public string name;
         public int type;
         public GameObject gameObject;
-        private IPartScript _partScript;
+        private readonly IPartScript _partScript;
         public Vector2 offset;
         public Element elementData => Elements[type];
-        private static Element[] Elements = new Element[3] {
-            new Element ("ReceiverUP1", "Basic", new Vector2 (0.065f, 0.1f), 1000),
-            new Element ("ReflectorUP1", "Basic", new Vector2 (0.1f, 0.075f), 1000),
-            new Element ("ReflectorUP2_1", "Saturn", new Vector2 (0.05f, 0.15f), 3000)//0.06f, 0.15f //0.1f, 0.075
+        private static readonly Element[] Elements = new Element[3] {
+            new("ReceiverUP1", "Basic", new Vector2 (0.065f, 0.1f), 1000),
+            new("ReflectorUP1", "Basic", new Vector2 (0.1f, 0.075f), 1000),
+            new("ReflectorUP2_1", "Saturn", new Vector2 (0.05f, 0.15f), 3000)//0.06f, 0.15f //0.1f, 0.075
         };
         public static List<string> Receivers = Elements.Where(e => e.name.Contains("Receiver")).Select(e => e.displayName).ToList();
         public static List<string> Reflectors = Elements.Where(e => e.name.Contains("Reflector")).Select(e => e.displayName).ToList();

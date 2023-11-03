@@ -1,121 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.DroonComlinks.Ui;
 using Assets.Scripts.DroonComLinks.Antennas;
 using Assets.Scripts.DroonComLinks.Ui.ListItems;
 using Assets.Scripts.Flight.MapView.Interfaces;
 using Assets.Scripts.Flight.Sim;
-using ModApi.Craft.Parts;
+using ModApi.Ui.Inspector;
 using UnityEngine;
 
 namespace Assets.Scripts.DroonComLinks.Network
 {
     public class NetworkNode : IDisplayable
     {
-        public bool isCraft { get; } = true;
+        public bool IsCraft { get; } = true;
         public bool isPlayer = false;
-        public CraftNode craftNode { get; }
-        public bool gsInRange
-        {
-            get
-            {
-                return _gsInDirectRange || _gsInRange;
-            }
-        }
-        public bool gsInDirectRange
-        {
-            get
-            {
-                return _gsInDirectRange;
-            }
-        }
+        public CraftNode CraftNode { get; }
+        public bool GsInRange { get => _gsInDirectRange || _gsInRange; }
+        public bool GsInDirectRange { get => _gsInDirectRange; }
         private bool _gsInRange, _gsInDirectRange;
         public string id { get; }
-        public bool underWater
+        public bool UnderWater
         {
             get
             {
-                if (isCraft && craftNode.Parent.PlanetData.HasWater && craftNode.AltitudeAgl < 0) return true;
+                if (IsCraft && CraftNode.Parent.PlanetData.HasWater && CraftNode.AltitudeAgl < 0) return true;
                 return false;
             }
         }
-        public double battery
+        public double Battery
         {
             get
             {
-                if (craftNode?.CraftScript != null) return craftNode.CraftScript.CommandPods.First().BatteryFuelSource.TotalFuel;
+                if (CraftNode?.CraftScript != null) return CraftNode.CraftScript.CommandPods.First().BatteryFuelSource.TotalFuel;
                 return _unloadedCraftBattery;
             }
         }
-        private double _unloadedCraftBattery;
-        public int relayCount => _comLinksManager.GetNodePathToGS(this).Count;
+        private readonly double _unloadedCraftBattery;
+        public int RelayCount => _comLinksManager.GetNodePathToGS(this).Count - 1;
         private ComLinksManager _comLinksManager;
         public IMapViewCoordinateConverter _coordinateConverter;
-        public List<Antenna> antennas { get; private set; } = new List<Antenna>();
-        public Dictionary<string, Antenna> antennaFromId { get; private set; } = new Dictionary<string, Antenna>();
-        public Dictionary<int, Antenna> antennaFromPartId { get; private set; } = new Dictionary<int, Antenna>();
-        public List<InRangeNode> nodesInDirectRange = new List<InRangeNode>();
-        public Dictionary<string, InRangeNode> inrangeNodeFromId { get; private set; } = new Dictionary<string, InRangeNode>();
-        public List<NetworkNode> nodesInRelayRange = new List<NetworkNode>();
-        public List<string> stringNodesInDirectRange = new List<string>();
-        public List<string> stringNodesInRelayRange = new List<string>();
-        public List<NetworkNode> objectNodesInDirectRange = new List<NetworkNode>();
-        public Vector3d position => isCraft ? craftNode.SolarPosition : _gsPosition;
-        private Vector3d _gsPosition => _parent.SolarPosition + _parent.SurfaceVectorToPlanetVector(_gslocalPos) * Mod.Instance.heightScale;
+        public List<Antenna> Antennas { get; private set; } = new();
+        public List<Antenna> AvailableAntennas => Antennas.Where(a => a.Available).ToList();
+        private readonly Dictionary<string, Antenna> _antennaFromId = new();
+        private readonly Dictionary<int, Antenna> _antennaFromPartId = new();
+        public List<InRangeNode> nodesInDirectRange = new();
+        public Dictionary<string, InRangeNode> InrangeNodeFromId { get; private set; } = new();
+        public List<NetworkNode> nodesInRelayRange = new();
+        public List<string> stringNodesInDirectRange = new();
+        public List<string> stringNodesInRelayRange = new();
+        public List<NetworkNode> objectNodesInDirectRange = new();
+        public Vector3d Position => IsCraft ? CraftNode.SolarPosition : GsPosition;
+        private Vector3d GsPosition => parent.SolarPosition + parent.SurfaceVectorToPlanetVector(_gslocalPos);// * Mod.Instance.heightScale;
         private Vector3d _gslocalPos;
-        private PlanetNode _parent;
-        private float _updateFrequency => _comLinksManager.updatePeriod;
-        private double _lastInrangeCheck = 0;
-        private double _lastInRelayrangeCheck = 0;
+        public PlanetNode parent;
         public bool relayRangeInitialised;
+        public string nodesInDirectRangeReport;
 
-        public NetworkNode(CraftNode craftnode, List<Antenna> _antennas, ComLinksManager comLinksManager, double unloadedCraftBattery)
+        public NetworkNode(CraftNode craftnode, List<Antenna> _antennas, ComLinksManager comlinksManager, double unloadedCraftBattery)
         {
-            craftNode = craftnode;
-            id = craftNode.Name + " id: " + craftNode.NodeId;
-            _parent = (PlanetNode)craftNode.Parent;
+            CraftNode = craftnode;
+            id = CraftNode.Name + " id: " + CraftNode.NodeId;
+            parent = (PlanetNode)CraftNode.Parent;
             _unloadedCraftBattery = unloadedCraftBattery;
 
-            antennas = _antennas;
+            Antennas = _antennas;
             foreach (Antenna antenna in _antennas)
             {
-                antennaFromId.Add(antenna.id, antenna);
-                antennaFromPartId.Add(antenna.partId, antenna);
+                _antennaFromId.Add(antenna.id, antenna);
+                _antennaFromPartId.Add(antenna.PartId, antenna);
             }
 
-            SetUp(comLinksManager);
+            SetUp(comlinksManager);
         }
         public NetworkNode(string name, Vector3d pos, PlanetNode parent, ComLinksManager comLinksManager)
         {
-            isCraft = false;
+            IsCraft = false;
             _gslocalPos = pos;
             this.id = name;
-            antennas = new List<Antenna>() { { new Antenna(35f, 8f) } };
-            _parent = parent;
+            Antennas = new List<Antenna>() { { new Antenna(35f) } }; //, 8f
+            this.parent = parent;
             _unloadedCraftBattery = 99999;
             SetUp(comLinksManager);
         }
 
-        public void ForceRefresh()
-        {
-            foreach (Antenna antenna in antennas) antenna.RefreshAntenna();
-        }
+        public void ForceRefresh() { foreach (Antenna antenna in Antennas) antenna.RefreshAntenna(); }
 
         private void SetUp(ComLinksManager comLinksManager)
         {
             _comLinksManager = comLinksManager;
             _coordinateConverter = _comLinksManager.coordinateConverter;
-            foreach (Antenna antenna in antennas)
-            {
-                antenna.node = this;
-            }
+            foreach (Antenna antenna in Antennas) antenna.node = this;
         }
 
         public void StartNetworkUpdate()
         {
             nodesInDirectRange.Clear();
-            inrangeNodeFromId.Clear();
+            InrangeNodeFromId.Clear();
             stringNodesInDirectRange.Clear();
             objectNodesInDirectRange.Clear();
             _gsInDirectRange = _gsInRange = false;
@@ -130,39 +110,50 @@ namespace Assets.Scripts.DroonComLinks.Network
 
         public void GetNodesInDirectRange()
         {
-            List<NetworkNode> targets = new List<NetworkNode>(_comLinksManager.networkNodes);
+            nodesInDirectRangeReport = "Nodes in direct range repport ----- [" + id + "] ----- Target count [" + _comLinksManager.NetworkNodes.Count + "]\n";
 
-            if (ModSettings.Instance.needPower && battery < ComLinksManager.minPower) return;
+            if (ModSettings.Instance.NeedPower && Battery < ComLinksManager.minPower) return;
 
-            foreach (NetworkNode target in targets)
+            foreach (NetworkNode target in _comLinksManager.NetworkNodes)
             {
-                if (inrangeNodeFromId.ContainsKey(target.id)) continue;
-                if (target == this) continue;
-                if (!isCraft && !target.isCraft) continue;
-                if (ModSettings.Instance.needPower && target.battery < ComLinksManager.minPower) continue;
-                if (ConnectionObstructed(position, target.position)) continue;
+                ConnectionInfo c = CheckConnectionWith(target);
+                if (c.connectionResult != ConnectionResults.Success)
+                {
+                    nodesInDirectRangeReport += "     [" + target.id + "] Failed : " + c.connectionResult + " / " + c.signalInfoResult + "\n";
+                    foreach (SignalStrengthResults s in c.signalStrengthResults) nodesInDirectRangeReport += "          " + s + "\n";
+                    continue;
+                }
 
-                float[] signalStrength, waveLength;
-                Antenna[] A, B;
-                AntennaMath.GetSignalInfo(this, target, out A, out B, out signalStrength, out waveLength);
-                if (signalStrength[0] <= 0 || signalStrength[1] <= 0) continue; // || to differentiate Up and down link
-
-                InRangeNode inRangeNode = new InRangeNode(target, A, B, Vector3d.Distance(position, target.position), signalStrength, waveLength);
-                target.OnFoundInRange(this, inRangeNode);
+                InRangeNode inRangeNode = new(target, c);
+                target.OnFoundInRange(this, c);
                 nodesInDirectRange.Add(inRangeNode);
-                inrangeNodeFromId.Add(target.id, inRangeNode);
+                InrangeNodeFromId.Add(target.id, inRangeNode);
                 stringNodesInDirectRange.Add(target.id);
                 objectNodesInDirectRange.Add(target);
-                if (!target.isCraft) _gsInDirectRange = true;
+                if (!target.IsCraft) _gsInDirectRange = true;
             }
+        }
+
+        public ConnectionInfo CheckConnectionWith(NetworkNode target)
+        {
+            if (InrangeNodeFromId.ContainsKey(target.id)) return new ConnectionInfo(ConnectionResults.Duplicate);
+            if (!IsCraft && !target.IsCraft) return new ConnectionInfo(ConnectionResults.GS2GS);
+            if (target.id == this.id) return new ConnectionInfo(ConnectionResults.ToSelf);
+            if (ModSettings.Instance.NeedPower && target.Battery < ComLinksManager.minPower) return new ConnectionInfo(ConnectionResults.MissingBattery);
+            if (DCLUtilities.ConnectionObstructed(Position, target.Position)) return new ConnectionInfo(ConnectionResults.Obstructed);
+
+            SignalInfoResults signalInforesult = AntennaMath.GetSignalInfo(this, target, out Antenna A, out Antenna B, out float signalStrength, out float waveLength, out double distance, out List<SignalStrengthResults> signalStrengthResults);
+            if (signalStrength <= 0) return new ConnectionInfo(ConnectionResults.Signal2Weak, signalInforesult, signalStrengthResults); ;
+
+            return new ConnectionInfo(A, B, signalStrength, waveLength, distance, signalStrengthResults);
         }
 
         public void CheckConnectionsOcclusion()
         {
-            List<InRangeNode> nodesInRelayRange = new List<InRangeNode>(nodesInDirectRange);
+            List<InRangeNode> nodesInRelayRange = new(nodesInDirectRange);
             foreach (InRangeNode target in nodesInRelayRange)
             {
-                if (ConnectionObstructed(position, target.node.position))
+                if (DCLUtilities.ConnectionObstructed(Position, target.node.Position))
                 {
                     nodesInDirectRange.Remove(target);
                     objectNodesInDirectRange.Remove(target.node);
@@ -171,16 +162,14 @@ namespace Assets.Scripts.DroonComLinks.Network
             }
         }
 
-        public void OnFoundInRange(NetworkNode target, InRangeNode targetInRangeNode)
+        public void OnFoundInRange(NetworkNode target, ConnectionInfo c)
         {
-            float[] signalStrength = new float[2] { targetInRangeNode.signalStrength[1], targetInRangeNode.signalStrength[0] };
-            float[] waveLength = new float[2] { targetInRangeNode.waveLength[1], targetInRangeNode.waveLength[0] };
-            InRangeNode inRangeNode = new InRangeNode(target, targetInRangeNode.antennaB, targetInRangeNode.antennaA, targetInRangeNode.distance, signalStrength, waveLength);
+            InRangeNode inRangeNode = new(target, c);
             nodesInDirectRange.Add(inRangeNode);
-            inrangeNodeFromId.Add(target.id, inRangeNode);
+            InrangeNodeFromId.Add(target.id, inRangeNode);
             stringNodesInDirectRange.Add(target.id);
             objectNodesInDirectRange.Add(target);
-            if (!target.isCraft) _gsInDirectRange = true;
+            if (!target.IsCraft) _gsInDirectRange = true;
         }
 
         public void GetNodesInRelayRange(NetworkNode node)
@@ -195,7 +184,7 @@ namespace Assets.Scripts.DroonComLinks.Network
 
                 nodesInRelayRange.Add(target);
                 stringNodesInRelayRange.Add(target.id);
-                if (!target.isCraft) _gsInRange = true;
+                if (!target.IsCraft) _gsInRange = true;
                 GetNodesInRelayRange(target);
             }
 
@@ -203,8 +192,8 @@ namespace Assets.Scripts.DroonComLinks.Network
 
         public void TransfertNodesInRelayRange()
         {
-            List<NetworkNode> baseNodesInRelayRange = new List<NetworkNode>(nodesInRelayRange);
-            List<string> baseStringNodesInRelayRange = new List<string>(stringNodesInRelayRange);
+            List<NetworkNode> baseNodesInRelayRange = new(nodesInRelayRange);
+            List<string> baseStringNodesInRelayRange = new(stringNodesInRelayRange);
             baseNodesInRelayRange.Add(this);
             stringNodesInRelayRange.Add(this.id);
 
@@ -226,29 +215,63 @@ namespace Assets.Scripts.DroonComLinks.Network
             relayRangeInitialised = true;
         }
 
-        public bool ConnectionObstructed(Vector3d A, Vector3d B)
+        public Antenna GetAntennaFromPartId(int partId)
         {
-            Vector3d center = (A + B) / 2;
-            foreach (PlanetNode planet in _comLinksManager.planets)
+            if (!IsCraft)
             {
-                double planetMagnitude = planet.SolarPosition.magnitude;
-                if (!((A.magnitude > planetMagnitude * 1.1 && B.magnitude > planetMagnitude * 1.1) || (A.magnitude < planetMagnitude * 0.9 && B.magnitude < planetMagnitude * 0.9)))
-                {
-                    if (LineSphereIntersect(A, B, planet.SolarPosition, planet.PlanetData.Radius)) return true;
-                    if ((center - planet.SolarPosition).magnitude < planet.PlanetData.Radius) return true;
-                }
+                Debug.LogError("Node is GroundStation: antenna " + partId + " doesn't exist,    (GetAntennaFromPartId)");
+                return null;
             }
-            return false;
+
+            Antenna antenna = _antennaFromPartId[partId];
+            if (antenna == null)
+            {
+                Debug.LogError("Antenna for part " + partId + " not found,    (GetAntennaFromPartId)");
+                return null;
+            }
+            return antenna;
         }
 
-        private bool LineSphereIntersect(Vector3d A, Vector3d B, Vector3d C, double r)
+        public Antenna GetAntennaFromId(string antennaId)
         {
-            r *= Mod.Instance.radiusScale;
+            if (!IsCraft)
+            {
+                Debug.LogError("Node is GroundStation: antenna " + antennaId + " doesn't exist,    (GetAntennaFromId)");
+                return null;
+            }
 
-            double u = ((C.x - A.x) * (B.x - A.x) + (C.y - A.y) * (B.y - A.y) + (C.z - A.z) * (B.z - A.z)) / ((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y) + (B.z - A.z) * (B.z - A.z));
-            double d = (C - A + (A - B) * u).magnitude;
-            if (u > 0 && u < 1 && d < r) return true;
-            return false;
+            Antenna antenna = _antennaFromId[antennaId];
+            if (antenna == null)
+            {
+                Debug.LogError("Antenna for part " + antennaId + " not found,    (GetAntennaFromId)");
+                return null;
+            }
+            return antenna;
+        }
+
+        public void CreateInfoPanel(InspectorModel inspectorModel)
+        {
+            GroupModel g = inspectorModel.Add(new GroupModel("Node Info"));
+
+            g.Add(new TextModel("Node", () => id));
+            g.Add(new TextModel("Location", () => parent.Name));
+            g.Add(new TextModel("Type", () => IsCraft ? "Craft" : "Ground Station"));
+
+            g.Add(new SpacerModel());
+
+            if (IsCraft)
+            {
+                g.Add(new TextModel("Ground Station In Range", () => DCLUtilities.YesNo(GsInRange)));
+                g.Add(new TextModel("Relay Count", () => RelayCount.ToString()));
+            }
+            g.Add(new TextModel("Nodes In Range", () => stringNodesInRelayRange.Count.ToString()));
+            g.Add(new TextModel("Nodes In Direct Range", () => nodesInDirectRange.Count.ToString()));
+            g.Add(new TextModel("Antennas", () => Antennas.Count.ToString()));
+            g.Add(new TextModel("UnderWater", () => DCLUtilities.YesNo(UnderWater)));
+
+            g.Add(new SpacerModel());
+
+            g.Add(new TextButtonModel("Print Report", b => OnPrintReport()));
         }
 
         private IUIListItem[,] info;
@@ -257,44 +280,84 @@ namespace Assets.Scripts.DroonComLinks.Network
             if (info == null)
             {
                 info = new IUIListItem[2, 16];
-                if (isCraft)
+                if (IsCraft)
                 {
-                    info[0, 0] = (IUIListItem)new UIListTextValue<string>("Node Type", () => "Player");
-                    info[0, 2] = (IUIListItem)new UIListTextValue<bool>("Ground Station In Range", () => gsInRange);
-                    info[0, 3] = (IUIListItem)new UIListTextValue<int>("Relay Count", () => relayCount);
+                    info[0, 0] = new UIListTextValue<string>("Node Type", () => "Player", null);
+                    info[0, 2] = new UIListTextValue<bool>("Ground Station In Range", () => GsInRange, null);
+                    info[0, 3] = new UIListTextValue<int>("Relay Count", () => RelayCount, null);
                 }
                 else
                 {
-                    info[0, 0] = (IUIListItem)new UIListTextValue<string>("Node Type", () => "Ground Station");
+                    info[0, 0] = new UIListTextValue<string>("Node Type", () => "Ground Station", null);
                 }
-                info[0, 1] = (IUIListItem)new UIListTextValue<string>("location", () => _parent.Name);
-                info[0, 4] = (IUIListItem)new UIListTextValue<int>("Nodes In Range:", () => stringNodesInRelayRange.Count);
-                info[0, 5] = (IUIListItem)new UIListDropDown(UIListItems.nodesInRelayRangeDropDownID, () => stringNodesInRelayRange);
-                info[0, 6] = (IUIListItem)new UIListTextValue<int>("Nodes In Direct Range:", () => nodesInDirectRange.Count);
-                info[0, 7] = (IUIListItem)new UIListDropDown(UIListItems.nodesInDirectRangeDropDownID, () => inrangeNodeFromId.Keys);
-                info[0, 8] = (IUIListItem)new UIListTextValue<int>("Antennas:", () => antennas.Count);
-                info[0, 9] = (IUIListItem)new UIListDropDown(UIListItems.antennasDropDownID, () => antennaFromId.Keys);
-                info[1, 0] = (IUIListItem)new UIListTextValue<bool>("UnderWater", () => underWater);
+                info[0, 1] = new UIListTextValue<string>("Location", () => parent.Name, null);
+                info[0, 4] = new UIListTextValue<int>("Nodes In Range:", () => stringNodesInRelayRange.Count, null);
+                info[0, 5] = new UIListDropDown(UIListItems.nodesInRelayRangeDropDownID, () => stringNodesInRelayRange, null);
+                info[0, 6] = new UIListTextValue<int>("Nodes In Direct Range:", () => nodesInDirectRange.Count, null);
+                info[0, 7] = new UIListDropDown(UIListItems.nodesInDirectRangeDropDownID, () => InrangeNodeFromId.Keys, null);
+                info[0, 8] = new UIListTextValue<int>("Antennas:", () => Antennas.Count, null);
+                info[0, 9] = new UIListDropDown(UIListItems.antennasDropDownID, () => _antennaFromId.Keys, null);
+                info[1, 0] = new UIListTextValue<bool>("UnderWater", () => UnderWater, null);
+                info[1, 1] = new UIListButton("Print Report", delegate (string T, string s, string t, string d) { OnPrintReport(); });
             }
             return info;
         }
+
+        public void OnPrintReport()
+        {
+            DCLUtilities.ShowMapViewMessage("Report printed to dev console");
+            Debug.Log(nodesInDirectRangeReport);
+        }
     }
 
-    public class InRangeNode
+    public struct InRangeNode
     {
         public NetworkNode node;
         public double distance;
-        public float[] signalStrength, waveLength, frequency = new float[2];
-        public Antenna[] antennaA, antennaB;
+        public float signalStrength, waveLength, frequency;
+        public Antenna antennaA, antennaB;
 
-        public InRangeNode(NetworkNode _node, Antenna[] A, Antenna[] B, double _distance, float[] _signalStrength, float[] _waveLength)
+        public InRangeNode(NetworkNode _node, ConnectionInfo c)
         {
             node = _node;
+            distance = c.distance;
+            signalStrength = c.signalStrength;
+            waveLength = c.waveLength;
+            frequency = c.frequency;
+            antennaA = c.antennaA;
+            antennaB = c.antennaB;
+        }
+    }
+
+    public enum ConnectionResults { Success, Duplicate, GS2GS, ToSelf, MissingBattery, Obstructed, Signal2Weak };
+
+    public struct ConnectionInfo
+    {
+        public Antenna antennaA, antennaB;
+        public float signalStrength, waveLength, frequency;
+        public double distance;
+        public ConnectionResults connectionResult;
+        public SignalInfoResults signalInfoResult;
+        public List<SignalStrengthResults> signalStrengthResults;
+
+        public ConnectionInfo(ConnectionResults _connectionResult, SignalInfoResults _signalInfoResults = SignalInfoResults.NotTested, List<SignalStrengthResults> _signalStrengthResults = null)
+        {
+            antennaA = antennaB = null;
+            distance = signalStrength = waveLength = frequency = -1;
+            connectionResult = _connectionResult;
+            signalInfoResult = _signalInfoResults;
+            signalStrengthResults = _signalStrengthResults == null ? new List<SignalStrengthResults>() : _signalStrengthResults;
+        }
+
+        public ConnectionInfo(Antenna A, Antenna B, float _signalStrength, float _waveLength, double _distance, List<SignalStrengthResults> _signalStrengthResults)
+        {
+            connectionResult = ConnectionResults.Success;
+            signalInfoResult = SignalInfoResults.Succes;
+            signalStrengthResults = _signalStrengthResults;
             distance = _distance;
             signalStrength = _signalStrength;
             waveLength = _waveLength;
-            frequency[0] = AntennaMath.FWLConversion(waveLength[0]);
-            frequency[1] = AntennaMath.FWLConversion(waveLength[1]);
+            frequency = AntennaMath.FWLConversion(waveLength);
             antennaA = A;
             antennaB = B;
         }

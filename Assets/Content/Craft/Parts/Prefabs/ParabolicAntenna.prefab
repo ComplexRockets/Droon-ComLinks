@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6137750180137403411}
   m_RootOrder: 2
@@ -88,6 +89,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8286590903214407290}
   m_Father: {fileID: 793564096682153678}
@@ -119,6 +121,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 453705827101236789}
   m_Father: {fileID: 8823689379737811749}
@@ -151,6 +154,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2241632870249028659}
   m_RootOrder: 0
@@ -173,6 +177,7 @@ MonoBehaviour:
     _canReceive: 1
     _canSeek: 1
     _connectionType: 1
+    _crewTraversable: 0
     _disableJointCollisions: 0
     _displayName: 
     _fuelLine: 0
@@ -180,13 +185,17 @@ MonoBehaviour:
     _ignoreSurfaces: 0
     _jointType: 0
     _localJointAxis: {x: 0, y: 0, z: 1}
+    _position: {x: 0, y: 0, z: 0}
     _radius: 0
     _rayCastFromCursor: 0
     _renderQueue: 0
     _requiresPhysicsJoint: 0
+    _rotation: {x: 0, y: 0, z: 0}
+    _scale: 1
     _surfaceCollider: {fileID: 0}
     _surfaceColliderName: 
     _tag: 
+    _upVectorOverride: {x: 0, y: 0, z: 0}
 --- !u!1 &1936001352546339877
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +223,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6137750180137403411}
   m_RootOrder: 4
@@ -265,6 +275,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4990406944752074246}
   - {fileID: 4238104763078659079}
@@ -312,6 +323,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3235317434904384267}
   m_Father: {fileID: 8823689379737811749}
@@ -344,6 +356,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7410923403793509653}
   - {fileID: 6142256572524523934}
@@ -410,6 +423,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6137750180137403411}
   m_RootOrder: 0
@@ -470,6 +484,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2574953952761713713}
   m_Father: {fileID: 8823689379737811749}
@@ -502,6 +517,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6137750180137403411}
   m_RootOrder: 3
@@ -553,6 +569,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6137750180137403411}
   m_RootOrder: 1
@@ -619,6 +636,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3235317434904384267}
   m_RootOrder: 0
@@ -646,6 +664,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -721,6 +740,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4238104763078659079}
     m_Modifications:
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._maxPower
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._frequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._efficiency
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._bitPerCycle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._customAntenna
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129778695885031200, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._fractionalBandWidth
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3149590042191900767, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
       propertyPath: m_Name
       value: Default
@@ -769,6 +816,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4142749890820525255, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._name
+      value: Parabolic Antenna
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142749890820525255, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
+      propertyPath: Data._category
+      value: 
+      objectReference: {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
     m_RemovedComponents:
     - {fileID: 2385695400856502411, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1a980ca0dd80349a48f99b69c0ed5524, type: 3}

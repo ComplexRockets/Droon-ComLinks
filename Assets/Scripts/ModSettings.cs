@@ -18,21 +18,21 @@ namespace Assets.Scripts
 
         public static ModSettings Instance => _instance ?? (_instance = Game.Instance.Settings.ModSettings.GetCategory<ModSettings>());
 
-        public BoolSetting blockControls { get; private set; }
-        public BoolSetting needPower { get; private set; }
-        public EnumSetting<DelayModes> delay { get; private set; }
-        public NumericSetting<int> delayOverride { get; private set; }
-        public BoolSetting diffirenciateUpDownLink { get; private set; }
-        public BoolSetting debugMode { get; private set; }
+        public BoolSetting BlockControls { get; private set; }
+        public BoolSetting NeedPower { get; private set; }
+        public EnumSetting<DelayModes> Delay { get; private set; }
+        public NumericSetting<int> DelayOverride { get; private set; }
+        public BoolSetting DiffirenciateUpDownLink { get; private set; }
+        public BoolSetting DebugMode { get; private set; }
 
         protected override void InitializeSettings()
         {
-            this.blockControls = this.CreateBool("Block Controls")
+            this.BlockControls = this.CreateBool("Block Controls")
                .SetDescription("If enable, blocks the controls when the craft is out of range and no Drood is onboard (makes the game harder)")
                .SetDefault(true);
 
-            this.needPower = this.CreateBool("Antenna Require Power")
-               .SetDescription("If enable, blocks the connection between two antennas if not enough power. Also, sending inputs consumes power (makes the game harder)")
+            this.NeedPower = this.CreateBool("Antenna Require Power")
+               .SetDescription("If enable, blocks the connection between two antennas if not there isn't enough power. Also, sending inputs consumes power (makes the game harder)")
                .SetDefault(true);
 
             // this.delay = this.CreateEnum<DelayModes>("Antenna Delay Difficulty")
@@ -43,11 +43,7 @@ namespace Assets.Scripts
             //     .SetState(SettingState.Hidden)
             //     .SetDefault(value: -1);
 
-            // this.diffirenciateUpDownLink = this.CreateBool("Differentiate Link Direction")
-            //    .SetDescription("If enabled, a connection can be disconected, only uplink, only downlink or both, allowing different mechanics depending on the case (harder). if disabled, a connection is either connected or disconnected (easier)")
-            //    .SetDefault(true);
-
-            this.debugMode = this.CreateBool("Debug Mode")
+            this.DebugMode = this.CreateBool("Debug Mode")
                .SetDescription("")
                .SetDefault(false);
         }

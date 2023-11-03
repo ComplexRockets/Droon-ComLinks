@@ -1,43 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.DroonComlinks.Ui;
-using Assets.Scripts.DroonComLinks.Antennas;
 using Assets.Scripts.DroonComLinks.Network;
+using Assets.Scripts.DroonComLinks.Ui.Flight.NetworkManager;
 using Assets.Scripts.DroonComLinks.Ui.ListItems;
-using Assets.Scripts.Flight.UI;
-using Assets.Scripts.Input;
-using HarmonyLib;
-using ModApi.Flight.UI;
-using ModApi.Input;
 using ModApi.Ui;
 using TMPro;
 using UI.Xml;
 using UnityEngine;
-using static Assets.Scripts.Flight.UI.FlightSceneUiController;
 
 namespace Assets.Scripts.DroonComLinks.Ui.Flight
 {
     public class DCLFlightUIScript : MonoBehaviour
     {
-        private GameInputs gameInputs;
-        private ComLinksManager _comLinksManager => Mod.Instance.comLinksManager;
+        public ComLinksManager ComLinksManager => ComLinksManager.Instance;
+        private readonly NetworkManagerDialog _networkMangerDialogScript;
         private XmlLayoutController _controller;
         private XmlLayout _xmlLayout;
         private XmlElement _statusPanel, _reducedStatusPanel, _statusIconsPanel;
         private TextMeshProUGUI _infoSubHeader;
         public XmlElement buttonListItemTemplate, textValueListItemTemplate, dropDownListItemTemplate, labelButtonListItemTemplate;
-        private List<string> _connectedNodes, _playerAntenna, _networkNodes, _networkConnections;
-        private bool _playerHasDroonControl, _playerHasRemoteControl, reducedStatusPanelOpen, statusPanelOpen, inputs;
+        private List<string> _connectedNodes, _playerAntenna;
+        private List<string> NetworkNodes => ComLinksManager.NetworkNodes.Select(n => n.id).ToList();
+        private List<string> NetworkConnections => ComLinksManager.NetworkConnections.Select(c => c.id).ToList();
+        private bool _playerHasDroonControl;
+        private bool _playerHasRemoteControl;
+        private readonly bool reducedStatusPanelOpen;
+        private readonly bool statusPanelOpen;
+        private readonly bool inputs;
         private bool uiActive;
-        private static string _inRangeList = "inrange", _antennasList = "antennas", networkNodesList = "network-nodes", networkConnectionsList = "network-connections", listSufix = "-list";
-        private static string infoTable = "info", globalInfoTable = "globalinfo", tableSuffix = "-table";
-        private static string noObjectSelectedtext = "No object selected";
-        private static string objectNullText = "The object you are trying to get info from doesn't exist anymore";
-        private static string displayedInfoPrefix = "Selected Object: ";
-        private Dictionary<string, int> tablesWidth = new Dictionary<string, int> { { infoTable, 2 }, { globalInfoTable, 4 } };
-        private Dictionary<string, IDisplayable> displayed = new Dictionary<string, IDisplayable> { { infoTable, null }, { globalInfoTable, null } };
+        public bool infoViewActive;
+        private const string networkNodesList = "network-nodes", networkConnectionsList = "network-connections", listSufix = "-list";
+        private const string infoTable = "info", globalInfoTable = "globalinfo", tableSuffix = "-table";
+        private const string noObjectSelectedtext = "No object selected";
+        private const string objectNullText = "The object you are trying to get info from doesn't exist anymore";
+        private const string displayedInfoPrefix = "Selected Object: ";
+        private readonly Dictionary<string, int> tablesWidth = new() { { infoTable, 2 }, { globalInfoTable, 4 } };
+        private readonly Dictionary<string, IDisplayable> displayed = new() { { infoTable, null }, { globalInfoTable, null } };
         private IDisplayable Displayed(string table) => displayed[table];
-        private IInputResponder _inputResponder;
+        public IUIListItem EmptyListItem => new UIListTextValue<string>("---", () => "---", delegate (string T, string s, string t, string d) { OnListItemInteracted(T, s, t, d); });
 
         public void OnLayoutRebuilt(IXmlLayoutController xmlLayoutController)
         {
@@ -55,15 +56,15 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
 
             _infoSubHeader.SetText(noObjectSelectedtext);
 
-            OnDroonControlChanged(_comLinksManager.playerHasDroonControl);
-            OnRemoteControlChanged(_comLinksManager.playerHasRemoteControl);
+            OnDroonControlChanged(ComLinksManager.PlayerHasDroonControl);
+            OnRemoteControlChanged(ComLinksManager.PlayerHasRemoteControl);
 
-            _comLinksManager.NetworkNodesUpdated += OnNetworkNodesUpdated;
-            _comLinksManager.NetworkConnectionAdded += OnNetworkConnectionChanged;
-            _comLinksManager.NetworkConnectionRemoved += OnNetworkConnectionChanged;
-            _comLinksManager.DroonControlChanged += OnDroonControlChanged;
-            _comLinksManager.RemoteControlChanged += OnRemoteControlChanged;
-            _connectedNodes = _playerAntenna = _networkNodes = _networkConnections = new List<string>();
+            ComLinksManager.NetworkNodesUpdated += OnNetworkNodesUpdated;
+            ComLinksManager.NetworkConnectionAdded += OnNetworkConnectionChanged;
+            ComLinksManager.NetworkConnectionRemoved += OnNetworkConnectionChanged;
+            ComLinksManager.DroonControlChanged += OnDroonControlChanged;
+            ComLinksManager.RemoteControlChanged += OnRemoteControlChanged;
+            _connectedNodes = _playerAntenna = new List<string>();
         }
 
         public void Update()
@@ -71,10 +72,10 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             if (_controller != null)
             {
                 if (Game.Instance.FlightScene.FlightSceneUI.Visible != uiActive) UpdateUI();
-                UpdateTable(infoTable, displayed[infoTable] == null ? _comLinksManager.player : Displayed(infoTable));
+                UpdateTable(infoTable, displayed[infoTable] == null ? ComLinksManager.Player : Displayed(infoTable));
                 UpdateTable(globalInfoTable, displayed[globalInfoTable]);
-                if (ModSettings.Instance.blockControls && !Mod.Instance.comLinksManager.playerHasControl)
-                    Game.Instance.FlightScene.FlightSceneUI.ShowMessage("<color=#b33e46FF><b><size=180%> CRAFT IS UNCONTROLLABLE");
+                if (ModSettings.Instance.BlockControls && !ComLinksManager.Instance.PlayerHasControl)
+                    DCLUtilities.ShowMapViewMessage("CRAFT IS UNCONTROLLABLE", error:true, size:1.8f, bold:true);
             }
         }
 
@@ -83,7 +84,6 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             if (_controller != null)
             {
                 if (droonControl) Game.Instance.FlightScene.FlightSceneUI.ShowMessage("");
-                if (!droonControl) OverrideInputs();
                 if (droonControl != _playerHasDroonControl)
                 {
                     _playerHasDroonControl = droonControl;
@@ -97,7 +97,6 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             if (_controller != null)
             {
                 if (remoteControl) Game.Instance.FlightScene.FlightSceneUI.ShowMessage("");
-                if (!remoteControl) OverrideInputs();
                 if (remoteControl != _playerHasRemoteControl)
                 {
                     _playerHasRemoteControl = remoteControl;
@@ -106,24 +105,14 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             }
         }
 
-        private void OverrideInputs()
-        {
-            List<InspectorPanelWrapper> partInspectorPanels = (List<InspectorPanelWrapper>)Traverse.Create(((FlightSceneInterfaceScript)Game.Instance.FlightScene.FlightSceneUI).UiController).Field("_partInspectorPanels").GetValue();
-            foreach (InspectorPanelWrapper inspectorPanel in partInspectorPanels)
-            {
-            }
-        }
-
         public void OnNetworkNodesUpdated()
         {
-            _networkNodes = _comLinksManager.networkNodeFromId.Keys.ToList();
-            if (statusPanelOpen) UpdateList(networkNodesList, _networkNodes);
+            if (statusPanelOpen) UpdateList(networkNodesList, NetworkNodes);
         }
 
         public void OnNetworkConnectionChanged(string id)
         {
-            _networkConnections = _comLinksManager.NetworkConnectionFromId.Keys.ToList();
-            if (statusPanelOpen) UpdateList(networkConnectionsList, _networkConnections);
+            if (statusPanelOpen) UpdateList(networkConnectionsList, NetworkConnections);
         }
 
         private void UpdateUI()
@@ -131,35 +120,32 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             uiActive = Game.Instance.FlightScene.FlightSceneUI.Visible;
             _statusPanel.SetAndApplyAttribute("active", (statusPanelOpen && uiActive).ToString());
             _reducedStatusPanel.SetAndApplyAttribute("active", (reducedStatusPanelOpen && uiActive).ToString());
-            _statusIconsPanel.SetAndApplyAttribute("active", (uiActive).ToString());
+            _statusIconsPanel.SetAndApplyAttribute("active", uiActive.ToString());
 
             if (uiActive && statusPanelOpen)
             {
-                _networkConnections = _comLinksManager.NetworkConnectionFromId.Keys.ToList();
-                _networkNodes = _comLinksManager.networkNodeFromId.Keys.ToList();
-
-                UpdateList(networkNodesList, _networkNodes);
-                UpdateList(networkConnectionsList, _networkConnections);
-                UpdateTable(infoTable, displayed[infoTable] == null ? _comLinksManager.player : Displayed(infoTable));
-                UpdateTable(globalInfoTable, _comLinksManager);
+                UpdateList(networkNodesList, NetworkNodes);
+                UpdateList(networkConnectionsList, NetworkConnections);
+                UpdateTable(infoTable, displayed[infoTable] == null ? ComLinksManager.Player : Displayed(infoTable));
+                UpdateTable(globalInfoTable, ComLinksManager);
             }
         }
 
-        public void UpdateList(string listName, List<string> items)
+        private void UpdateList(string listName, List<string> items)
         {
             XmlElement scrollView = _xmlLayout.GetElementById(listName + listSufix);
-            List<XmlElement> elements = new List<XmlElement>(scrollView.childElements);
+            List<XmlElement> elements = new(scrollView.childElements);
 
             foreach (XmlElement element in elements)
                 if (!items.Contains(element.id.Split(',')[2])) scrollView.RemoveChildElement(element, true);
 
             foreach (string item in items)
                 if (_xmlLayout.GetElementById(UIListItems.GetButtonId(listName + listSufix, item)) == null)
-                    new UIListButton(item).AddTo(scrollView, delegate (string T, string s, string t, string d) { OnListItemInteracted(T, s, t, d); });
+                    new UIListButton(item, delegate (string T, string s, string t, string d) { OnListItemInteracted(T, s, t, d); }).AddTo(scrollView);
 
         }
 
-        public void UpdateTable(string tableName, IDisplayable obj)
+        private void UpdateTable(string tableName, IDisplayable obj)
         {
             if (obj == null)
             {
@@ -169,7 +155,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
                     for (int c = 0; c < tablesWidth[tableName]; c++)
                     {
                         XmlElement column = _xmlLayout.GetElementById(tableName + tableSuffix + ":" + c);
-                        List<XmlElement> elements = new List<XmlElement>(column.childElements);
+                        List<XmlElement> elements = new(column.childElements);
                         foreach (XmlElement element in elements)
                             column.RemoveChildElement(element, true);
 
@@ -195,7 +181,7 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
                     for (int c = 0; c < columnCount; c++)
                     {
                         XmlElement column = _xmlLayout.GetElementById(tableName + tableSuffix + ":" + c);
-                        List<XmlElement> elements = new List<XmlElement>(column.childElements);
+                        List<XmlElement> elements = new(column.childElements);
 
                         foreach (XmlElement element in elements)
                             column.RemoveChildElement(element, true);
@@ -203,8 +189,8 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
                         for (int l = 0; l < lineCount; l++)
                         {
                             IUIListItem item = items[c, l];
-                            if (item != null) item.AddTo(column, delegate (string T, string s, string t, string d) { OnListItemInteracted(T, s, t, d); });
-                            else UIListItems.emptyListItem.AddTo(column, delegate (string T, string s, string t, string d) { OnListItemInteracted(T, s, t, d); });
+                            if (item != null) item.AddTo(column);
+                            else EmptyListItem.AddTo(column);
                         }
                     }
                 displayed[tableName] = obj;
@@ -219,62 +205,37 @@ namespace Assets.Scripts.DroonComLinks.Ui.Flight
             else icon.SetAndApplyAttribute("color", "DangerHover");
         }
 
-        private void UpdateConnection() { }
-
-        private void OnListItemInteracted(string itemType, string source, string text, string data)
+        public void OnListItemInteracted(string itemType, string source, string text, string data)
         {
-            if (ModSettings.Instance.debugMode) Debug.Log("Received list interacted event of type [" + itemType + "] from [" + source + "] text: [" + text + "] data:[" + data + "]");
+            if (ModSettings.Instance.DebugMode) Debug.Log("Received list interacted event of type [" + itemType + "] from [" + source + "] text: [" + text + "] data:[" + data + "]");
 
-            if (text == "Antenna Xml")
-            {
-                ModApi.Ui.MessageDialogScript dialog = Game.Instance.UserInterface.CreateMessageDialog(((Antenna)Displayed(infoTable)).antennaModifier + "\n" + ((Antenna)Displayed(infoTable)).typeModifier);
-                dialog.ExtraWide = true;
-            }
-            else
-            {
-                IDisplayable cast = null;
-                try { cast = _comLinksManager.networkNodeFromId[data]; } catch { }
-                if (cast == null) try { cast = _comLinksManager.NetworkConnectionFromId[data]; } catch { }
-                if (cast == null) try { cast = ((NetworkNode)Displayed(infoTable)).antennaFromId[data]; } catch { }
-                UpdateTable(infoTable, cast);
-            }
+            IDisplayable cast = null;
+            try { cast = ComLinksManager.GetNetworkNodeFromId(data); } catch { }
+            if (cast == null) try { cast = ComLinksManager.GetNetworkConnectionFromId(data); } catch { }
+            if (cast == null) try { cast = ((NetworkNode)Displayed(infoTable)).GetAntennaFromId(data); } catch { }
+            UpdateTable(infoTable, cast);
         }
 
-        public void OnToggleReducedStatus()
+        public void OnToggleNetworkStatus()
         {
-            statusPanelOpen = !statusPanelOpen;
-            UpdateUI();
-        }
+            // statusPanelOpen = !statusPanelOpen;
+            // UpdateUI();
 
-        private void OnToggleStatus()
-        {
-            statusPanelOpen = !statusPanelOpen;
-            UpdateUI();
-        }
-
-        private void OnTestButtonClicked()
-        {
-            Game.Instance.FlightScene.FlightSceneUI.ShowMessage("Test Button Working", duration: 12f);
-        }
-
-        private void ToggleKeyboardInputs()
-        {
-            gameInputs = (GameInputs)Game.Instance.Inputs;
-            foreach (IGameInput input in gameInputs.AllInputs)
-            {
-                input.Enabled = inputs;
-            }
-            inputs = !inputs;
+            DCLUIManager.OnOpenNetworkInfoButtonClicked();
+            // _networkMangerDialogScript = (Instantiate(Resources.Load("Ui/Prefabs/Dialog")) as GameObject).AddComponent<NetworkManagerDialog>();
+            // _networkMangerDialogScript.Initialize();
+            // _networkMangerDialogScript.transform.SetParent(transform, worldPositionStays: false);
+            // _networkMangerDialogScript.Closed += delegate { _networkMangerDialogScript = null; };
         }
 
         public void Close()
         {
             _controller = null;
-            _comLinksManager.NetworkNodesUpdated -= OnNetworkNodesUpdated;
-            _comLinksManager.NetworkConnectionAdded -= OnNetworkConnectionChanged;
-            _comLinksManager.NetworkConnectionRemoved -= OnNetworkConnectionChanged;
-            _comLinksManager.DroonControlChanged -= OnDroonControlChanged;
-            _comLinksManager.RemoteControlChanged -= OnRemoteControlChanged;
+            ComLinksManager.NetworkNodesUpdated -= OnNetworkNodesUpdated;
+            ComLinksManager.NetworkConnectionAdded -= OnNetworkConnectionChanged;
+            ComLinksManager.NetworkConnectionRemoved -= OnNetworkConnectionChanged;
+            ComLinksManager.DroonControlChanged -= OnDroonControlChanged;
+            ComLinksManager.RemoteControlChanged -= OnRemoteControlChanged;
 
             _xmlLayout.Hide(() => GameObject.Destroy(this.gameObject), true);
         }

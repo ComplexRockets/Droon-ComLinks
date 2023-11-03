@@ -1,9 +1,11 @@
 ﻿using System;
+using Assets.Scripts.Craft.Parts.Modifiers;
 using UnityEngine;
 namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
 {
     public class ParabolicAntennaMesh : MonoBehaviour
     {
+        private ParabolicAntennaData _data;
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;
         private Mesh _mesh;
@@ -12,52 +14,72 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
         private Vector4[] _uvs;
         private int[] _triangles;
         private Vector2 _upperElementOffset;
-        private Vector3 noPoint = new Vector3(9182367, 2973, 0209736);
-        private float _divAngle, _parabolaDivWidth, _ridgeDivWidth, _focalLength, _depth, _verticsScale, _ridgeDivCount, _ridgeA, _ridgeB, _radius, _ridgeEndX, _ridgeEndY, _strucureRadius, structureDivAngle, _thickness, _bottomRadius, _bottomdepth, _bottomOffset, _structurePos, _doubleSupportArmOffset, _ridgeWidth;
+        private Vector3 noPoint = new(9182367, 2973, 0209736);
+        private float _divAngle;
+        private float _parabolaDivWidth;
+        private float _ridgeDivWidth;
+        private float _focalLength;
+        private float _depth;
+        private float _ridgeDivCount;
+        private float _ridgeA;
+        private float _ridgeB;
+        private float _radius;
+        private float _ridgeEndX;
+        private float _ridgeEndY;
+        private float _strucureRadius;
+        private float structureDivAngle;
+        private float _thickness;
+        private float _bottomRadius;
+        private float _bottomdepth;
+        private float _bottomOffset;
+        private float _structurePos;
+        private float _doubleSupportArmOffset;
+        private float _ridgeWidth;
         private int verticsIndex, preVertices, _totalVertices, _totalDivCount, _parabolaDivCount, _parabolaRes, triangleIndex, pointsToConnect, subPartId, _structureRes, _suportArmCount;
         private bool _straightSide;
-        public float lowestPoint { get; private set; }
+        public float LowestPoint { get; private set; }
         public const string prefabPath = "Assets/Content/Craft/Parts/ParametricalAntenna/Prefabs/";
+
 
 
         public void Initialize()
         {
-            _colliderMesh = new Mesh();
-            _mesh = new Mesh();
-            _meshFilter = this.gameObject.GetComponent<MeshFilter>();
-            _meshCollider = this.gameObject.GetComponent<MeshCollider>();
+            _colliderMesh = new Mesh { name = "Parabolic collider mesh" };
+            _mesh = new Mesh { name = "Parabolic mesh" };
+            _meshFilter = gameObject.GetComponent<MeshFilter>();
+            _meshCollider = gameObject.GetComponent<MeshCollider>();
         }
 
-        public void CreateMesh(float r, float depth, int parabolaRes, int parabolaDivCount, float thickness, float ridgeA, float ridgeB, int ridgeDivCount, float ridgeWidth, bool straightSide, float bottomRadius, float bottomDepth, float bottomOffset,
-            int structureRes, float structurePos, float strucureRadius, int suportArmCount, float doubleSupportArmOffset, Vector2 upperElementOffset, bool collider = false)
+        public void CreateMesh(ParabolicAntennaData Data, Vector2 upperElementOffset, bool collider = false)
         {
-            _radius = r;
-            _depth = depth;
-            _parabolaRes = parabolaRes;
-            _parabolaDivCount = parabolaDivCount;
-            _thickness = thickness;
-            _ridgeA = ridgeA;
-            _ridgeB = ridgeB;
-            _ridgeDivCount = ridgeDivCount;
-            _divAngle = 2 * Mathf.PI / parabolaRes;
-            _ridgeWidth = ridgeWidth;
-            _ridgeDivWidth = ridgeWidth / ridgeDivCount;
-            _straightSide = straightSide;
-            _bottomRadius = !straightSide && bottomOffset == 0 ? 0 : bottomRadius; // Ignore bottom radius if not straightside and no bottom offset
-            _bottomdepth = !straightSide ? 0 : bottomDepth; // Ignore bottom depth if not straightSide
-            _bottomOffset = bottomOffset;
-            _structureRes = structureRes;
-            _structurePos = structurePos;
-            _strucureRadius = strucureRadius;
-            _suportArmCount = suportArmCount;
-            _doubleSupportArmOffset = doubleSupportArmOffset;
+            _data = Data;
+            _radius = Mathf.Max(0.1f, Data.Radius);
+            _depth = Mathf.Max(0.1f, Data.Depth);
+            _parabolaRes = collider ? 10 : Math.Clamp(Data.ParabolaResolution, 3, 128);
+            _parabolaDivCount = collider ? 3 : Math.Clamp(Data.ParabolaDivCount, 3, 32);
+            _thickness = Data.Thickness;
+            _ridgeA = Data.RidgeA;
+            _ridgeB = Data.RidgeB;
+            _ridgeDivCount = collider ? 1 : Math.Clamp(Data.RidgeDivCount, 1, 32);
+            _divAngle = 2 * Mathf.PI / _parabolaRes;
+            _ridgeWidth = Data.RidgeWidth;
+            _ridgeDivWidth = _ridgeWidth / _ridgeDivCount;
+            _straightSide = Data.straightSide;
+            _bottomOffset = Data.BottomOffset;
+            _bottomRadius = !_straightSide && _bottomOffset == 0 ? 0 : Data.BottomRadius; // Ignore bottom radius if not straightside and no bottom offset
+            _bottomdepth = !_straightSide ? 0 : Data.BottomDepth; // Ignore bottom depth if not straightSide
+            _structureRes = collider ? 3 : Math.Clamp(Data.StructureResolution, 3, 32);
+            _structurePos = Data.SupportArmPos;
+            _strucureRadius = Math.Max(0.005f, Data.SupportArmRadius);
+            _suportArmCount = Math.Max(1, Data.SupportArmCount);
+            _doubleSupportArmOffset = Data.DoubleSupportArmOffset;
             _upperElementOffset = upperElementOffset;
             verticsIndex = triangleIndex = 0;
 
             _vertices = new Vector3[2];
             _uvs = new Vector4[2];
             _triangles = new int[0];
-            _focalLength = (_radius * _radius) / (4 * depth);
+            _focalLength = _radius * _radius / (4 * _depth);
 
             CreateParabola();
             CreateStructure();
@@ -71,7 +93,7 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
             float curentRadius = _parabolaDivWidth = _radius / _parabolaDivCount; ;
             _totalDivCount = subPartId = 0; //Top parabola sub part id
             _ridgeEndX = _ridgeEndY = 0;
-            lowestPoint = -_bottomdepth - _bottomOffset - (_straightSide ? 0 : _thickness);
+            LowestPoint = -_bottomdepth - _bottomOffset - (_straightSide ? 0 : _thickness);
 
             //FirstVertex
             verticsIndex = 1;
@@ -98,13 +120,13 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
             {
                 if (_straightSide) AddDivision(-_bottomdepth, _bottomRadius, 2); //Sharp Edge
                 else AddDivision(height, curentRadius, 2);
-                AddDivision(lowestPoint, _bottomRadius, 2); //Bottom Offset
+                AddDivision(LowestPoint, _bottomRadius, 2); //Bottom Offset
             }
 
             //LastVertex
             verticsIndex++;
-            _vertices[_vertices.Length - 1] = new Vector3(0, lowestPoint, 0);
-            _uvs[_vertices.Length - 1] = new Vector4(0, 0, 0, _bottomOffset != 0 ? subPartId * 10f + 2 + 0.1f : subPartId * 10f + 1 + 0.1f);
+            _vertices[^1] = new Vector3(0, LowestPoint, 0);
+            _uvs[^1] = new Vector4(0, 0, 0, _bottomOffset != 0 ? subPartId * 10f + 2 + 0.1f : subPartId * 10f + 1 + 0.1f);
 
             //Triangles
             _totalVertices = _parabolaRes * _totalDivCount + 2;
@@ -197,12 +219,12 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
                     Mathf.Sin(angle) * radius
                 );
 
-                _uvs[verticsIndex] = (new Vector4(
+                _uvs[verticsIndex] = new Vector4(
                     _vertices[verticsIndex].x,
                     _vertices[verticsIndex].z,
                     0,
                     subPartId * 10f + matId + 0.1f
-                ));
+                );
             }
         }
 
@@ -219,8 +241,8 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
             for (int i = 0; i < _suportArmCount; i++, angle += angleStep)
             {
                 float pos = _structurePos * _radius;
-                Vector3 A = new Vector3(_upperElementOffset.y, _focalLength, 0);
-                Vector3 B = new Vector3(pos, HeightOnParabola(pos));
+                Vector3 A = new(_upperElementOffset.y, _focalLength, 0);
+                Vector3 B = new(pos, HeightOnParabola(pos));
 
                 Point(_focalLength + _upperElementOffset.x * _radius, 0, angle, Vector3.right);
                 AnglePoint(_focalLength + _upperElementOffset.x * _radius, _upperElementOffset.y * _radius, angle, Vector3.right, B - A);
@@ -238,10 +260,10 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
         private void Point(float height, float centerOffset, float angle, Vector3 rotation, float hemiOffset = 0)
         {
             Point();
-            Vector3 center = new Vector3(Mathf.Cos(angle) * centerOffset, height, Mathf.Sin(angle) * centerOffset);
+            Vector3 center = new(Mathf.Cos(angle) * centerOffset, height, Mathf.Sin(angle) * centerOffset);
             rotation = Quaternion.Euler(0, -angle * Mathf.Rad2Deg, 0) * rotation;
 
-            Plane p = new Plane(Vector3.forward, Vector3.zero);
+            Plane p = new(Vector3.forward, Vector3.zero);
             Vector3 xAxis = Vector3.up;
             Vector3 yAxis = Vector3.right;
             if (p.GetSide(rotation))
@@ -255,8 +277,8 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
             {
                 float angleSin = Mathf.Sin(angle2);
                 _vertices[verticsIndex] =
-                    xAxis * Mathf.Cos(angle2) * _strucureRadius +
-                    yAxis * (angleSin * _strucureRadius + hemiOffset * Mathf.Sign(angleSin)) +
+                    _strucureRadius * Mathf.Cos(angle2) * xAxis +
+                    (angleSin * _strucureRadius + hemiOffset * Mathf.Sign(angleSin)) * yAxis +
                     center;
             }
         }
@@ -264,14 +286,13 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
         private void PointOnParabola(float centerOffset, float angle, Vector3 rotation)
         {
             Point();
-            float u = rotation.x / rotation.y;
+            float u = Mathf.Max(0.00001f, rotation.x / rotation.y);
             float f = 1 / (4 * _focalLength);
 
             rotation = Quaternion.Euler(0, -angle * Mathf.Rad2Deg, 0) * rotation;
-            Plane p = new Plane(Vector3.forward, Vector3.zero);
+            Plane p = new(Vector3.forward, Vector3.zero);
             Vector3 xAxis = Vector3.up;
             Vector3 yAxis = Vector3.right;
-
             if (p.GetSide(rotation)) yAxis = Vector3.left;
             Vector3.OrthoNormalize(ref rotation, ref xAxis, ref yAxis);
 
@@ -282,7 +303,7 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
                 float y = HeightOnParabola(x);
                 x = (1 - Mathf.Sqrt(1 - 4 * u * f * (-u * y + x))) / (2 * u * f);
 
-                _vertices[verticsIndex] = yAxis * Mathf.Sin(angle2) * _strucureRadius +
+                _vertices[verticsIndex] = _strucureRadius * Mathf.Sin(angle2) * yAxis +
                     new Vector3(
                         Mathf.Cos(angle) * x,
                         HeightOnParabola(x),
@@ -323,24 +344,24 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
                     _triangles[triangleIndex + 1] = _triangles[triangleIndex + 3] = vertex - _structureRes;
                     _triangles[triangleIndex + 4] = vertex - _structureRes - 1;
 
-                    _uvs[vertex] = (new Vector4(
+                    _uvs[vertex] = new Vector4(
                         _vertices[vertex].x,
                         _vertices[vertex].z,
                         0,
                         subPartId * 10f + matId + 0.1f
-                    ));
+                    );
                 }
                 _triangles[triangleIndex - 6 + 4] += _structureRes;
                 _triangles[triangleIndex - 6 + 2] = _triangles[triangleIndex - 6 + 5] += _structureRes;
             }
 
             for (; vertex >= preVertices; vertex--)
-                _uvs[vertex] = (new Vector4(
+                _uvs[vertex] = new Vector4(
                     _vertices[vertex].x,
                     _vertices[vertex].z,
                     0,
                     subPartId * 10f + matId + 0.1f
-                ));
+                );
 
             pointsToConnect = 0;
         }
@@ -371,7 +392,7 @@ namespace Assets.Scripts.DroonComLinks.Antennas.ParabolicAntenna
                 _mesh.RecalculateTangents();
                 _meshFilter.sharedMesh = _mesh;
 
-                CreateMesh(_radius, _depth, 16, 2, _thickness, 0, 0, 0, 0, _straightSide, _bottomRadius, _bottomdepth, _bottomOffset, 3, _structurePos, _strucureRadius, _suportArmCount, _doubleSupportArmOffset, _upperElementOffset, true);
+                CreateMesh(_data, _upperElementOffset, true);
             }
         }
 

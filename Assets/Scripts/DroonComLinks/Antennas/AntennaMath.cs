@@ -7,11 +7,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.DroonComLinks.Antennas
 {
+    public enum SignalInfoResults { Succes, NoAvailableAntennas, Signal2Weak, NotTested }
+    public enum SignalStrengthResults { Succes, NoCommonFreq, Signal2Weak }
+
     public static class AntennaMath
     {
-        private static Dictionary<(XElement, string), float> floatAttributes = new Dictionary<(XElement, string), float>();
-
-        public static double GetMinReceivablePower(float sensitivityConstant, float efficiency) => Mathd.Pow(10, -16) / (efficiency * sensitivityConstant);
+        public static double GetMinReceivablePower(float efficiency) => Mathd.Pow(10, -15) / efficiency;
 
         public static float GetMaxTransmittedPower(float maxPowerConsumption, float txPowerRatio) => maxPowerConsumption * txPowerRatio;
 
@@ -19,133 +20,79 @@ namespace Assets.Scripts.DroonComLinks.Antennas
 
         public static double GetTransmittedPower(double rxPower, float gainA, float gainB, float waveLength, double d) => rxPower * 16 * Math.PI * Math.PI * d * d / (gainA * gainB * waveLength * waveLength);
 
-        public static float GetGain(IAntennaType type, XElement antennaModifer, XElement typeModifier, float waveLength)
-        {
-            try
-            {
-                //float waveLength = FWLConversion(GetFloatAttribute(type, antennaModifer, FloatAttributes.frequency));
-
-                if (type == AntennaTypes.parametricalParabolic)
-                {
-                    float diameter = GetFloatAttribute(type, typeModifier, FloatAttributes.diameter);
-                    float depth = GetFloatAttribute(type, typeModifier, FloatAttributes.depth);
-                    float size = GetFloatAttribute(type, typeModifier, FloatAttributes.size);
-                    return GetParabolicGain(GetParabolicFocalLength(diameter, depth), diameter, waveLength);
-                }
-                else
-                {
-                    float size = GetFloatAttribute(type, antennaModifer, FloatAttributes.size);
-                    float efficiency = GetFloatAttribute(type, antennaModifer, FloatAttributes.efficiency);
-                    return GetGain(type, waveLength, size, efficiency);
-                }
-            }
-            catch (Exception e) { Debug.LogError("Error on GetGain " + e); return -1; }
-        }
-
-        public static float GetGain(IAntennaType type, float waveLength, float size, float efficiency)
-        {
-            double a = 9.73 / (waveLength * type.azAngle * type.eqAngle / 700);
-            return (float)(a * a * efficiency * size);
-        }
-
-        public static float GetPoleLength(float waveLength, int div) => waveLength / div;
         public static float FWLConversion(float a) => 0.299792458f / a; // Frequency waveLength conversion
         public static float GetBitRate(float bitPerCycle, float frenquecy) => bitPerCycle * frenquecy;
         public static float GetParabolicFocalLength(float diameter, float depth) => diameter * diameter / (16 * depth);
-        public static float GetParabolicEficiency(float focalLength, float diameter) => focalLength / diameter;
-        public static float GetParabolicGain(float focalLength, float diameter, float waveLength)
+        public static float GetParabolicGain(float efficiency, float diameter, float waveLength)
         {
-            float efficiency = GetParabolicEficiency(focalLength, diameter);
-            return efficiency * Mathf.PI * diameter * Mathf.PI * diameter / (waveLength * waveLength);
+            float a = Mathf.PI * diameter / waveLength;
+            return efficiency * a * a;
         }
-        public static float GetPartialParabolicGain(float focalLength, float diameter)
-        {
-            float parabolicEfficiency = GetParabolicEficiency(focalLength, diameter);
-            return parabolicEfficiency * Mathf.PI * diameter * Mathf.PI * diameter;
-        }
-
-        public static float GetOptimisedParabolicGain(float partialGain, float waveLength) => partialGain / (waveLength * waveLength);
+        public static float GetWhipGain(float efficiency, float length, float waveLength) => efficiency * 1.76f * length / waveLength;
+        public static float GetDipoleGain(float efficiency, float length, float waveLength) => efficiency * 1.5f * length / waveLength;
+        public static float GetPatchGain(float efficiency, float size, float waveLength) => efficiency * 4 * Mathf.PI * 0.0025f * size / (waveLength * waveLength); //0.0025m2 = area of patch antenna of scale 1
 
         public static float GetHalfBandWidth(float frequency, float fractionalBandWidth) => frequency * fractionalBandWidth / 2;
 
         public static int GetBasePrice(DCLAntennaData antenna)
         {
             float price = 0;
-            price += Mathf.Pow(antenna.size + 1, 4); // Size price
-            price += Mathf.Pow(antenna.efficiency + 1, 13); // Efficiency price
-            price += Mathf.Pow(antenna.fractionalBandWidth + 1, 5); // Frequency price
-            price += Mathf.Pow(antenna.maxTransmittedPower / antenna.Script.antennaData.type.maxPower + 1, 3); // Max tx power price
+            price += Mathf.Pow(antenna.Size + 1, 4); // Size price
+            price += Mathf.Pow(antenna.Efficiency + 1, 13); // Efficiency price
+            price += Mathf.Pow(antenna.FractionalBandWidth + 1, 5); // Frequency price
+            price += Mathf.Pow(antenna.MaxTransmittedPower / antenna.Script.AntennaData.type.maxPower + 1, 3); // Max tx power price
             return (int)(price);
         }
 
-        public static void GetSignalInfo(NetworkNode A, NetworkNode B, out Antenna[] outA, out Antenna[] outB, out float[] signalStrength, out float[] waveLength)
+        public static SignalInfoResults GetSignalInfo(NetworkNode A, NetworkNode B, out Antenna outA, out Antenna outB, out float signalStrength, out float waveLength, out double distance, out List<SignalStrengthResults> signalStrengthResults)
         {
-            signalStrength = new float[2];
-            waveLength = new float[2];
-            outA = outB = new Antenna[2];
+            signalStrengthResults = new List<SignalStrengthResults>();
+            distance = signalStrength = waveLength = 0;
+            outA = outB = null;
 
-            foreach (Antenna a in A.antennas)
+            if (A.AvailableAntennas.Count == 0 || B.AvailableAntennas.Count == 0) return SignalInfoResults.NoAvailableAntennas;
+
+            foreach (Antenna a in A.AvailableAntennas)
             {
-                if (a.activated && !a.underWater)
+                foreach (Antenna b in B.AvailableAntennas)
                 {
-                    foreach (Antenna b in B.antennas)
-                    {
-                        if (b.activated && !b.underWater)
-                        {
-                            float[] wls = new float[2];
-                            float abStrength = a.SignalStrengthFrom(b, out wls[0]);
-                            float baStrength = b.SignalStrengthFrom(a, out wls[1]);
-                            //float wl = a.isGS ? b.waveLength : a.waveLength;
+                    signalStrengthResults.Add(SignalStrengthBetween(a, b, out double strength, out float wl, out distance));
 
-                            if (abStrength > signalStrength[0])
-                            {
-                                signalStrength[0] = abStrength;
-                                waveLength[0] = wls[0];
-                                outA[0] = a;
-                                outB[0] = b;
-                            }
-                            if (baStrength > signalStrength[1])
-                            {
-                                signalStrength[1] = baStrength;
-                                waveLength[1] = wls[1];
-                                outA[1] = a;
-                                outB[1] = b;
-                            }
-                        }
-                    }
+                    if (strength < signalStrength) continue;
+                    signalStrength = (float)strength;
+                    waveLength = wl;
+                    outA = a;
+                    outB = b;
                 }
+
             }
+
+            if (signalStrength == 0) return SignalInfoResults.Signal2Weak;
+            if (signalStrength > Mod.Instance.maxSignalStrength) Mod.Instance.maxSignalStrength = signalStrength;
+            if (signalStrength < Mod.Instance.minSignalStrength) Mod.Instance.minSignalStrength = signalStrength;
+            return SignalInfoResults.Succes;
         }
 
-        public static void ResetFloatAttributes() => floatAttributes.Clear();
-
-        public static float GetFloatAttribute(IAntennaType type, XElement xml, FloatAttributes attributeName)
+        public static SignalStrengthResults SignalStrengthBetween(Antenna A, Antenna B, out double signalStrength, out float wl, out double distance)
         {
-            float result = -1;
-            if (xml == null) Debug.LogError("XML NULL");
-            if (type == null) Debug.LogError("Type NULL");
-            try
-            {
-                if (floatAttributes.ContainsKey((xml, attributeName.ToString()))) return floatAttributes[(xml, attributeName.ToString())];
+            distance = signalStrength = wl = 0;
 
-                XAttribute attribute = xml.Attribute(attributeName.ToString());
+            if (A.IsGS) wl = B.WaveLengths[1];
+            else if (B.IsGS) wl = A.WaveLengths[1];
+            else if (A.Frequencies[0] >= B.Frequencies[0] && A.Frequencies[0] <= B.Frequencies[2])
+                wl = A.WaveLengths[0];
+            else if (B.Frequencies[0] >= A.Frequencies[0] && B.Frequencies[0] <= A.Frequencies[2])
+                wl = B.WaveLengths[0];
+            else return SignalStrengthResults.NoCommonFreq;
 
-                if (attribute != null) result = float.Parse(attribute.Value);
-                else if (attributeName == FloatAttributes.efficiency) result = type.defaultEfficiency;
-                else if (attributeName == FloatAttributes.frequency) result = type.defaultFrequency;
-                else if (attributeName == FloatAttributes.fractionalBandWidth) result = type.defaultFractionalBandWidth;
-                else if (attributeName == FloatAttributes.maxPower) result = type.defaultMaxPowerConsumption;
-                else if (attributeName == FloatAttributes.size) result = type.defaultSize;
-                else if (attributeName == FloatAttributes.diameter) result = AntennaTypes.Defaults.parabolicDiameter;
-                else if (attributeName == FloatAttributes.depth) result = AntennaTypes.Defaults.parabolicDepth;
-                else { Debug.LogError("atribute : " + attributeName.ToString() + " unknown"); return -1; };
+            float gainA = A.GetGain(wl);
+            float gainB = B.GetGain(wl);
 
-                floatAttributes.Add((xml, attributeName.ToString()), result);
-            }
-            catch (Exception e) { Debug.LogError("Error on Get Float Attribute" + e); }
-            return result;
+            distance = Vector3d.Distance(A.node.Position, B.node.Position);
+            signalStrength = GetReceivedPower(Mathf.Min(A.MaxTransmittedPower, B.MaxTransmittedPower), gainA, gainB, wl, distance) / GetMinReceivablePower(A.efficiency * B.efficiency);
+
+            if (signalStrength > 1) return SignalStrengthResults.Succes;
+            return SignalStrengthResults.Signal2Weak;
         }
-
-        public enum FloatAttributes { efficiency, frequency, fractionalBandWidth, maxPower, size, diameter, depth }
     }
 }

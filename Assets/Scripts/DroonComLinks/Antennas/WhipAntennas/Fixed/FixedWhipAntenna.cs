@@ -46,14 +46,14 @@ namespace Assets.Scripts.DroonComLinks.Antennas.WhipAntennas.Fixed
             }
         }
 
-        public void SetPosition(bool startOpen) { if (ModSettings.Instance.debugMode) Debug.LogError("Trying to set position of fixed antenna"); }
+        public void SetPosition(bool startOpen) { if (ModSettings.Instance.DebugMode) Debug.LogError("Trying to set position of fixed antenna"); }
 
-        public IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data) { if (ModSettings.Instance.debugMode) Debug.LogError("Trying to toggle fixed antenna"); yield return 0; }
+        public IEnumerator Toggle(bool open, float animationDuration, WhipAntennaData data) { if (ModSettings.Instance.DebugMode) Debug.LogError("Trying to toggle fixed antenna"); yield return 0; }
 
-        public void Update(WhipAntennaData data)
+        public void UpdateAntenna(WhipAntennaData data)
         {
             float thicknessOffset = data.thickness > 0.02f ? data.thickness - 0.02f : 0;
-            antenna.localScale = Vector3.one * data.size;
+            antenna.localScale = Vector3.one * data.Size;
             antennaBase.localScale = Vector3.one * (0.014f + thicknessOffset) / 0.014f;
             antennaRod.localScale = new Vector3(data.thickness / 0.01f, data.length, data.thickness / 0.01f);
         }

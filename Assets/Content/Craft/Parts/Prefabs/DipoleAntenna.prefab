@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4600534511947480385}
   m_RootOrder: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
     _canReceive: 1
     _canSeek: 1
     _connectionType: 1
+    _crewTraversable: 0
     _disableJointCollisions: 0
     _displayName: 
     _fuelLine: 0
@@ -56,13 +58,17 @@ MonoBehaviour:
     _ignoreSurfaces: 0
     _jointType: 0
     _localJointAxis: {x: 0, y: 0, z: 1}
+    _position: {x: 0, y: 0, z: 0}
     _radius: 0
     _rayCastFromCursor: 0
     _renderQueue: 0
     _requiresPhysicsJoint: 0
+    _rotation: {x: 0, y: 0, z: 0}
+    _scale: 1
     _surfaceCollider: {fileID: 0}
     _surfaceColliderName: 
     _tag: 
+    _upVectorOverride: {x: 0, y: 0, z: 0}
 --- !u!1 &2878494372630969365
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +96,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1616861318913275648}
   - {fileID: 3342284259295041689}
@@ -138,6 +145,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1492445384068924535}
   m_Father: {fileID: 607410572820024718}
@@ -187,6 +195,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 607410572820024718}
   m_RootOrder: 3
@@ -218,6 +227,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7882918496749580414}
   m_RootOrder: 0
@@ -267,6 +277,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6734953370105075058}
   m_Father: {fileID: 607410572820024718}
@@ -298,6 +309,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6873438904585797989}
   m_Father: {fileID: 607410572820024718}
@@ -310,6 +322,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3342284259295041689}
     m_Modifications:
+    - target: {fileID: 3739698896441784212, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
+      propertyPath: Data._name
+      value: Dipole Antenna
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739698896441784212, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
+      propertyPath: Data._category
+      value: 
+      objectReference: {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
     - target: {fileID: 4192080184316321428, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
       propertyPath: m_Name
       value: Default
@@ -357,6 +377,18 @@ PrefabInstance:
     - target: {fileID: 8216528772451818665, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999818568977094435, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
+      propertyPath: Data._maxPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999818568977094435, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
+      propertyPath: Data._frequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999818568977094435, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}
+      propertyPath: Data._fractionalBandWidth
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a5f2998cc1e244ba84183114908c879, type: 3}

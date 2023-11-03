@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XmlLayout xmlns="http://www.w3schools.com"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:SchemaLocation="..\..\..\ModTools\UI\XmlLayout.xsd">
+    <Include path="Ui/Xml/Design/DesignStyles.xml" />
+    <Include path="Ui/Xml/Styles.xml" />
+    <Include path="Ui/Xml/InspectorPanel.xml" />
+
+    <Defaults>
+        <InputField class="DT" colors="Button|ButtonHover|ButtonHover|ButtonDisabled" preferredheight="30" width="50" rectAlignment="MiddleRight" contentType="DecimalNumber" caretColor="white" textcolor="white" />
+    </Defaults>
+
+    <Panel id="flyout-dcl" class="panel flyout" width="280" active="false">
+        <Panel class="flyout-header">
+            <TextMeshPro text="DROON COMLINKS" id="flyout-title" />
+            <Image name="Flyout.PartProperties.Close" class="flyout-close-button audio-btn-back" />
+        </Panel>
+        <Panel class="flyout-content no-image">
+            <VerticalScrollView class="no-image">
+                <VerticalLayout class="no-image" childForceExpandHeight="false" pivot="0 1" contentSizeFitter="vertical" rectAlignment="UpperCenter" childAlignment="UpperCenter" padding="20 20 20 50" spacing="10">
+                    <!-- Antenna Generator -->
+                    <Panel class="header">
+                        <TextMeshPro class="header-text" text="STOCK ANTENNA GENERATOR" />
+                    </Panel>
+                    <Panel class="inspector-panel-row tooltip-row no-image" preferredHeight="3">
+                        <Image height="1" color="#2E353E" />
+                    </Panel>
+
+                    <!-- Selected Part Text -->
+                    <Panel class="property-row row">
+                        <TextMeshPro class="label" text="Selected Part" />
+                        <TextMeshPro id="selected-part-text" class="value" text="none" alignment="Right" />
+                    </Panel>
+
+                    <!-- Type Selector -->
+                    <HorizontalLayout class="inspector-panel-row tooltip-row no-image fix" childForceExpandWidth="false" preferredHeight="30">
+                        <TextMeshPro class="label" preferredWidth="100" alignment="Left" text="Antenna Type" />
+                        <Panel flexibleWidth="1"/>
+                        <TextMeshProDropdown id="antenna-types-dropdown" preferredwidth="100">
+                            <TMP_OptionTextTemplate enableWordWrapping="false" overflowMode="ScrollRect" />
+                            <TMP_DropdownLabel enableWordWrapping="false" overflowMode="ScrollRect" text="Parabolic" />
+                        </TextMeshProDropdown>
+                    </HorizontalLayout>
+
+                    <Panel class="inspector-panel-row tooltip-row no-image" preferredHeight="10">
+                        <Image height="1" color="#2E353E" />
+                    </Panel>
+
+                    <!-- Properties -->
+                    <VerticalLayout class="no-image" childForceExpandHeight="false" pivot="0 1" preferredHeight="30" rectAlignment="UpperCenter" childAlignment="UpperCenter" spacing="10">
+                        <!-- Input Field Template -->
+                        <HorizontalLayout id="input-field-template" class="inspector-panel-row tooltip-row no-image fix" childForceExpandWidth="false" preferredHeight="30" active="false">
+                            <TextMeshPro class="label input-field-label" preferredWidth="100" alignment="Left" text="Size" />
+                            <Panel flexibleWidth="1"/>
+                            <TextMeshProInputField contentType="DecimalNumber" preferredwidth="100">
+                                <TMP_Text alignment="Right" />
+                            </TextMeshProInputField>
+                        </HorizontalLayout>
+                    </VerticalLayout>
+
+                    <Panel class="inspector-panel-row tooltip-row no-image" preferredHeight="10">
+                        <Image height="1" color="#2E353E" />
+                    </Panel>
+
+                    <!-- Info Text-->
+                    <TextMeshPro class="label" text="Select a part and click 'generate', the part will then act as an antenna" />
+                    <TextMeshPro class="label" text="After generating the antenna, the data will be saved in the part's name." />
+                    <TextMeshPro class="label" text="Do not edit the name manually" />
+
+                    <!-- Generate Button -->
+                    <Button class="btn menu-button" id="export_button" rectAlignment="BottomCenter" onClick="OnGenerateAntenna();" colors="Primary|PrimaryHover|PrimaryHover|PrimaryHover">
+                        <TextMeshPro text="Generate" alignment="Center" color="White" />
+                    </Button>
+
+                </VerticalLayout>
+            </VerticalScrollView>
+        </Panel>
+    </Panel>
+</XmlLayout>

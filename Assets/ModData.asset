@@ -13,26 +13,20 @@ MonoBehaviour:
   m_Name: ModData
   m_EditorClassIdentifier: 
   _assemblies:
-  - 0Harmony.dll
-  - Droon Comlinks.dll
+  - Droon ComLinks.dll
+  - Unity.AI.Navigation.dll
   _author: Aram
-  _description: 'DCL adds a whole new gameplay experience by adding communication
-    to SimpleRockets 2.
-
-    More info on the mod''s web page https://www.simplerockets.com/Mods/View/114248/Droon-ComLinks'
+  _description: 
   _loadPriority: 1000
-  _name: Droon Comlinks
+  _name: Droon ComLinks
   _otherAssets:
-  - {fileID: 2100000, guid: 8ccf1ff8930b844409171a0481bc7819, type: 2}
   - {fileID: 2800000, guid: 23efe550ce1e641fb8dabc4c6055530d, type: 3}
   _prefabs:
-  - {fileID: 9144705692310912206, guid: 3763c2229d62f4bcf96b87408e3d92a2, type: 3}
-  - {fileID: 8555157069980614380, guid: fcd9e27b0af804343992d8c887f45a74, type: 3}
   - {fileID: 526705831781635670, guid: d7ca7d8b42b854f3ca84df7fa01bab6e, type: 3}
   - {fileID: 8976453463338096861, guid: c513a1fbdc9c646eb9a46a643ad4e3a5, type: 3}
   - {fileID: 9106000074157556813, guid: 295fff0508e3a4c2f96eb701d66f2b0c, type: 3}
   - {fileID: 6520087875603149865, guid: 6ab976e4d7b4d4dc9b692473d5b5ac4c, type: 3}
-  - {fileID: 1384079547464141543, guid: d842043c92adb4aaba333d3d2b4e25bd, type: 3}
+  - {fileID: 3787681566466947067, guid: 0becc29e446e64ff49dd803c07b99b0f, type: 3}
   - {fileID: 6777830611588333843, guid: 0e3ceb3310de84c018948528c61a2c2c, type: 3}
   - {fileID: 4767836966991344864, guid: 09e5d9ed6acab4531aaa784c9c90c0f4, type: 3}
   - {fileID: 2951338742814241491, guid: 057a2c1a756134a118e6401ccd04652a, type: 3}
@@ -40,11 +34,7 @@ MonoBehaviour:
   - {fileID: 7056679550213296106, guid: 4305f0bead6fc43e4b1a325eec2e87a0, type: 3}
   - {fileID: 3992600919861206369, guid: 891168f5e95ca4e1baffa51ae769db2f, type: 3}
   - {fileID: 5475505657188212959, guid: e3e1a1929553c41ea8225751a3cd5e53, type: 3}
-  - {fileID: 4041940529024696411, guid: 3af7c521b6597419a9f1512b29fb708c, type: 3}
-  - {fileID: 7046471993914268560, guid: 59ee9109b4beb44aa84e7f0d3884a54c, type: 3}
   - {fileID: 8316980095376536345, guid: cf295200a88e44741b0d8f740be842e0, type: 3}
-  - {fileID: 3424636495409622759, guid: 1e4739c65720645768cd97c87e4da830, type: 3}
-  - {fileID: 1646478781082898352, guid: 3660f23e417114a95a3d115051be2093, type: 3}
   _steamDescription: 
   _steamLanguage: English
   _steamPreviewPath: 
@@ -52,13 +42,13 @@ MonoBehaviour:
   _steamTitle: 
   _steamVisibility: 0
   _versionMajor: 0
-  _versionMinor: 31
+  _versionMinor: 4
   _partCategories:
-  - {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
+  - {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
   _parts:
-  - {fileID: 4900000, guid: 0ff5fc6b365d54fc28216a688bac50fe, type: 3}
   - {fileID: 4900000, guid: a4fada1cd0e0d4136948bd0b99686fbb, type: 3}
   - {fileID: 4900000, guid: cdaaf18a94a58403eaf9d964a1fba849, type: 3}
+  - {fileID: 4900000, guid: 0ff5fc6b365d54fc28216a688bac50fe, type: 3}
   - {fileID: 4900000, guid: d49788bd37f404c6e81833451b291e7f, type: 3}
   _partStyleExtensions: []
   _partTextureStyles: []

@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -80,12 +81,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     _activationGroup: 0
-    _category: {fileID: 11400000, guid: 1dbcb8f6c0c6a4b9bb740d899ecce0e8, type: 2}
-    _description: An antenna made of a metal rod.
-    _displayOrder: 5
+    _category: {fileID: 11400000, guid: 837ab00ff4bde4928890b088a3f933e9, type: 2}
+    _description: 
+    _displayOrder: 0
     _iconPath: Assets/Content/Craft/Parts/Icons/WhipAntenna.png
     _iconType: 2
-    _name: Monopole Antenna
+    _name: Whip Antenna
     _partTypeOverrides: []
     _position: {x: 0, y: 0, z: 0}
     _rotation: {x: 0, y: 0, z: 0}
@@ -112,6 +113,8 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _autoActivateIfNoStageOrActivationGroup: 1
     _buoyancyBaseScale: 1
     _buoyancyUserScale: 1
@@ -125,16 +128,20 @@ MonoBehaviour:
     _collisionVelocityMode: 2
     _dragScale: 1
     _dragScaleActive: 1
+    _dragScaleAngular: 1
     _explosiveness: 0
     _fuelLine: 0
     _heatShield: 0
     _heatShieldBaseScale: 1
     _heatShieldMass: 0
     _heatShieldScale: -1
+    _heatShieldValidation: 1
+    _ignoreValidation: 0
     _includeInDrag: 1
     _inertiaTensorBaseScale: 1
     _inertiaTensorMin: 0.05
     _inertiaTensorUserScale: 1
+    _initialCraftNodeId: -1
     _massScale: 1
     _maxDamage: 100
     _maxDrag: 0
@@ -144,13 +151,16 @@ MonoBehaviour:
     _partCollisionHandling: 0
     _partCollisionResponse: 2
     _partScale: {x: 1, y: 1, z: 1}
+    _partSelectionEnabled: 1
     _preventDebris: 0
+    _priceScale: 1
     _raiseWaterEventsEvenIfNotBuoyant: 0
     _renderQueue: 0
     _stageActivationType: 0
-    _supportsActivation: 1
+    _supportsActivation: 0
     _supportsTransparency: 1
     _thermalMassRatio: 1
+    _tutorialId: 
 --- !u!114 &1059162843964757239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +179,10 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _size: 1
-    maxPower: 0
+    _maxPower: 0
     _frequency: 0
     _fractionalBandWidth: 0
     _efficiency: 0.6
@@ -194,10 +206,14 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _antennaType: Deployable
     _antennaStyle: Simple
     _startOpen: 1
     _deploymentDuration: 2
+    _length: 0.7
+    _thickness: 0.015
 --- !u!114 &5313427301338686579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,15 +228,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     _id: 
-    _inputId: OpenCloseAntenna
+    _inputId: 
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _activationGroup: 0
     _currentValue: 0
     _designerInputOptions: 
     _ignorePartActivationState: 0
-    _input: AG1
+    _input: Slider1
     _inputAxisRange:
       _maxValue: 0
       _minValue: 0
@@ -238,7 +256,7 @@ MonoBehaviour:
     _outputCurveStyle: 4
     _outputCurveWrapMode: 8
     _overrideInput: 
-    _showActivationGroup: 1
+    _showActivationGroup: 0
     _showInputAxis: 1
     _showInvert: 1
     _type: 0

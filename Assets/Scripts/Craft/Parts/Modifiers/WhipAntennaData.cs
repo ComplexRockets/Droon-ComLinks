@@ -20,16 +20,15 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     public class WhipAntennaData : PartModifierData<WhipAntennaScript>, IDCLAntennaData
     {
         public IAntennaType type => AntennaTypes.whip;
-        //public float gain => 10 * Mathf.Log (4100 / (azAngle * eqAngle)) * size;
-        public float gain => AntennaMath.GetGain(type, Script.antennaData.waveLength, size, Script.antennaData.efficiency);
         public float mass => Script.whipAntenna.mass;
         public int price => 0;
-        public float size
+        public float Size
         {
             get;
             private set;
         }
-        public readonly Dictionary<WhipAntennaTypes, WhipAntennaStyles[]> typeStyles = new Dictionary<WhipAntennaTypes, WhipAntennaStyles[]> {
+        public Dictionary<WhipAntennaTypes, WhipAntennaStyles[]> typeStyles = new()
+        {
             {WhipAntennaTypes.Deployable, new WhipAntennaStyles[2] {WhipAntennaStyles.Simple, WhipAntennaStyles.Thin}},
             { WhipAntennaTypes.Fixed, new WhipAntennaStyles[1] { WhipAntennaStyles.Simple}} };
 
@@ -83,20 +82,23 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             d.OnPropertyChanged(() => _antennaType, (string oldType, string newType) => _antennaStyle = typeStyles[antennaType][0].ToString());
 
             d.OnValueLabelRequested(() => _deploymentDuration, (float x) => deploymentDuration.ToString("n1") + "s");
-            d.OnValueLabelRequested(() => _length, (float x) => (x * size).ToString("n2") + "m");
-            d.OnValueLabelRequested(() => _thickness, (float x) => (x * 100 * size).ToString("n2") + "cm");
+            d.OnValueLabelRequested(() => _length, (float x) => (x * Size).ToString("n2") + "m");
+            d.OnValueLabelRequested(() => _thickness, (float x) => (x * 100 * Size).ToString("n2") + "cm");
 
             d.OnSpinnerValuesRequested(() => _antennaType, delegate (List<string> x)
             {
                 x.Clear();
-                x.Add(WhipAntennaTypes.Deployable.ToString());
+                if (Game.Instance.GameState.Validator.IsItemAvailable("DCL.Deployable")) x.Add(WhipAntennaTypes.Deployable.ToString());
                 x.Add(WhipAntennaTypes.Fixed.ToString());
             });
 
             d.OnSpinnerValuesRequested(() => _antennaStyle, delegate (List<string> x)
             {
                 x.Clear();
-                foreach (WhipAntennaStyles style in typeStyles[antennaType]) x.Add(style.ToString());
+                foreach (WhipAntennaStyles style in typeStyles[antennaType])
+                {
+                    if (Game.Instance.GameState.Validator.IsItemAvailable("DCL.WhipAntenna." + style.ToString())) x.Add(style.ToString());
+                }
             });
 
             d.OnVisibilityRequested(() => _deploymentDuration, (bool x) => _antennaType == WhipAntennaTypes.Deployable.ToString());
@@ -109,7 +111,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         {
             Symmetry.ExecuteOnSymmetricPartModifiers(this, true, delegate (WhipAntennaData d)
             {
-                d.size = _size;
+                d.Size = _size;
                 d.Script.UpdateAntenna();
             });
         }
